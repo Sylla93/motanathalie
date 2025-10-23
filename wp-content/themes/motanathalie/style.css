@@ -3,6 +3,26 @@ Theme Name : Motanathalie
 */
 /* ************HEADER****************** */
 
+
+ /* la couleur d’arrière-plan  */
+body {
+    background-color: #f9f9f9;
+      font-family: 'Space Mono', monospace;
+  font-weight: 400;
+}
+
+h1, h2, h3 {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+}
+
+.italic {
+  font-family: 'Space Mono', monospace;
+  font-style: italic;
+}
+
+/* ***********************HEADER********************* */
+
 .my-logo {
     display: flex;
     width: 100%;
