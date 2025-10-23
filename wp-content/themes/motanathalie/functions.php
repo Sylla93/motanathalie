@@ -13,3 +13,15 @@ function register_my_menus() {
     ) );
 }
 add_action( 'init', 'register_my_menus' );
+
+// ***********************javascript***************************
+function theme_scripts() {
+    wp_enqueue_script(
+        'custom-js',
+        get_template_directory_uri() . '/js/script.js',
+        array('jquery'), // si vous utilisez jQuery
+        null,
+        true // charge dans le footer
+    );
+}
+add_action('wp_enqueue_scripts', 'theme_scripts');
