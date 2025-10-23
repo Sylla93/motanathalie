@@ -1,57 +1,23 @@
-
 jQuery(document).ready(function($) {
-
-    $('.btn-contact').click(function() {
-    let ref = $(this).data('ref');
-    $('#ref-photo').val(ref);
-    $('#popup-contact').show();
-  });
-  $('#close-popup').click(function() {
-    $('#popup-contact').hide();
-  });
-
- console.log('Je suis présent au  milieu');
-
-//   // Exemple de récupération des catégories
-//   fetch('/wp-json/wp/v2/category')
-//     .then(response => response.json())
-//     .then(categories => {
-//       const select = document.getElementById('categoryFilter');
-//       categories.forEach(cat => {
-//         const option = document.createElement('option');
-//         option.value = cat.slug;
-//         option.textContent = cat.name;
-//         select.appendChild(option);
-//       });
-//     });
-
-
-
-  const modal = $('#contact-modal');
-  const closeBtn = modal.find('.modal-close');
-  const photoRefField = $('#photo-ref'); // champ dans le formulaire CF7
-
-  // Ouverture de la popup
-  $('.open-contact-modal').on('click', function() {
-    const ref = $(this).data('photo-ref'); // récupère la valeur du bouton
-    modal.css('display', 'flex');
+  // Ouverture de la popup et préremplissage
+  $('.contact-btn, .btn-contact, .open-contact-modal').on('click', function() {
+    var ref = $(this).data('photo-ref') || $(this).data('ref');
+    const modal = $('#contactModal, #popup-contact');
+    modal.show().css('display', 'flex');
     $('body').css('overflow', 'hidden');
 
-    // Préremplir le champ REF.PHOTO
-    if (photoRefField.length) {
-      photoRefField.val(ref);
-    }
+    // Préremplir le champ
+    modal.find('input[name="photo_ref"], #ref-photo').val(ref);
   });
 
-  // Fermeture de la popup
-  closeBtn.on('click', function() {
-    modal.hide();
+  // Fermeture popup au clic sur bouton ou à l'extérieur
+  $('#close-popup, .close').on('click', function() {
+    $('#contactModal, #popup-contact').hide();
     $('body').css('overflow', '');
   });
-
-  modal.on('click', function(e) {
+  $('#contactModal, #popup-contact').on('click', function(e) {
     if (e.target === this) {
-      modal.hide();
+      $(this).hide();
       $('body').css('overflow', '');
     }
   });
