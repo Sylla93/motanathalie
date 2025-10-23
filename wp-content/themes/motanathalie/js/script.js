@@ -22,7 +22,7 @@ jQuery(document).ready(function($) {
     }
   });
 
-  
+
   // *******************pagination infini*****************
   
   
@@ -54,7 +54,35 @@ jQuery(document).ready(function($) {
               });
           }
       });
+
+    //   ****************TAXOMY*****************
+
+  const filterCategorie = document.getElementById('filter_categorie');
+  const filterFormat = document.getElementById('filter_format');
+  const filterTrier = document.getElementById('filter_trier');
+
+  function fetchPhotos() {
+    const categorie = filterCategorie ? filterCategorie.value : '';
+    const format = filterFormat ? filterFormat.value : '';
+    const trier = filterTrier ? filterTrier.value : '';
+
+    console.log("Filtres sélectionnés :", { categorie, format, trier });
+
+    // Ici, tu feras l'appel Ajax vers WordPress REST API ou admin-ajax.php
+    // pour récupérer et afficher les photos filtrées selon ces critères.
+  }
+
+  if (filterCategorie) {
+    filterCategorie.addEventListener('change', fetchPhotos);
+  }
+  if (filterFormat) {
+    filterFormat.addEventListener('change', fetchPhotos);
+  }
+  if (filterTrier) {
+    filterTrier.addEventListener('change', fetchPhotos);
+  }
 });
+
 
 
 

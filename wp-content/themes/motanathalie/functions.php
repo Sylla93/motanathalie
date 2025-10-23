@@ -23,8 +23,11 @@ function theme_scripts() {
         null,
         true // charge dans le footer
     );
+    // Ceci définit la variable JS ajaxurl pour utiliser admin-ajax.php dans ton script.js
+    wp_localize_script('custom-js', 'ajaxurl', admin_url('admin-ajax.php'));
 }
 add_action('wp_enqueue_scripts', 'theme_scripts');
+
 
 
 

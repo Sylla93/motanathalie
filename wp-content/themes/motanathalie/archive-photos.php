@@ -1,10 +1,48 @@
 <?php get_header(); ?>
 
-<?php 
+<!-- *******************TAXONOMY*************** -->
+ <?php get_header(); ?>
 
+<div class="choisir">
+  <!-- Filtre Catégories -->
+  <div>
+    <select class="categorie" id="filter_categorie">
+      <option value="">Catégories</option>
+      <option value="[translate:Réception]">[translate:Réception]</option>
+      <option value="[translate:Concert]">[translate:Concert]</option>
+      <option value="[translate:Mariage]">[translate:Mariage]</option>
+      <option value="[translate:Télévision]">[translate:Télévision]</option>
+    </select>
+  </div>
+
+  <!-- Filtre Formats -->
+  <div>
+    <select class="format" id="filter_format">
+      <option value="">Formats</option>
+      <option value="[translate:paysage]">[translate:paysage]</option>
+      <option value="[translate:portrait]">[translate:portrait]</option>
+    </select>
+  </div>
+
+  <!-- Filtre Trier par -->
+  <div>
+    <select class="trier" id="filter_trier">
+      <option value="">[translate:Trier par]</option>
+      <option value="[translate:Argentique]">[translate:Argentique]</option>
+      <option value="[translate:Numérique]">[translate:Numérique]</option>
+    </select>
+  </div>
+</div>
+
+
+<!-- Ensuite ta boucle WP pour afficher les photos -->
+
+
+
+<?php 
 $args = array(
     'post_type' => 'photos',  // Remplace par le slug de ton CPT
-    'posts_per_page' => 8    // Affiche toutes les photos
+    'posts_per_page' => 8
 );
 
 $photos_query = new WP_Query($args);
