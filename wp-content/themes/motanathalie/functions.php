@@ -37,3 +37,38 @@ add_action('after_setup_theme', 'my_theme_setup');
 
 add_filter('acf/settings/remove_wp_meta_box', '__return_false', 20);
 
+
+// **************************Pagination infinie***********************
+
+function ajax_load_more_photos() {
+    $paged = isset($_POST['page']) ? intval($_POST['page']) : 1;
+
+    $args = array(
+        'post_type' => 'photos',
+        'posts_per_page' => 8,
+        'paged' => $paged,
+    );
+
+    $query = new WP_Query($args);
+
+    if($query->have_posts()) :
+        while($query->have_posts()): $query->the_post();
+            // Exemple d'affichage simplifié, adapte selon ton bloc photo
+            ?>
+            <div class="photo-item">
+                <h2><?php the_title(); ?></h2>
+                <div class="photo-thumbnail">
+                    <?php if (has_post_thumbnail()) { the_post_thumbnail('medium'); } ?>
+                </div>
+                <button class="contact-btn" data-photo-ref="<?php the_ID(); ?>">Contact</button>
+            </div>
+            <?php
+        endwhile;
+    endif;
+    wp_reset_postdata();
+    wp_die(); // Terminer proprement
+}
+add_action('wp_ajax_load_more_photos', 'ajax_load_more_photos');
+add_action('wp_ajax_nopriv_load_more_photos', 'ajax_load_more_photos');
+
+

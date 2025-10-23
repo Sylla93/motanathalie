@@ -21,4 +21,40 @@ jQuery(document).ready(function($) {
       $('body').css('overflow', '');
     }
   });
+
+  
+  // *******************pagination infini*****************
+  
+  
+      var page = 2; // on commence à la page 2 (1 déjà chargée)
+      var loading = false;
+  
+      $(window).scroll(function(){
+          if(loading) return;
+  
+          if($(window).scrollTop() + $(window).height() >= $(document).height() - 100) { // proche bas page
+              loading = true;
+              $.ajax({
+                  url: ajaxurl, // défini automatiquement par WP si wp_localize_script est utilisé
+                  type: 'POST',
+                  data: {
+                      action: 'load_more_photos',
+                      page: page,
+                  },
+                  success: function(res) {
+                      if(res) {
+                          $('.photos-list').append(res);
+                          page++;
+                          loading = false;
+                      } else {
+                          // Plus de posts à charger
+                          loading = true;
+                      }
+                  }
+              });
+          }
+      });
 });
+
+
+
