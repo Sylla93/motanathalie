@@ -1,6 +1,8 @@
 /* 
 Theme Name : Motanathalie
 */
+
+
 /* ************HEADER****************** */
 
 
@@ -9,6 +11,14 @@ body {
     background-color: #f9f9f9;
       font-family: 'Space Mono', monospace;
   font-weight: 400;
+
+   width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+    overflow-x: hidden;
+  overflow-y: auto;
 }
 
 h1, h2, h3 {
@@ -101,75 +111,96 @@ color: black;
 
 /* **********************MODAL**************************** */
 
-#contact-modal {
-    width: 213vh;
-    display: none;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
 
-
-
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
+.modal-overlay.active {
+  display: flex;
 }
 
 .modal-content {
   background: #fff;
   padding: 2rem;
+  padding-left: 15vh;
   border-radius: 12px;
   max-width: 500px;
   width: 90%;
   position: relative;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-  animation: fadeIn 0.3s ease;
 }
 
 .modal-close {
   position: absolute;
   top: 10px;
   right: 15px;
-  font-size: 5vh;
   background: none;
   border: none;
+  font-size: 5vh;
   cursor: pointer;
 }
 
-@keyframes fadeIn {
-  from {opacity: 0; transform: translateY(-10px);}
-  to {opacity: 1; transform: translateY(0);}
+
+.input-nom {
+  height: 4vh;
+  border-radius: 1vh;
+ border: 1px solid #B8BBC2;
 }
 
-.wpcf7-form-control {
-    display: flex;
-    justify-content: center;
-    width: 40vh;
-    /* height: 10vh; */
-    border-radius: 1vh;
+.input-email {
+  height: 4vh;
+  border-radius: 1vh;
+   border: 1px solid #B8BBC2;
+}
+.input-photo {
+  height: 4vh;
+  border-radius: 1vh;
+   border: 1px solid #B8BBC2;
 }
 
-.form-label {
+.input-message {
+  height: 30vh;
+   border: 1px solid #B8BBC2;
+}
+
+.btn-envoyer {
+  height: 6vh;
+  background-color: #D8D8D8;
+  border-radius: 0vh;
+  cursor: pointer;
+      width: 46vh;
+      border: none;
+
+  
+}
+
+
+
+ .wpcf7-form-control {
+     border-color: #B8BBC2;
+
+}
+
+
+
+/* .form-label {
     height: 10vh;
-}
-.form-submit{
-    width: 40vh;
-    height: 7vh;
-    border-radius: 0vh;
-    border: none;
-}
+} */
+
 
 
 /* ***********************HERO*********************** */
 
 .hero {
-  height: 600px;
+  height: 800px;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -179,10 +210,715 @@ color: black;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0 20px;
+  /* padding: 0 20px; */
+  margin-left: 0vh;
 }
 .hero-content {
   /* background-color: rgba(0,0,0,0.5); overlay sombre */
   padding: 20px;
   border-radius: 10px;
+
+
+  /* Effet texte blanc contouré */
+
+  color: transparent;
+  font-family: 'Arial Black', Arial, sans-serif; /* police épaisse pour l’effet */
+  font-size: 3.1vw;             /* taille responsive */
+  font-weight: bold;
+  line-height: 1;
+  text-transform: uppercase;
+  text-align: center;
+  -webkit-text-stroke: 3px #fff; /* contour blanc autour des lettres */
+  letter-spacing: 0.07em;
 }
+
+
+
+
+/* ********************************************************* */
+
+
+.content-area {
+  /* display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px; espace entre les images */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2vw;
+
+  justify-content: center;  /* centre horizontalement la grille dans le container */
+  align-content: start;     /* aligne verticalement au début (ou utiliser center pour centrer) */
+  max-width: 1200px;        /* limite la largeur pour que le centrage soit visible */
+  margin-left: auto;
+  margin-right: auto;       /* centre la zone horizontalement dans la page */
+}
+.gallery-grid img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover; /* pour que les images remplissent bien leur case */
+}
+
+/* .banniere  {
+  display: flex;
+  width: 208vh;
+  height: 130vh;
+  object-fit: cover;
+  overflow: hidden;
+  margin-bottom: 5vh;
+}
+.banniere img {
+width: 100%;
+height: 100%;
+} */
+
+/* *********************img publication***************************** */
+
+
+.wp-block-image img {
+    box-sizing: border-box;
+    height: 80vh;
+    max-width: 90vh;
+    vertical-align: bottom;
+    object-fit: cover;
+}
+
+.photo-thumbnail img{
+ height: 70vh;
+ width: 35vw;
+ object-fit: cover;
+}
+
+/* *************************FILTRES**************************** */
+
+.choisir {
+  display: flex;
+  justify-content: center;
+  gap: 6vh;
+  /* margin-bottom: 5vh; */
+  margin-top: 10vh;
+  margin-bottom: 5vh;
+  margin-right: 5vh;
+
+}
+
+.choisir select {
+  padding: 5px 5px;  /* espace interne sur chaque select pour éloigner texte et bordure */
+  /* border: 1px solid #999; bordure plus sombre */
+  border-radius: 1vh;  /* coins arrondis sur les selects */
+  /* font-size: 1rem; */
+  /* appearance: none;    enlève la flèche native pour personnaliser si besoin */
+  text-transform: uppercase;
+
+}
+
+.trier {
+width: 14vw;
+margin-left: 43vh;
+height: 5vh;
+}
+
+.format {
+  width: 14vw;
+  height: 5vh;
+}
+.categorie {
+  width: 14vw;
+  height: 5vh;
+}
+
+
+
+.photo-item  h2{
+display: none;
+position: relative;
+}
+
+/* ******************IMAGE UNIQUE****************************** */
+.photo-container {
+  width: 100vw;
+}
+
+
+.photo-image {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+.photo-image img{
+  width: 50vw;
+  display: flex;
+  justify-content: center;
+  object-fit: cover;
+}
+
+.photo-title {
+  display: flex;
+  justify-content: center;
+}
+
+
+
+/* *******************photo apparentée***************** */
+
+.related-photos {
+  display: flex;
+  flex-direction: column;
+
+}
+.related-photos h2 {
+  display: flex;
+  justify-content: center;
+  /* flex-direction: column; */
+
+}
+.related-photos-list {
+  display: flex;
+  justify-content: center;
+    gap: 2vh;
+      /* grid-template-columns: repeat(3, 1fr); */
+
+}
+
+.related-photo  img {
+width: 90vh;
+height: 60vh;
+object-fit: cover;
+}
+
+/* .related-photo:nth-child(n+3) {
+  display: none;
+} */
+
+
+/* ********************************* */
+
+
+/* ----- Bloc principal : photo + détails ----- */
+.photo-detail {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 5vh;
+  margin: 5vh auto;
+  max-width: 1200px;
+  padding: 0 2vh;
+}
+
+.photo-acf p,
+.photo-taxonomies ul li {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.photo-taxonomies a {
+  color: #d67c45;
+  text-decoration: none;
+}
+
+.photo-taxonomies a:hover {
+  text-decoration: underline;
+}
+
+.related-photos {
+  margin-top: 60px;
+}
+
+.related-photos-list {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.related-photo img {
+  border-radius: 6px;
+  transition: transform 0.3s ease;
+}
+
+.related-photo img:hover {
+  transform: scale(1.05);
+}
+
+
+/* ============================= */
+/* 🎞️ Zone d'informations ACF sur la page photo */
+/* ============================= */
+.photo-acf {
+  margin-top: 1.5rem;
+  padding: 1.2rem 1.5rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  border: 1px solid #e3e3e3;
+  max-width: 400px; /* largeur raisonnable */
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+}
+
+.photo-acf p {
+  margin: 0.4rem 0;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.photo-acf strong {
+  color: #111;
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+/* 🪶 Optionnel : effet au survol */
+.photo-acf:hover {
+  background-color: #f0f0f0;
+  transition: background-color 0.3s ease;
+}
+
+/* ✅ Pour bien espacer la section des taxonomies */
+.photo-taxonomies {
+  margin-top: 2rem;
+}
+
+
+/* ********************************* */
+.related-photo h3 {
+  display: none;
+}
+/* Colonne gauche (texte) */
+.photo-infos {
+  flex: 1 1 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-family: 'Poppins', sans-serif;
+}
+
+.photo-title {
+  font-size: 2rem;
+  margin-bottom: 1vh;
+}
+
+.photo-content {
+  line-height: 1.6;
+}
+
+.photo-taxonomies {
+  display: block;
+  align-items: center;
+  margin-top: 2vh;
+  color: black;
+}
+
+.genres-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.genres-list li a {
+  text-decoration: none;
+  background: #eee;
+  padding: 4px 10px;
+  /* border-radius: 20px; */
+  transition: background 0.3s;
+}
+
+.genres-list li a:hover {
+  background: #333;
+  color: white;
+}
+
+/* Colonne droite (photo) */
+.photo-image {
+  flex: 1 1 45%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.photo-image img {
+  width: 100%;
+  max-width: 550px;
+  /* border-radius: 10px; */
+  object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .photo-detail {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .photo-infos,
+  .photo-image {
+    flex: 1 1 100%;
+    max-width: 90%;
+  }
+
+  .photo-title {
+    text-align: center;
+  }
+}
+
+
+
+/* ******************************* */
+
+/* === Mise en page corrigée de la grille photo === */
+.photo-archive {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4vh;
+  justify-content: center;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.photo-item {
+  text-align: center;
+      width: 70vh;
+
+}
+
+.photo-thumbnail img {
+  width: 100%;
+  height: 70vh;
+  object-fit: cover;
+  display: block;
+}
+
+/* === Centrage du bouton === */
+.button {
+  width: 100%;
+  position: relative;
+  text-align: center;
+  margin: 5vh auto;
+  margin-left: 53%;
+}
+
+#load-more {
+  width: 30vh;
+  height: 6vh;
+  background-color: #d9d9d9;
+  color: #000;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.button {
+  transition: all 0.3s ease;
+}
+
+.button.hidden {
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+
+#load-more:hover {
+  background-color: #bfbfbf;
+}
+
+.gallery-wrapper {
+  display: grid;
+}
+
+#load-more {
+  display: inline-block;
+  transition: opacity 0.3s ease;
+}
+
+#load-more.hidden {
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: none;
+}
+
+
+ /* .photo-link {
+  width: 30vh;
+  width: flex;
+} */
+
+/* 🌙 LIGHTBOX GLOBALE */
+.lightbox.hidden { display: none; }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  font-family: "Poppins", sans-serif;
+}
+
+.lightbox-header {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  right: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ccc;
+}
+
+.lightbox-close {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.lightbox-close:hover { color: #fff; }
+
+.lightbox-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 900px;
+  gap: 2rem;
+}
+
+.lightbox-image-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox img {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 4px;
+}
+
+.lightbox-prev,
+.lightbox-next {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.lightbox-prev:hover,
+.lightbox-next:hover { color: #fff; }
+
+.lightbox-footer {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 60px;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+/* ****************** */
+/* ===== Galerie - Effet survol ===== */
+.photo-thumbnail {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet d’assombrissement au survol */
+.photo-thumbnail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6); /* 🔹 un peu plus sombre pour mieux lire le titre */
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+/* Icône au centre */
+.fullscreen-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* Effet d’apparition */
+.photo-thumbnail:hover::after {
+  opacity: 1;
+}
+
+/* Effet zoom sur la photo */
+.photo-thumbnail:hover img {
+  transform: scale(1.05);
+  filter: brightness(0.8);
+}
+
+/* Apparition de l’œil */
+.photo-thumbnail:hover .fullscreen-btn {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Icône plein écran en haut à droite */
+.photo-thumbnail .icon-top {
+  position: absolute;
+  top: 2vh;
+  right: 3vh;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  color: white;
+  width: 3vw;
+  padding: 6px;
+  font-size: 1.4rem;
+  opacity: 0;
+  transition: opacity 0.3s ease, background 0.3s ease;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.photo-thumbnail .icon-top:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.photo-thumbnail:hover .icon-top {
+  opacity: 1;
+}
+
+.fullscreen-btn {
+  cursor: pointer;
+}
+
+/* 🏷️ Titre sur l’image */
+.photo-hover-title {
+  position: absolute;
+  width: 45vh;
+  bottom: 2vh;
+  left: 0;
+  margin-right: 30vh;
+  text-align: center;
+  color: #fff; /* ✅ blanc pour contraste */
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.photo-hover-title h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #FFFFFF;
+  margin: 0;
+  margin-right: 15vh;
+  padding: 6px 14px;
+  /* background: rgba(0, 0, 0, 0.5); */
+  display: inline-block;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+/* Apparition au survol */
+.photo-thumbnail:hover .fullscreen-btn,
+.photo-thumbnail:hover .icon-top,
+.photo-thumbnail:hover .photo-hover-title {
+  opacity: 1;
+  /* transform: translateY(0); */
+}
+
+
+/* ===== Galerie - Titre + Catégorie ===== */
+.photo-hover-info {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #fff;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.photo-hover-info h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin: 0;
+  display: inline-block;
+  padding: 6px 14px;
+   margin-right: 45vh;
+   margin-bottom: 3vh;
+  text-transform: uppercase;
+}
+
+.photo-hover-info .photo-cat {
+  font-size: 1rem;
+  margin-top: 4px;
+  color:  #FFFFFF;
+  display: inline-block;
+  padding: 4px 10px;
+  /* border-radius: 4px; */
+  margin-left: 37vh;
+ margin-bottom: 1vh;
+
+}
+
+ /* .photo-cat {
+  font-size: 0.9rem;
+  margin-top: 4px;
+  color: rgb(113, 20, 20);
+  background: rgba(0, 0, 0, 0.4);
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  z-index: 10;
+} */
+
+
+
+/* Apparition au survol */
+.photo-thumbnail:hover .photo-hover-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+/* ***************************************** */
+
+
+.photo-categories {
+  position: absolute;
+  bottom: 15px;
+  left: 15vh;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  z-index: 3;
+
+}
+
+
