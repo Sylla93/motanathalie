@@ -9,5 +9,6 @@ return array(
     'SCF\\Meta\\' => array($baseDir . '/includes/Meta'),
     'SCF\\Forms\\' => array($baseDir . '/includes/forms'),
     'SCF\\Fields\\FlexibleContent\\' => array($baseDir . '/includes/fields/FlexibleContent'),
+    'JsonSchema\\' => array($vendorDir . '/justinrainbow/json-schema/src/JsonSchema'),
     'ACF\\Blocks\\' => array($baseDir . '/includes/Blocks'),
 );

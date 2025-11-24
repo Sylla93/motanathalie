@@ -1,6 +1,7 @@
 <?php
+
 // ============================
-// 🔍 Debug : liste les CPT
+//  Debug : liste les CPT
 // ============================
 add_action('init', function() {
     $post_types = get_post_types([], 'objects');
@@ -10,15 +11,7 @@ add_action('init', function() {
 });
 
 // ============================
-// 🎨 Feuille de style de base
-// ============================
-function mon_theme_styles() {
-    wp_enqueue_style('mon-theme-style', get_stylesheet_uri());
-}
-add_action('wp_enqueue_scripts', 'mon_theme_styles');
-
-// ============================
-// 📜 Menus
+//  Menus
 // ============================
 function register_my_menus() {
     register_nav_menus(array(
@@ -29,7 +22,7 @@ function register_my_menus() {
 add_action('init', 'register_my_menus');
 
 // ============================
-// 🖼️ Images à la une
+//  Images à la une
 // ============================
 function my_theme_setup() {
     add_theme_support('post-thumbnails');
@@ -55,9 +48,10 @@ function register_cpt_galerie() {
 add_action('init', 'register_cpt_galerie');
 
 // ============================
-// 🔄 Charger les scripts & styles
+// Charger les scripts & styles
 // ============================
 function motanathalie_enqueue_scripts() {
+
     wp_enqueue_script('jquery');
 
     // Script AJAX “Charger plus”
@@ -69,7 +63,16 @@ function motanathalie_enqueue_scripts() {
         true
     );
 
-    // Script Lightbox (doit dépendre de celui du dessus)
+    // Script menu burger
+    wp_enqueue_script(
+        'motanathalie-burger',
+        get_template_directory_uri() . '/js/burger.js',
+        array(),
+        null,
+        true
+    );
+
+    // Script Lightbox
     wp_enqueue_script(
         'motanathalie-lightbox',
         get_template_directory_uri() . '/js/lightbox.js',
@@ -81,13 +84,13 @@ function motanathalie_enqueue_scripts() {
     // Feuille de style principale
     wp_enqueue_style('motanathalie-style', get_stylesheet_uri());
 
-    // Font Awesome pour les icônes
+    // Font Awesome
     wp_enqueue_style(
         'fontawesome',
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css'
     );
 
-    // Variable AJAX
+    // Variable AJAX (important !)
     wp_localize_script('motanathalie-ajax', 'load_more_params', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
     ));
@@ -95,71 +98,63 @@ function motanathalie_enqueue_scripts() {
 add_action('wp_enqueue_scripts', 'motanathalie_enqueue_scripts');
 
 // ============================
-// ⚡ Fonction AJAX “Charger plus” (avec icônes et data pour lightbox)
+//  Fonction AJAX “Charger plus”
 // ============================
 add_action('wp_ajax_filter_photos', 'filter_photos');
 add_action('wp_ajax_nopriv_filter_photos', 'filter_photos');
 
+
+
+
 function filter_photos() {
-    $paged = isset($_POST['page']) ? intval($_POST['page']) : 1;
+    $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+    $categorie = sanitize_text_field($_POST['categorie'] ?? '');
 
     $args = array(
-        'post_type'      => 'photo',
+        'post_type' => 'photo',
         'posts_per_page' => 8,
-        'paged'          => $paged,
+        'paged' => $page,
+        'orderby' => 'date',
+        'order' => 'DESC',
     );
 
-    // 🔹 Filtre Catégorie
-    if (!empty($_POST['categorie'])) {
-        $args['tax_query'][] = array(
-            'taxonomy' => 'categorie',
-            'field'    => 'slug',
-            'terms'    => sanitize_text_field($_POST['categorie']),
-        );
-    }
-
-    // 🔹 Filtre Format
-    if (!empty($_POST['format'])) {
-        $args['tax_query'][] = array(
-            'taxonomy' => 'format',
-            'field'    => 'slug',
-            'terms'    => sanitize_text_field($_POST['format']),
+    if (!empty($categorie)) {
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => 'categorie', // taxonomie des catégories filtrées dans front-page.php
+                'field'    => 'slug',
+                'terms'    => $categorie,
+            )
         );
     }
 
     $query = new WP_Query($args);
 
-    if ($query->have_posts()) :
-        while ($query->have_posts()) : $query->the_post();
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
 
-            $categories = get_the_terms(get_the_ID(), 'categorie');
-            $categorie_name = $categories && !is_wp_error($categories)
-                ? esc_attr($categories[0]->name)
-                : '';
+            // Génère HTML identique à celui de front-page.php pour chaque photo
             ?>
-
             <article class="photo-item">
                 <div class="photo-thumbnail">
-                    <img src="<?php the_post_thumbnail_url('medium'); ?>"
-                         alt="<?php the_title_attribute(); ?>"
-                         data-ref="<?php the_field('reference'); ?>"
+                    <?php
+                    $categories = get_the_terms(get_the_ID(), 'categorie');
+                    $categorie_name = $categories && !is_wp_error($categories) ? esc_attr($categories[0]->name) : '';
+                    ?>
+                    <img src="<?php the_post_thumbnail_url('medium'); ?>" 
+                         alt="<?php the_title_attribute(); ?>" 
+                         data-ref="<?php the_field('reference'); ?>" 
                          data-categorie="<?php echo $categorie_name; ?>">
-
-                    <!-- Bouton œil -->
-                    <button class="fullscreen-btn" aria-label="Afficher la photo">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="none"
-                             stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                    <a href="<?php the_permalink(); ?>" class="eye-btn" aria-label="Voir les détails de la photo">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
                             <circle cx="12" cy="12" r="3"/>
                         </svg>
-                    </button>
-
-                    <!-- Icône plein écran -->
+                    </a>
                     <div class="icon-top">
                         <i class="fa-solid fa-expand"></i>
                     </div>
-
-                    <!-- Bloc hover -->
                     <div class="photo-hover-info">
                         <h3 class="photo-title"><?php the_title(); ?></h3>
                         <?php
@@ -173,14 +168,23 @@ function filter_photos() {
                         ?>
                     </div>
                 </div>
+                <h2 class="photo-title"><?php the_title(); ?></h2>
             </article>
-
-        <?php endwhile;
-    endif;
+            <?php
+        }
+    }
 
     wp_reset_postdata();
     wp_die();
 }
+
+
+// **********************************
+
+
+
+
+
 
 // ============================
 // 🔧 REST API + Cache

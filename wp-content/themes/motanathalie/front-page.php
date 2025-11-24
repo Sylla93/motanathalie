@@ -22,56 +22,79 @@
 <!-- ********************************************* -->
 
 
-  <!-- ********************************************* -->
-<!-- ********************************************* -->
-
-
-<!-- Conteneur pour la galerie
-<div id="photos-grid"></div> -->
-
-<!-- Pagination -->
-<!-- <button id="load-more" hidden>Charger plus</button> -->
-
-
-
 
 
  <div class="choisir">
    <!-- Filtre Catégories  -->
-  <div>
+
+ <div class="custom-dropdown categorie" id="categorie-dropdown">
+ <div class="selected">
+    <span class="selected-text">Catégories</span>
+    <span class="dropdown-arrow catego"></span>
+  </div>
+     <ul class="options">
+    <li data-value="">Catégories</li>
+    <li data-value="Reception">Réception</li>
+    <li data-value="Concert">Concert</li>
+    <li data-value="Mariage">Mariage</li>
+    <li data-value="Television">Télévision</li>
+  </ul>
+</div>
+
+<div class="custom-dropdown format" id="format-dropdown">
+  <div class="selected">
+    <span class="selected-text">Formats</span>
+    <span class="dropdown-arrow forma"></span>
+  </div>
+  <ul class="options">
+    <li data-value="">Formats</li>
+    <li data-value="paysage">paysage</li>
+    <li data-value="portrait">portrait</li>
+  </ul>
+</div>
+
+<div class="custom-dropdown trier" id="trier-dropdown">
+    <div class="selected">
+    <span class="selected-text">Trier par</span>
+    <span class="dropdown-arrow tri"></span>
+  </div>
+  <ul class="options">
+    <li data-value="recent">Trier par</li>
+    <li data-value="Argentique">Argentique</li>
+    <li data-value="Numérique">Numérique</li>
+  </ul>
+</div>
+
+
+
+  <!-- <div>
   <select id="filter_categorie" class="categorie">
   <option value="">Catégories</option>
-  <option value="Réception">Réception</option>
+  <option class= "reception" value="Réception">Réception</option>
   <option value="Concert">Concert</option>
   <option value="Mariage">Mariage</option>
   <option value="Télévision">Télévision</option>
 </select>
-  </div>
+  </div> -->
 
         <!-- Filtre Formats -->
-     <div>
+     <!-- <div>
    <select id="filter_format" class="format">
   <option value="">Formats</option>
   <option value="paysage">paysage</option>
   <option value="portrait">portrait</option>
 </select>
-  </div>
+  </div> -->
 
-   <!-- Filtre Trier par -->
-  <div>
+   <!-- Filtre Trier par
+   <div>
 <select id="filter_trier" class="trier">
   <option value="recent">Trier par</option>
   <option value="Argentique">Argentique</option>
   <option value="Numérique">Numérique</option>
 </select>
-  </div>
-</div> 
-
-<section>
-
-  </section>
-  <!-- <div class="galerie"></div> -->
-
+  </div> -->
+</div>  
 
 
 <main class="wrap">
@@ -113,12 +136,13 @@ $categorie_name = $categories && !is_wp_error($categories) ? esc_attr($categorie
      data-categorie="<?php echo $categorie_name; ?>">
 
 
-  <!--  Icône centrale pour ouvrir la lightbox -->
-  <button class="fullscreen-btn" aria-label="Afficher la photo">
- <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
-    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
-    <circle cx="12" cy="12" r="3"/>
-  </svg>  </button>
+  <!--  Icône centrale pour ouvrir le lien -->
+  <a href="<?php the_permalink(); ?>" class="eye-btn" aria-label="Voir les détails de la photo">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+                   <circle cx="12" cy="12" r="3"/>
+                   </svg>
+                    </a>
 
   <!-- ⛶ Icône optionnelle en haut à droite -->
   <div class="icon-top">
@@ -149,23 +173,23 @@ $categorie_name = $categories && !is_wp_error($categories) ? esc_attr($categorie
 <?php endwhile; ?>
 
 
-    <!--  Bouton Charger plus -->
-    <?php if ($photos->max_num_pages > 1) : ?>
-      <div class="button">
-        <button id="load-more"
-                data-current-page="1"
-                data-max-pages="<?php echo $photos->max_num_pages; ?>">
-          Charger plus
-        </button>
-      </div>
-    <?php endif; ?>
-  </section>
+
+</section>
 <?php endif; ?>
 
+
+</section>
+<!--  Bouton Charger plus -->
+<?php if ($photos->max_num_pages > 1) : ?>
+  <div class="button">
+    <button id="load-more"
+            data-current-page="1"
+            data-max-pages="<?php echo $photos->max_num_pages; ?>">
+      Charger plus
+    </button>
+  </div>
+<?php endif; ?>
 <?php wp_reset_postdata(); ?>
-
-
-  </section>
 </main>
 
 <?php get_footer(); ?>

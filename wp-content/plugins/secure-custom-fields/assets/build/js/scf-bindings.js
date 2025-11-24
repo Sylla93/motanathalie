@@ -201,6 +201,9 @@ const withCustomControls = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_2__.cr
     if (fieldOptions.length === 0 || !bindableAttributes) {
       return /*#__PURE__*/React.createElement(BlockEdit, props);
     }
+    if (bindableAttributes.length === 0) {
+      return /*#__PURE__*/React.createElement(BlockEdit, props);
+    }
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, props, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.__experimentalToolsPanel, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Connect to a field', 'secure-custom-fields'),
       resetAll: handleReset
@@ -234,9 +237,7 @@ const withCustomControls = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_2__.cr
     }))))), /*#__PURE__*/React.createElement(BlockEdit, props));
   };
 }, 'withCustomControls');
-if (window.scf?.betaFeatures?.connect_fields) {
-  (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__.addFilter)('editor.BlockEdit', 'secure-custom-fields/with-custom-controls', withCustomControls);
-}
+(0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__.addFilter)('editor.BlockEdit', 'secure-custom-fields/with-custom-controls', withCustomControls);
 
 /***/ }),
 

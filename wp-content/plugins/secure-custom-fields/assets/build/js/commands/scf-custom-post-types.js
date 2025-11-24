@@ -273,9 +273,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/page.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/plus.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/edit.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/edit.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/page.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/plus.js");
 /**
  * Custom Post Type Commands
  *
@@ -321,7 +321,7 @@ const registerPostTypeCommands = () => {
       name: `scf/cpt-${postType.name}`,
       label: postType.all_items,
       icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Icon, {
-        icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["default"]
+        icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__["default"]
       }),
       context: 'admin',
       description: postType.all_items,
@@ -341,7 +341,7 @@ const registerPostTypeCommands = () => {
       name: `scf/new-${postType.name}`,
       label: postType.add_new_item,
       icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Icon, {
-        icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__["default"]
+        icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__["default"]
       }),
       context: 'admin',
       description: postType.add_new_item,
@@ -361,7 +361,7 @@ const registerPostTypeCommands = () => {
       name: `scf/edit-${postType.name}`,
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Edit post type: %s', 'secure-custom-fields'), postType.label),
       icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Icon, {
-        icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__["default"]
+        icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["default"]
       }),
       context: 'admin',
       description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Edit the %s post type settings', 'secure-custom-fields'), postType.label),

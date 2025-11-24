@@ -709,11 +709,11 @@
 /***/ (() => {
 
 (function ($, undefined) {
-  var __ = acf.__;
-  var parseString = function (val) {
+  const __ = acf.__;
+  const parseString = function (val) {
     return val ? '' + val : '';
   };
-  var isEqualTo = function (v1, v2) {
+  const isEqualTo = function (v1, v2) {
     return parseString(v1).toLowerCase() === parseString(v2).toLowerCase();
   };
 
@@ -724,30 +724,30 @@
    * @param {number|string|Array} v2 - The selected value to compare.
    * @returns {boolean} Returns true if the values are equal numbers, otherwise returns false.
    */
-  var isEqualToNumber = function (v1, v2) {
+  const isEqualToNumber = function (v1, v2) {
     if (v2 instanceof Array) {
       return v2.length === 1 && isEqualToNumber(v1, v2[0]);
     }
     return parseFloat(v1) === parseFloat(v2);
   };
-  var isGreaterThan = function (v1, v2) {
+  const isGreaterThan = function (v1, v2) {
     return parseFloat(v1) > parseFloat(v2);
   };
-  var isLessThan = function (v1, v2) {
+  const isLessThan = function (v1, v2) {
     return parseFloat(v1) < parseFloat(v2);
   };
-  var inArray = function (v1, array) {
+  const inArray = function (v1, array) {
     // cast all values as string
     array = array.map(function (v2) {
       return parseString(v2);
     });
     return array.indexOf(v1) > -1;
   };
-  var containsString = function (haystack, needle) {
+  const containsString = function (haystack, needle) {
     return parseString(haystack).indexOf(parseString(needle)) > -1;
   };
-  var matchesPattern = function (v1, pattern) {
-    var regexp = new RegExp(parseString(pattern), 'gi');
+  const matchesPattern = function (v1, pattern) {
+    const regexp = new RegExp(parseString(pattern), 'gi');
     return parseString(v1).match(regexp);
   };
   const conditionalSelect2 = function (field, type) {
@@ -795,7 +795,7 @@
    *
    *  @since ACF 6.3
    */
-  var HasPageLink = acf.Condition.extend({
+  const HasPageLink = acf.Condition.extend({
     type: 'hasPageLink',
     operator: '==',
     label: __('Page is equal to'),
@@ -814,7 +814,7 @@
    *
    *  @since ACF 6.3
    */
-  var HasPageLinkNotEqual = acf.Condition.extend({
+  const HasPageLinkNotEqual = acf.Condition.extend({
     type: 'hasPageLinkNotEqual',
     operator: '!==',
     label: __('Page is not equal to'),
@@ -833,7 +833,7 @@
    *
    *  @since ACF 6.3
    */
-  var containsPageLink = acf.Condition.extend({
+  const containsPageLink = acf.Condition.extend({
     type: 'containsPageLink',
     operator: '==contains',
     label: __('Pages contain'),
@@ -860,7 +860,7 @@
    *
    *  @since ACF 6.3
    */
-  var containsNotPageLink = acf.Condition.extend({
+  const containsNotPageLink = acf.Condition.extend({
     type: 'containsNotPageLink',
     operator: '!=contains',
     label: __('Pages do not contain'),
@@ -887,7 +887,7 @@
    *
    *  @since ACF 6.3
    */
-  var HasAnyPageLink = acf.Condition.extend({
+  const HasAnyPageLink = acf.Condition.extend({
     type: 'hasAnyPageLink',
     operator: '!=empty',
     label: __('Has any page selected'),
@@ -910,7 +910,7 @@
    *
    *  @since ACF 6.3
    */
-  var HasNoPageLink = acf.Condition.extend({
+  const HasNoPageLink = acf.Condition.extend({
     type: 'hasNoPageLink',
     operator: '==empty',
     label: __('Has no page selected'),
@@ -933,7 +933,7 @@
    *
    *  @since ACF 6.3
    */
-  var HasUser = acf.Condition.extend({
+  const HasUser = acf.Condition.extend({
     type: 'hasUser',
     operator: '==',
     label: __('User is equal to'),
@@ -952,7 +952,7 @@
    *
    *  @since ACF 6.3
    */
-  var HasUserNotEqual = acf.Condition.extend({
+  const HasUserNotEqual = acf.Condition.extend({
     type: 'hasUserNotEqual',
     operator: '!==',
     label: __('User is not equal to'),
@@ -971,7 +971,7 @@
    *
    *  @since ACF 6.3
    */
-  var containsUser = acf.Condition.extend({
+  const containsUser = acf.Condition.extend({
     type: 'containsUser',
     operator: '==contains',
     label: __('Users contain'),
@@ -998,7 +998,7 @@
    *
    *  @since ACF 6.3
    */
-  var containsNotUser = acf.Condition.extend({
+  const containsNotUser = acf.Condition.extend({
     type: 'containsNotUser',
     operator: '!=contains',
     label: __('Users do not contain'),
@@ -1024,7 +1024,7 @@
    *
    *  @since ACF 6.3
    */
-  var HasAnyUser = acf.Condition.extend({
+  const HasAnyUser = acf.Condition.extend({
     type: 'hasAnyUser',
     operator: '!=empty',
     label: __('Has any user selected'),
@@ -1047,7 +1047,7 @@
    *
    *  @since ACF 6.3
    */
-  var HasNoUser = acf.Condition.extend({
+  const HasNoUser = acf.Condition.extend({
     type: 'hasNoUser',
     operator: '==empty',
     label: __('Has no user selected'),
@@ -1070,7 +1070,7 @@
    *
    *  @since	ACF 6.3
    */
-  var HasRelationship = acf.Condition.extend({
+  const HasRelationship = acf.Condition.extend({
     type: 'hasRelationship',
     operator: '==',
     label: __('Relationship is equal to'),
@@ -1089,7 +1089,7 @@
    *
    *  @since	ACF 6.3
    */
-  var HasRelationshipNotEqual = acf.Condition.extend({
+  const HasRelationshipNotEqual = acf.Condition.extend({
     type: 'hasRelationshipNotEqual',
     operator: '!==',
     label: __('Relationship is not equal to'),
@@ -1108,7 +1108,7 @@
    *
    *  @since	ACF 6.3
    */
-  var containsRelationship = acf.Condition.extend({
+  const containsRelationship = acf.Condition.extend({
     type: 'containsRelationship',
     operator: '==contains',
     label: __('Relationships contain'),
@@ -1134,7 +1134,7 @@
    *
    *  @since	ACF 6.3
    */
-  var containsNotRelationship = acf.Condition.extend({
+  const containsNotRelationship = acf.Condition.extend({
     type: 'containsNotRelationship',
     operator: '!=contains',
     label: __('Relationships do not contain'),
@@ -1160,7 +1160,7 @@
    *
    *  @since ACF 6.3
    */
-  var HasAnyRelation = acf.Condition.extend({
+  const HasAnyRelation = acf.Condition.extend({
     type: 'hasAnyRelation',
     operator: '!=empty',
     label: __('Has any relationship selected'),
@@ -1183,7 +1183,7 @@
    *
    *  @since ACF 6.3
    */
-  var HasNoRelation = acf.Condition.extend({
+  const HasNoRelation = acf.Condition.extend({
     type: 'hasNoRelation',
     operator: '==empty',
     label: __('Has no relationship selected'),
@@ -1206,7 +1206,7 @@
    *
    *  @since ACF 6.3
    */
-  var HasPostObject = acf.Condition.extend({
+  const HasPostObject = acf.Condition.extend({
     type: 'hasPostObject',
     operator: '==',
     label: __('Post is equal to'),
@@ -1225,7 +1225,7 @@
    *
    *  @since ACF 6.3
    */
-  var HasPostObjectNotEqual = acf.Condition.extend({
+  const HasPostObjectNotEqual = acf.Condition.extend({
     type: 'hasPostObjectNotEqual',
     operator: '!==',
     label: __('Post is not equal to'),
@@ -1244,7 +1244,7 @@
    *
    *  @since ACF 6.3
    */
-  var containsPostObject = acf.Condition.extend({
+  const containsPostObject = acf.Condition.extend({
     type: 'containsPostObject',
     operator: '==contains',
     label: __('Posts contain'),
@@ -1271,7 +1271,7 @@
    *
    *  @since ACF 6.3
    */
-  var containsNotPostObject = acf.Condition.extend({
+  const containsNotPostObject = acf.Condition.extend({
     type: 'containsNotPostObject',
     operator: '!=contains',
     label: __('Posts do not contain'),
@@ -1298,7 +1298,7 @@
    *
    *  @since ACF 6.3
    */
-  var HasAnyPostObject = acf.Condition.extend({
+  const HasAnyPostObject = acf.Condition.extend({
     type: 'hasAnyPostObject',
     operator: '!=empty',
     label: __('Has any post selected'),
@@ -1321,7 +1321,7 @@
    *
    *  @since ACF 6.3
    */
-  var HasNoPostObject = acf.Condition.extend({
+  const HasNoPostObject = acf.Condition.extend({
     type: 'hasNoPostObject',
     operator: '==empty',
     label: __('Has no post selected'),
@@ -1344,7 +1344,7 @@
    *
    *  @since	ACF 6.3
    */
-  var HasTerm = acf.Condition.extend({
+  const HasTerm = acf.Condition.extend({
     type: 'hasTerm',
     operator: '==',
     label: __('Term is equal to'),
@@ -1363,7 +1363,7 @@
    *
    *  @since	ACF 6.3
    */
-  var hasTermNotEqual = acf.Condition.extend({
+  const hasTermNotEqual = acf.Condition.extend({
     type: 'hasTermNotEqual',
     operator: '!==',
     label: __('Term is not equal to'),
@@ -1382,7 +1382,7 @@
    *
    *  @since	ACF 6.3
    */
-  var containsTerm = acf.Condition.extend({
+  const containsTerm = acf.Condition.extend({
     type: 'containsTerm',
     operator: '==contains',
     label: __('Terms contain'),
@@ -1407,7 +1407,7 @@
    *
    *  @since	ACF 6.3
    */
-  var containsNotTerm = acf.Condition.extend({
+  const containsNotTerm = acf.Condition.extend({
     type: 'containsNotTerm',
     operator: '!=contains',
     label: __('Terms do not contain'),
@@ -1432,7 +1432,7 @@
    *
    *  @since	ACF 6.3
    */
-  var HasAnyTerm = acf.Condition.extend({
+  const HasAnyTerm = acf.Condition.extend({
     type: 'hasAnyTerm',
     operator: '!=empty',
     label: __('Has any term selected'),
@@ -1455,7 +1455,7 @@
    *
    *  @since	ACF 6.3
    */
-  var HasNoTerm = acf.Condition.extend({
+  const HasNoTerm = acf.Condition.extend({
     type: 'hasNoTerm',
     operator: '==empty',
     label: __('Has no term selected'),
@@ -1482,7 +1482,7 @@
    *  @param	void
    *  @return	void
    */
-  var HasValue = acf.Condition.extend({
+  const HasValue = acf.Condition.extend({
     type: 'hasValue',
     operator: '!=empty',
     label: __('Has any value'),
@@ -1509,7 +1509,7 @@
    *  @param	void
    *  @return	void
    */
-  var HasNoValue = HasValue.extend({
+  const HasNoValue = HasValue.extend({
     type: 'hasNoValue',
     operator: '==empty',
     label: __('Has no value'),
@@ -1528,7 +1528,7 @@
    *  @param	void
    *  @return	void
    */
-  var EqualTo = acf.Condition.extend({
+  const EqualTo = acf.Condition.extend({
     type: 'equalTo',
     operator: '==',
     label: __('Value is equal to'),
@@ -1555,7 +1555,7 @@
    *  @param	void
    *  @return	void
    */
-  var NotEqualTo = EqualTo.extend({
+  const NotEqualTo = EqualTo.extend({
     type: 'notEqualTo',
     operator: '!=',
     label: __('Value is not equal to'),
@@ -1574,7 +1574,7 @@
    *  @param	void
    *  @return	void
    */
-  var PatternMatch = acf.Condition.extend({
+  const PatternMatch = acf.Condition.extend({
     type: 'patternMatch',
     operator: '==pattern',
     label: __('Value matches pattern'),
@@ -1597,7 +1597,7 @@
    *  @param	void
    *  @return	void
    */
-  var Contains = acf.Condition.extend({
+  const Contains = acf.Condition.extend({
     type: 'contains',
     operator: '==contains',
     label: __('Value contains'),
@@ -1620,7 +1620,7 @@
    *  @param	void
    *  @return	void
    */
-  var TrueFalseEqualTo = EqualTo.extend({
+  const TrueFalseEqualTo = EqualTo.extend({
     type: 'trueFalseEqualTo',
     choiceType: 'select',
     fieldTypes: ['true_false'],
@@ -1642,7 +1642,7 @@
    *  @param	void
    *  @return	void
    */
-  var TrueFalseNotEqualTo = NotEqualTo.extend({
+  const TrueFalseNotEqualTo = NotEqualTo.extend({
     type: 'trueFalseNotEqualTo',
     choiceType: 'select',
     fieldTypes: ['true_false'],
@@ -1664,13 +1664,13 @@
    *  @param	void
    *  @return	void
    */
-  var SelectEqualTo = acf.Condition.extend({
+  const SelectEqualTo = acf.Condition.extend({
     type: 'selectEqualTo',
     operator: '==',
     label: __('Value is equal to'),
     fieldTypes: ['select', 'checkbox', 'radio', 'button_group'],
     match: function (rule, field) {
-      var val = field.val();
+      const val = field.val();
       if (val instanceof Array) {
         return inArray(rule.value, val);
       } else {
@@ -1679,8 +1679,8 @@
     },
     choices: function (fieldObject) {
       // vars
-      var choices = [];
-      var lines = fieldObject.$setting('choices textarea').val().split('\n');
+      const choices = [];
+      const lines = fieldObject.$setting('choices textarea').val().split('\n');
 
       // allow null
       if (fieldObject.$input('allow_null').prop('checked')) {
@@ -1720,7 +1720,7 @@
    *  @param	void
    *  @return	void
    */
-  var SelectNotEqualTo = SelectEqualTo.extend({
+  const SelectNotEqualTo = SelectEqualTo.extend({
     type: 'selectNotEqualTo',
     operator: '!=',
     label: __('Value is not equal to'),
@@ -1739,13 +1739,13 @@
    *  @param	void
    *  @return	void
    */
-  var GreaterThan = acf.Condition.extend({
+  const GreaterThan = acf.Condition.extend({
     type: 'greaterThan',
     operator: '>',
     label: __('Value is greater than'),
     fieldTypes: ['number', 'range'],
     match: function (rule, field) {
-      var val = field.val();
+      let val = field.val();
       if (val instanceof Array) {
         val = val.length;
       }
@@ -1766,12 +1766,12 @@
    *  @param	void
    *  @return	void
    */
-  var LessThan = GreaterThan.extend({
+  const LessThan = GreaterThan.extend({
     type: 'lessThan',
     operator: '<',
     label: __('Value is less than'),
     match: function (rule, field) {
-      var val = field.val();
+      let val = field.val();
       if (val instanceof Array) {
         val = val.length;
       }
@@ -1795,7 +1795,7 @@
    *  @param	void
    *  @return	void
    */
-  var SelectionGreaterThan = GreaterThan.extend({
+  const SelectionGreaterThan = GreaterThan.extend({
     type: 'selectionGreaterThan',
     label: __('Selection is greater than'),
     fieldTypes: ['checkbox', 'select', 'post_object', 'page_link', 'relationship', 'taxonomy', 'user']
@@ -1811,7 +1811,7 @@
    *  @param	void
    *  @return	void
    */
-  var SelectionLessThan = LessThan.extend({
+  const SelectionLessThan = LessThan.extend({
     type: 'selectionLessThan',
     label: __('Selection is less than'),
     fieldTypes: ['checkbox', 'select', 'post_object', 'page_link', 'relationship', 'taxonomy', 'user']
@@ -2595,13 +2595,17 @@
 /*!**************************************************!*\
   !*** ./assets/src/js/_acf-field-button-group.js ***!
   \**************************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 
 (function ($, undefined) {
-  var Field = acf.Field.extend({
+  const Field = acf.Field.extend({
     type: 'button_group',
     events: {
-      'click input[type="radio"]': 'onClick'
+      'click input[type="radio"]': 'onClick',
+      'keydown label': 'onKeyDown'
     },
     $control: function () {
       return this.$('.acf-button-group');
@@ -2609,25 +2613,65 @@
     $input: function () {
       return this.$('input:checked');
     },
+    initialize: function () {
+      this.updateButtonStates();
+    },
     setValue: function (val) {
       this.$('input[value="' + val + '"]').prop('checked', true).trigger('change');
+      this.updateButtonStates();
+    },
+    updateButtonStates: function () {
+      const labels = this.$control().find('label');
+      const input = this.$input();
+      labels.removeClass('selected').attr('aria-checked', 'false').attr('tabindex', '-1');
+      if (input.length) {
+        // If there's a checked input, mark its parent label as selected
+        input.parent('label').addClass('selected').attr('aria-checked', 'true').attr('tabindex', '0');
+      } else {
+        labels.first().attr('tabindex', '0');
+      }
     },
     onClick: function (e, $el) {
-      // vars
-      var $label = $el.parent('label');
-      var selected = $label.hasClass('selected');
+      this.selectButton($el.parent('label'));
+    },
+    onKeyDown: function (event, label) {
+      const key = event.which;
 
-      // remove previous selected
-      this.$('.selected').removeClass('selected');
-
-      // add active class
-      $label.addClass('selected');
-
-      // allow null
-      if (this.get('allow_null') && selected) {
-        $label.removeClass('selected');
-        $el.prop('checked', false).trigger('change');
+      // Space or Enter: select the button
+      if (key === 13 || key === 32) {
+        event.preventDefault();
+        this.selectButton(label);
+        return;
       }
+
+      // Arrow keys: move focus between buttons
+      if (key === 37 || key === 39 || key === 38 || key === 40) {
+        event.preventDefault();
+        const labels = this.$control().find('label');
+        const currentIndex = labels.index(label);
+        let nextIndex;
+
+        // Left/Up arrow: move to previous, wrap to last if at start
+        if (key === 37 || key === 38) {
+          nextIndex = currentIndex > 0 ? currentIndex - 1 : labels.length - 1;
+        }
+        // Right/Down arrow: move to next, wrap to first if at end
+        else {
+          nextIndex = currentIndex < labels.length - 1 ? currentIndex + 1 : 0;
+        }
+        const nextLabel = labels.eq(nextIndex);
+        labels.attr('tabindex', '-1');
+        nextLabel.attr('tabindex', '0').trigger('focus');
+      }
+    },
+    selectButton: function (element) {
+      const inputRadio = element.find('input[type="radio"]');
+      const isSelected = element.hasClass('selected');
+      inputRadio.prop('checked', true).trigger('change');
+      if (this.get('allow_null') && isSelected) {
+        inputRadio.prop('checked', false).trigger('change');
+      }
+      this.updateButtonStates();
     }
   });
   acf.registerFieldType(Field);
@@ -2648,7 +2692,8 @@
       'change input': 'onChange',
       'click .acf-add-checkbox': 'onClickAdd',
       'click .acf-checkbox-toggle': 'onClickToggle',
-      'click .acf-checkbox-custom': 'onClickCustom'
+      'click .acf-checkbox-custom': 'onClickCustom',
+      'keydown input[type="checkbox"]': 'onKeyDownInput'
     },
     $control: function () {
       return this.$('.acf-checkbox-list');
@@ -2697,23 +2742,18 @@
     onClickAdd: function (e, $el) {
       var html = '<li><input class="acf-checkbox-custom" type="checkbox" checked="checked" /><input type="text" name="' + this.getInputName() + '[]" /></li>';
       $el.parent('li').before(html);
-      $el.parent('li').parent().find('input[type="text"]').last().focus();
+      $el.parent('li').parent().find('input[type="text"]').last().trigger('focus');
     },
     onClickToggle: function (e, $el) {
       // Vars.
-      var checked = $el.prop('checked');
-      var $inputs = this.$('input[type="checkbox"]');
-      var $labels = this.$('label');
-
-      // Update "checked" state.
-      $inputs.prop('checked', checked);
-
-      // Add or remove "selected" class.
-      if (checked) {
-        $labels.addClass('selected');
-      } else {
-        $labels.removeClass('selected');
-      }
+      const inputs = this.$inputs();
+      const hasUnchecked = $inputs.not(':checked').length > 0;
+      inputs.each(function () {
+        $inputs.each(function () {
+          jQuery(this).prop('checked', hasUnchecked).trigger('change');
+        });
+      });
+      $el.prop('checked', hasUnchecked);
     },
     onClickCustom: function (e, $el) {
       var checked = $el.prop('checked');
@@ -2730,6 +2770,21 @@
         // remove
         if ($text.val() == '') {
           $el.parent('li').remove();
+        }
+      }
+    },
+    onKeyDownInput: function (e, $el) {
+      // Check if Enter key (keyCode 13) was pressed
+      if (e.which === 13) {
+        // Prevent default form submission
+        e.preventDefault();
+
+        // Toggle the checkbox state and trigger change event
+        $el.prop('checked', !$el.prop('checked')).trigger('change');
+
+        // If this is the "Select All" toggle checkbox, run the toggle logic
+        if ($el.is('.acf-checkbox-toggle')) {
+          this.onClickToggle(e, $el);
         }
       }
     }
@@ -2789,10 +2844,20 @@
         change: onChange,
         clear: onChange
       };
+      if ('custom' === $inputText.data('acf-palette-type')) {
+        const paletteColor = $inputText.data('acf-palette-colors').match(/#(?:[0-9a-fA-F]{3}){1,2}|rgba?\([\s*(\d|.)+\s*,]+\)/g);
+        if (paletteColor) {
+          let trimmed = paletteColor.map(color => color.trim());
+          args.palettes = trimmed;
+        }
+      }
 
       // filter
       var args = acf.applyFilters('color_picker_args', args, this);
-
+      if (Array.isArray(args.palettes) && args.palettes.length > 10) {
+        // Add class for large custom palette styling
+        this.$control().addClass('acf-color-picker-large-custom-palette');
+      }
       // initialize
       $inputText.wpColorPicker(args);
     },
@@ -3110,13 +3175,20 @@
 /***/ (() => {
 
 (function ($, undefined) {
-  var Field = acf.models.ImageField.extend({
+  const Field = acf.models.ImageField.extend({
     type: 'file',
     $control: function () {
       return this.$('.acf-file-uploader');
     },
     $input: function () {
       return this.$('input[type="hidden"]:first');
+    },
+    events: {
+      'click a[data-name="add"]': 'onClickAdd',
+      'click a[data-name="edit"]': 'onClickEdit',
+      'click a[data-name="remove"]': 'onClickRemove',
+      'change input[type="file"]': 'onChange',
+      'keydown .file-wrap': 'onImageWrapKeydown'
     },
     validateAttachment: function (attachment) {
       // defaults
@@ -3157,25 +3229,28 @@
       this.$('[data-name="filesize"]').text(attachment.filesizeHumanReadable);
 
       // vars
-      var val = attachment.id || '';
+      const val = attachment.id || '';
 
       // update val
       acf.val(this.$input(), val);
-
-      // update class
       if (val) {
+        // update class
         this.$control().addClass('has-value');
+        const fileWrap = this.$('.file-wrap');
+        if (fileWrap.length) {
+          fileWrap.trigger('focus');
+        }
       } else {
         this.$control().removeClass('has-value');
       }
     },
     selectAttachment: function () {
       // vars
-      var parent = this.parent();
-      var multiple = parent && parent.get('type') === 'repeater';
+      const parent = this.parent();
+      const multiple = parent && parent.get('type') === 'repeater';
 
       // new frame
-      var frame = acf.newMediaPopup({
+      const frame = acf.newMediaPopup({
         mode: 'select',
         title: acf.__('Select File'),
         field: this.get('key'),
@@ -3191,9 +3266,9 @@
         }, this)
       });
     },
-    editAttachment: function () {
+    editAttachment: function (button) {
       // vars
-      var val = this.val();
+      const val = this.val();
 
       // bail early if no val
       if (!val) {
@@ -3207,8 +3282,21 @@
         button: acf.__('Update File'),
         attachment: val,
         field: this.get('key'),
-        select: $.proxy(function (attachment, i) {
+        select: $.proxy(function (attachment) {
           this.render(attachment);
+        }, this),
+        close: $.proxy(function () {
+          if ('edit-button' === button) {
+            const edit = this.$el.find('a[data-name="edit"]');
+            if (edit.length) {
+              edit.trigger('focus');
+            }
+          } else {
+            const imageWrap = this.$el.find('.image-wrap');
+            if (imageWrap.length) {
+              imageWrap.trigger('focus');
+            }
+          }
         }, this)
       });
     }
@@ -4113,8 +4201,8 @@
   \*******************************************/
 /***/ (() => {
 
-(function ($, undefined) {
-  var Field = acf.Field.extend({
+(function ($) {
+  const Field = acf.Field.extend({
     type: 'image',
     $control: function () {
       return this.$('.acf-image-uploader');
@@ -4126,7 +4214,8 @@
       'click a[data-name="add"]': 'onClickAdd',
       'click a[data-name="edit"]': 'onClickEdit',
       'click a[data-name="remove"]': 'onClickRemove',
-      'change input[type="file"]': 'onChange'
+      'change input[type="file"]': 'onChange',
+      'keydown .image-wrap': 'onImageWrapKeydown'
     },
     initialize: function () {
       // add attribute to form
@@ -4153,7 +4242,7 @@
       });
 
       // Override with "preview size".
-      var size = acf.isget(attachment, 'sizes', this.get('preview_size'));
+      const size = acf.isget(attachment, 'sizes', this.get('preview_size'));
       if (size) {
         attachment.url = size.url;
         attachment.width = size.width;
@@ -4174,6 +4263,10 @@
       if (attachment.id) {
         this.val(attachment.id);
         this.$control().addClass('has-value');
+        const imageWrap = this.$('.image-wrap');
+        if (imageWrap.length) {
+          imageWrap.trigger('focus');
+        }
       } else {
         this.val('');
         this.$control().removeClass('has-value');
@@ -4182,15 +4275,15 @@
     // create a new repeater row and render value
     append: function (attachment, parent) {
       // create function to find next available field within parent
-      var getNext = function (field, parent) {
+      const getNext = function (field, parent) {
         // find existing file fields within parent
-        var fields = acf.getFields({
+        const fields = acf.getFields({
           key: field.get('key'),
           parent: parent.$el
         });
 
         // find the first field with no value
-        for (var i = 0; i < fields.length; i++) {
+        for (let i = 0; i < fields.length; i++) {
           if (!fields[i].val()) {
             return fields[i];
           }
@@ -4201,7 +4294,7 @@
       };
 
       // find existing file fields within parent
-      var field = getNext(this, parent);
+      let field = getNext(this, parent);
 
       // add new row if no available field
       if (!field) {
@@ -4216,11 +4309,11 @@
     },
     selectAttachment: function () {
       // vars
-      var parent = this.parent();
-      var multiple = parent && parent.get('type') === 'repeater';
+      const parent = this.parent();
+      const multiple = parent && parent.get('type') === 'repeater';
 
       // new frame
-      var frame = acf.newMediaPopup({
+      const frame = acf.newMediaPopup({
         mode: 'select',
         type: 'image',
         title: acf.__('Select Image'),
@@ -4237,24 +4330,35 @@
         }, this)
       });
     },
-    editAttachment: function () {
+    editAttachment: function (attachment) {
       // vars
-      var val = this.val();
-
-      // bail early if no val
-      if (!val) return;
-
-      // popup
-      var frame = acf.newMediaPopup({
-        mode: 'edit',
-        title: acf.__('Edit Image'),
-        button: acf.__('Update Image'),
-        attachment: val,
-        field: this.get('key'),
-        select: $.proxy(function (attachment, i) {
-          this.render(attachment);
-        }, this)
-      });
+      const val = this.val();
+      if (val) {
+        // popup
+        var frame = acf.newMediaPopup({
+          mode: 'edit',
+          title: acf.__('Edit Image'),
+          button: acf.__('Update Image'),
+          attachment: val,
+          field: this.get('key'),
+          select: $.proxy(function (attachment) {
+            this.render(attachment);
+          }, this),
+          close: $.proxy(function () {
+            if ('edit-button' === attachment) {
+              const edit = this.$el.find('a[data-name="edit"]');
+              if (edit.length) {
+                edit.trigger('focus');
+              }
+            } else {
+              const imageWrap = this.$('.image-wrap');
+              if (imageWrap.length) {
+                imageWrap.trigger('focus');
+              }
+            }
+          }, this)
+        });
+      }
     },
     removeAttachment: function () {
       this.render(false);
@@ -4263,19 +4367,38 @@
       this.selectAttachment();
     },
     onClickEdit: function (e, $el) {
-      this.editAttachment();
+      this.editAttachment('edit-button');
     },
     onClickRemove: function (e, $el) {
       this.removeAttachment();
     },
     onChange: function (e, $el) {
-      var $hiddenInput = this.$input();
+      const $hiddenInput = this.$input();
       if (!$el.val()) {
         $hiddenInput.val('');
       }
       acf.getFileInputData($el, function (data) {
         $hiddenInput.val($.param(data));
       });
+    },
+    onImageWrapKeydown: function (event, imageWrapElement) {
+      // Check if Enter key was pressed (keycode 13)
+      if (event.which === 13) {
+        // Check if the event target is the imageWrapElement itself
+        if (event.target === imageWrapElement[0]) {
+          // Prevent the default Enter key behavior
+          event.preventDefault();
+
+          // Check if the field has a value
+          if (this.val()) {
+            // Check if the uploader is NOT the basic uploader
+            if (this.get('uploader') !== 'basic') {
+              // Open the edit attachment dialog
+              this.editAttachment();
+            }
+          }
+        }
+      }
     }
   });
   acf.registerFieldType(Field);
@@ -4644,7 +4767,8 @@
   var Field = acf.Field.extend({
     type: 'radio',
     events: {
-      'click input[type="radio"]': 'onClick'
+      'click input[type="radio"]': 'onClick',
+      'keydown input[type="radio"]': 'onKeyDownInput'
     },
     $control: function () {
       return this.$('.acf-radio-list');
@@ -4691,6 +4815,12 @@
         } else {
           this.$inputText().prop('disabled', true);
         }
+      }
+    },
+    onKeyDownInput: function (event, input) {
+      if (event.which === 13) {
+        event.preventDefault();
+        input.prop('checked', true).trigger('change');
       }
     }
   });
@@ -5685,6 +5815,7 @@
     events: {
       'click a[data-name="add"]': 'onClickAdd',
       'click input[type="radio"]': 'onClickRadio',
+      'keydown label': 'onKeyDownLabel',
       removeField: 'onRemove'
     },
     $control: function () {
@@ -5946,6 +6077,17 @@
       if (this.get('allow_null') && selected) {
         $label.removeClass('selected');
         $el.prop('checked', false).trigger('change');
+      }
+    },
+    onKeyDownLabel: function (e, $el) {
+      // bail early if not space or enter
+      if (e.which !== 13) {
+        return;
+      }
+      e.preventDefault();
+      const firstInput = $el.find('input').first();
+      if (firstInput.length) {
+        firstInput.trigger('click').trigger('focus');
       }
     }
   });
@@ -10214,7 +10356,9 @@
 
       // Ensure textarea element is visible
       // - Fixes bug in block editor when switching between "Block" and "Document" tabs.
-      $('#' + id).show();
+      if (!tinymce.get(id)) {
+        $('#' + id).show();
+      }
 
       // toggle
       switchEditors.go(id, 'tmce');
@@ -11356,7 +11500,6 @@
         // Backup vars.
         var _this = this;
         var _args = arguments;
-
         // Perform validation within a Promise.
         return new Promise(function (resolve, reject) {
           // Bail early if is autosave or preview.
@@ -11388,9 +11531,74 @@
             }
           }
 
+          // Recursive function to check all blocks (including nested innerBlocks) for ACF validation errors
+          function checkBlocksForErrors(blocks) {
+            const errors = [];
+            return new Promise(function (resolve) {
+              // Iterate through each block
+              blocks.forEach(block => {
+                // If this block has nested blocks, recursively check them
+                if (block.innerBlocks.length > 0) {
+                  checkBlocksForErrors(block.innerBlocks).then(hasError => {
+                    if (hasError) {
+                      return resolve(true);
+                    }
+                  });
+                }
+
+                // Check if this block has an ACF error attribute
+                if (block.attributes.hasAcfError) {
+                  // Check if the publish panel is open and close it if so
+                  const publishPanel = document.getElementsByClassName('editor-post-publish-panel')[0];
+                  if (publishPanel) {
+                    wp.data.dispatch('core/editor').togglePublishSidebar();
+                  }
+
+                  // Add block to errors array
+                  errors.push(block);
+
+                  // Dispatch a custom event to notify about the block with validation error
+                  document.dispatchEvent(new CustomEvent('acf/block/has-error', {
+                    acfBlocksWithValidationErrors: [block]
+                  }));
+
+                  // Log debug message
+                  acf.debug('Rejecting save because the block editor has a invalid ACF block selected.');
+
+                  // Resolve with true (error found)
+                  return resolve(true);
+                }
+              });
+
+              // If errors were found, select the first one
+              if (errors.length > 0) {
+                const blockClientId = errors[0].clientId;
+                wp.data.dispatch('core/block-editor').selectBlock(blockClientId);
+              }
+
+              // No errors found, resolve with false
+              return resolve(false);
+            });
+          }
+
+          // Call the function with all blocks from the editor
+          checkBlocksForErrors(wp.data.select('core/block-editor').getBlocks()).then(hasError => {
+            // If errors were found
+            if (hasError) {
+              // Display an error notice
+              notices.createErrorNotice(acf.__('An ACF Block on this page requires attention before you can save.'), {
+                id: 'acf-blocks-validation',
+                isDismissible: true
+              });
+
+              // Reject the save operation
+              return reject('ACF Block Validation failed');
+            }
+          });
+
           // Validate the editor form.
           var valid = acf.validateForm({
-            form: $('#editor'),
+            form: $('#wpbody-content > .block-editor'),
             reset: true,
             complete: function ($form, validator) {
               // Always unlock the form after AJAX.
@@ -11399,12 +11607,23 @@
             failure: function ($form, validator) {
               // Get validation error and append to Gutenberg notices.
               var notice = validator.get('notice');
-              notices.createErrorNotice(notice.get('text'), {
-                id: 'acf-validation',
-                isDismissible: true
-              });
+              var action = validator.get('action');
+              if (action && 'object' === typeof action && action.label && action.url) {
+                notices.createErrorNotice(notice.get('text', {
+                  id: 'acf-validation',
+                  isDismissible: true,
+                  actions: [{
+                    label: action.label,
+                    url: action.url
+                  }]
+                }));
+              } else {
+                notices.createErrorNotice(notice.get('text'), {
+                  id: 'acf-validation',
+                  isDismissible: true
+                });
+              }
               notice.remove();
-
               // Restore last non "publish" status.
               if (lastPostStatus) {
                 editor.editPost({
@@ -11526,7 +11745,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _acf_field_accordion_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_acf-field-accordion.js */ "./assets/src/js/_acf-field-accordion.js");
 /* harmony import */ var _acf_field_accordion_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_acf_field_accordion_js__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _acf_field_button_group_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./_acf-field-button-group.js */ "./assets/src/js/_acf-field-button-group.js");
-/* harmony import */ var _acf_field_button_group_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_acf_field_button_group_js__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _acf_field_checkbox_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_acf-field-checkbox.js */ "./assets/src/js/_acf-field-checkbox.js");
 /* harmony import */ var _acf_field_checkbox_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_acf_field_checkbox_js__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _acf_field_color_picker_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_acf-field-color-picker.js */ "./assets/src/js/_acf-field-color-picker.js");

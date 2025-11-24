@@ -409,14 +409,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/layout.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/plus.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/post-list.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/category.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/settings.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/tool.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/upload.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/download.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/category.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/download.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/layout.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/plus.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/post-list.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/settings.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/tool.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/upload.js");
 /**
  * Admin Commands
  *
@@ -453,7 +453,7 @@ const registerAdminCommands = () => {
     urlArgs: {
       post_type: 'acf-field-group'
     },
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__["default"],
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('SCF: View and manage custom field groups', 'secure-custom-fields'),
     keywords: ['acf', 'custom fields', 'field editor', 'manage fields']
   }, {
@@ -463,7 +463,7 @@ const registerAdminCommands = () => {
     urlArgs: {
       post_type: 'acf-field-group'
     },
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__["default"],
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('SCF: Create a new field group to organize custom fields', 'secure-custom-fields'),
     keywords: ['add', 'new', 'create', 'field group', 'custom fields']
   }, {
@@ -473,7 +473,7 @@ const registerAdminCommands = () => {
     urlArgs: {
       post_type: 'acf-post-type'
     },
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__["default"],
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('SCF: Manage custom post types', 'secure-custom-fields'),
     keywords: ['cpt', 'content types', 'manage post types']
   }, {
@@ -483,7 +483,7 @@ const registerAdminCommands = () => {
     urlArgs: {
       post_type: 'acf-post-type'
     },
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__["default"],
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('SCF: Create a new custom post type', 'secure-custom-fields'),
     keywords: ['add', 'new', 'create', 'cpt', 'content type']
   }, {
@@ -493,7 +493,7 @@ const registerAdminCommands = () => {
     urlArgs: {
       post_type: 'acf-taxonomy'
     },
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["default"],
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('SCF: Manage custom taxonomies for organizing content', 'secure-custom-fields'),
     keywords: ['categories', 'tags', 'terms', 'custom taxonomies']
   }, {
@@ -503,7 +503,7 @@ const registerAdminCommands = () => {
     urlArgs: {
       post_type: 'acf-taxonomy'
     },
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__["default"],
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('SCF: Create a new custom taxonomy', 'secure-custom-fields'),
     keywords: ['add', 'new', 'create', 'taxonomy', 'categories', 'tags']
   }, {
@@ -513,7 +513,7 @@ const registerAdminCommands = () => {
     urlArgs: {
       post_type: 'acf-ui-options-page'
     },
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_10__["default"],
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('SCF: Manage custom options pages for global settings', 'secure-custom-fields'),
     keywords: ['settings', 'global options', 'site options']
   }, {
@@ -523,7 +523,7 @@ const registerAdminCommands = () => {
     urlArgs: {
       post_type: 'acf-ui-options-page'
     },
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__["default"],
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('SCF: Create a new custom options page', 'secure-custom-fields'),
     keywords: ['add', 'new', 'create', 'options', 'settings page']
   }, {
@@ -533,7 +533,7 @@ const registerAdminCommands = () => {
     urlArgs: {
       page: 'acf-tools'
     },
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_10__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__["default"],
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('SCF: Access SCF utility tools', 'secure-custom-fields'),
     keywords: ['utilities', 'import export', 'json']
   }, {
@@ -544,7 +544,7 @@ const registerAdminCommands = () => {
       page: 'acf-tools',
       tool: 'import'
     },
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__["default"],
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('SCF: Import field groups, post types, taxonomies, and options pages', 'secure-custom-fields'),
     keywords: ['upload', 'json', 'migration', 'transfer']
   }, {
@@ -555,7 +555,7 @@ const registerAdminCommands = () => {
       page: 'acf-tools',
       tool: 'export'
     },
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__["default"],
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('SCF: Export field groups, post types, taxonomies, and options pages', 'secure-custom-fields'),
     keywords: ['download', 'json', 'backup', 'migration']
   }];

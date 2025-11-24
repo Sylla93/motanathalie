@@ -1,6 +1,33 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./assets/src/js/pro/_acf-blocks-v3.js":
+/*!*********************************************!*\
+  !*** ./assets/src/js/pro/_acf-blocks-v3.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _blocks_v3_utils_post_locking__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./blocks-v3/utils/post-locking */ "./assets/src/js/pro/blocks-v3/utils/post-locking.js");
+/* harmony import */ var _blocks_v3_components_jsx_parser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./blocks-v3/components/jsx-parser */ "./assets/src/js/pro/blocks-v3/components/jsx-parser.js");
+/* harmony import */ var _blocks_v3_register_block_type_v3__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./blocks-v3/register-block-type-v3 */ "./assets/src/js/pro/blocks-v3/register-block-type-v3.js");
+/**
+ * ACF Blocks Version 3 - Entry Point
+ * Imports all modules and initializes the block system
+ */
+
+// Import utilities
+
+
+// Import JSX parser and expose on acf global
+
+
+// Import block registration (initializes automatically via acf.addAction)
+
+
+/***/ }),
+
 /***/ "./assets/src/js/pro/_acf-blocks.js":
 /*!******************************************!*\
   !*** ./assets/src/js/pro/_acf-blocks.js ***!
@@ -1032,7 +1059,7 @@ const md5 = __webpack_require__(/*! md5 */ "./node_modules/md5/md5.js");
 
       // Update component state if subscribed.
       // - Allows AJAX callback to update store without modifying state of an unmounted component.
-      if (this.subscribed) {
+      if (this.subscribed || acf.get('StrictMode')) {
         super.setState(state);
       }
       acf.debug('SetState', Object.assign({}, this), this.props.clientId, this.constructor.name, Object.assign({}, acf.blockInstances[this.props.clientId][this.constructor.name]));
@@ -1163,9 +1190,12 @@ const md5 = __webpack_require__(/*! md5 */ "./node_modules/md5/md5.js");
       acf.doAction('append', this.state.$el);
     }
     componentWillUnmount() {
-      acf.doAction('unmount', this.state.$el);
+      // Only skip unmount action if in StrictMode AND component is not subscribed
+      if (!acf.get('StrictMode') || this.subscribed) {
+        acf.doAction('unmount', this.state.$el);
+      }
 
-      // Unsubscribe this component from state.
+      // Unsubscribe this component from state
       this.subscribed = false;
     }
     componentDidRemount() {
@@ -1588,7 +1618,8 @@ const md5 = __webpack_require__(/*! md5 */ "./node_modules/md5/md5.js");
     // Register block types.
     const blockTypes = acf.get('blockTypes');
     if (blockTypes) {
-      blockTypes.map(registerBlockType);
+      // Only register blocks with version < 3 (v3 blocks are registered separately).
+      blockTypes.filter(blockType => parseInt(blockType.acf_block_version) < 3).map(registerBlockType);
     }
   }
 
@@ -2147,6 +2178,1999 @@ const md5 = __webpack_require__(/*! md5 */ "./node_modules/md5/md5.js");
 
 /***/ }),
 
+/***/ "./assets/src/js/pro/blocks-v3/components/block-edit.js":
+/*!**************************************************************!*\
+  !*** ./assets/src/js/pro/blocks-v3/components/block-edit.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BlockEdit: () => (/* binding */ BlockEdit)
+/* harmony export */ });
+/* harmony import */ var md5__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! md5 */ "./node_modules/md5/md5.js");
+/* harmony import */ var md5__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(md5__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _block_placeholder__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./block-placeholder */ "./assets/src/js/pro/blocks-v3/components/block-placeholder.js");
+/* harmony import */ var _block_form__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./block-form */ "./assets/src/js/pro/blocks-v3/components/block-form.js");
+/* harmony import */ var _block_preview__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./block-preview */ "./assets/src/js/pro/blocks-v3/components/block-preview.js");
+/* harmony import */ var _error_boundary__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./error-boundary */ "./assets/src/js/pro/blocks-v3/components/error-boundary.js");
+/* harmony import */ var _utils_post_locking__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/post-locking */ "./assets/src/js/pro/blocks-v3/utils/post-locking.js");
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+/**
+ * BlockEdit Component
+ * Main component for editing ACF blocks in the Gutenberg editor
+ * Handles form fetching, validation, preview rendering, and user interactions
+ */
+
+
+
+
+
+
+
+
+
+
+/**
+ * InspectorBlockFormContainer
+ * Small helper component that manages the inspector panel container ref
+ * Sets the current form container when the inspector panel is available
+ *
+ * @param {Object} props
+ * @param {React.RefObject} props.inspectorBlockFormRef - Ref to inspector container
+ * @param {Function} props.setCurrentBlockFormContainer - Setter for current container
+ */
+const InspectorBlockFormContainer = ({
+  inspectorBlockFormRef,
+  setCurrentBlockFormContainer
+}) => {
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    setCurrentBlockFormContainer(inspectorBlockFormRef.current);
+  }, []);
+  return /*#__PURE__*/React.createElement("div", {
+    ref: inspectorBlockFormRef
+  });
+};
+
+/**
+ * Main BlockEdit component wrapper
+ * Manages block data fetching and initial setup
+ *
+ * @param {Object} props - Component props
+ * @param {Object} props.attributes - Block attributes
+ * @param {Function} props.setAttributes - Function to update block attributes
+ * @param {Object} props.context - Block context
+ * @param {boolean} props.isSelected - Whether block is currently selected
+ * @param {jQuery} props.$ - jQuery instance
+ * @param {Object} props.blockType - ACF block type configuration
+ * @returns {JSX.Element} - Rendered block editor
+ */
+const BlockEdit = props => {
+  const {
+    attributes,
+    setAttributes,
+    context,
+    isSelected,
+    $,
+    blockType
+  } = props;
+  const shouldValidate = blockType.validate;
+  const {
+    clientId
+  } = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockEditContext)();
+  const preloadedData = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
+    return checkPreloadedData(generateAttributesHash(attributes, context), clientId, isSelected);
+  }, []);
+  const [validationErrors, setValidationErrors] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(() => {
+    return preloadedData?.validation?.errors ?? null;
+  });
+  const [showValidationErrors, setShowValidationErrors] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+  const [theSerializedAcfData, setTheSerializedAcfData] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+  const [blockFormHtml, setBlockFormHtml] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+  const [blockPreviewHtml, setBlockPreviewHtml] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(() => {
+    if (preloadedData?.html) {
+      return acf.applyFilters('blocks/preview/render', preloadedData.html, true);
+    }
+    return 'acf-block-preview-loading';
+  });
+  const [userHasInteractedWithForm, setUserHasInteractedWithForm] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+  const [hasFetchedOnce, setHasFetchedOnce] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+  const [ajaxRequest, setAjaxRequest] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)();
+  const acfFormRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+  const previewRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+  const debounceRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+  const attributesWithoutError = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
+    const {
+      hasAcfError,
+      ...rest
+    } = attributes;
+    return rest;
+  }, [attributes]);
+
+  /**
+   * Fetches block data from server (form HTML, preview HTML, validation)
+   *
+   * @param {Object} params - Fetch parameters
+   * @param {Object} params.theAttributes - Block attributes to fetch for
+   * @param {string} params.theClientId - Block client ID
+   * @param {Object} params.theContext - Block context
+   * @param {boolean} params.isSelected - Whether block is selected
+   */
+  function fetchBlockData({
+    theAttributes,
+    theClientId,
+    theContext,
+    isSelected
+  }) {
+    if (!theAttributes) return;
+
+    // NEW: Abort any pending request
+    if (ajaxRequest) {
+      ajaxRequest.abort();
+    }
+
+    // Generate hash of attributes for preload cache lookup
+    const attributesHash = generateAttributesHash(theAttributes, context);
+
+    // Check for preloaded block data
+    const preloadedData = checkPreloadedData(attributesHash, theClientId, isSelected);
+    if (preloadedData) {
+      handlePreloadedData(preloadedData);
+      return;
+    }
+
+    // Prepare query options
+    const queryOptions = {
+      preview: true,
+      form: true,
+      validate: true
+    };
+    if (!blockFormHtml) {
+      queryOptions.validate = false;
+    }
+    if (!shouldValidate) {
+      queryOptions.validate = false;
+    }
+    const blockData = {
+      ...theAttributes
+    };
+    (0,_utils_post_locking__WEBPACK_IMPORTED_MODULE_8__.lockPostSavingByName)('acf-fetching-block');
+
+    // Fetch block data via AJAX
+    const request = $.ajax({
+      url: acf.get('ajaxurl'),
+      dataType: 'json',
+      type: 'post',
+      cache: false,
+      data: acf.prepareForAjax({
+        action: 'acf/ajax/fetch-block',
+        block: JSON.stringify(blockData),
+        clientId: theClientId,
+        context: JSON.stringify(theContext),
+        query: queryOptions
+      })
+    }).done(response => {
+      (0,_utils_post_locking__WEBPACK_IMPORTED_MODULE_8__.unlockPostSavingByName)('acf-fetching-block');
+      setBlockFormHtml(response.data.form);
+      if (response.data.preview) {
+        setBlockPreviewHtml(acf.applyFilters('blocks/preview/render', response.data.preview, false));
+      } else {
+        setBlockPreviewHtml(acf.applyFilters('blocks/preview/render', 'acf-block-preview-no-html', false));
+      }
+      if (response.data?.validation && !response.data.validation.valid && response.data.validation.errors) {
+        setValidationErrors(response.data.validation.errors);
+      } else {
+        setValidationErrors(null);
+      }
+      setHasFetchedOnce(true);
+    }).fail(function () {
+      setHasFetchedOnce(true);
+      (0,_utils_post_locking__WEBPACK_IMPORTED_MODULE_8__.unlockPostSavingByName)('acf-fetching-block');
+    });
+    setAjaxRequest(request);
+  }
+
+  /**
+   * Generates a hash of block attributes for caching
+   *
+   * @param {Object} attrs - Block attributes
+   * @param {Object} ctx - Block context
+   * @returns {string} - MD5 hash of serialized attributes
+   */
+  function generateAttributesHash(attrs, ctx) {
+    delete attrs.hasAcfError;
+    attrs._acf_context = (0,_utils_post_locking__WEBPACK_IMPORTED_MODULE_8__.sortObjectKeys)(ctx);
+    return md5__WEBPACK_IMPORTED_MODULE_0___default()(JSON.stringify((0,_utils_post_locking__WEBPACK_IMPORTED_MODULE_8__.sortObjectKeys)(attrs)));
+  }
+
+  /**
+   * Checks if block data was preloaded and returns it
+   *
+   * @param {string} hash - Attributes hash
+   * @param {string} clientId - Block client ID
+   * @param {boolean} selected - Whether block is selected
+   * @returns {Object|boolean} - Preloaded data or false
+   */
+  function checkPreloadedData(hash, clientId, selected) {
+    if (selected) return false;
+    acf.debug('Preload check', hash, clientId);
+
+    // Don't preload blocks inside Query Loop blocks
+    if (isInQueryLoop(clientId)) {
+      return false;
+    }
+    const preloadedBlocks = acf.get('preloadedBlocks');
+    if (!preloadedBlocks || !preloadedBlocks[hash]) {
+      acf.debug('Preload failed: not preloaded.');
+      return false;
+    }
+    const data = preloadedBlocks[hash];
+
+    // Replace placeholder client ID with actual client ID
+    data.html = data.html.replaceAll(hash, clientId);
+    if (data?.validation && data?.validation.errors) {
+      data.validation.errors = data.validation.errors.map(error => {
+        error.input = error.input.replaceAll(hash, clientId);
+        return error;
+      });
+    }
+    acf.debug('Preload successful', data);
+    return data;
+  }
+
+  /**
+   * Checks if block is inside a Query Loop block
+   *
+   * @param {string} clientId - Block client ID
+   * @returns {boolean} - True if inside Query Loop
+   */
+  function isInQueryLoop(clientId) {
+    const parentIds = wp.data.select('core/block-editor').getBlockParents(clientId);
+    return wp.data.select('core/block-editor').getBlocksByClientId(parentIds).filter(block => block.name === 'core/query').length > 0;
+  }
+
+  /**
+   * Handles preloaded block data
+   *
+   * @param {Object} data - Preloaded data
+   */
+  function handlePreloadedData(data) {
+    if (data.form) {
+      setBlockFormHtml(data.html);
+    } else if (data.html) {
+      setBlockPreviewHtml(acf.applyFilters('blocks/preview/render', data.html, true));
+    } else {
+      setBlockPreviewHtml(acf.applyFilters('blocks/preview/render', 'acf-block-preview-no-html', true));
+    }
+    if (data?.validation && !data.validation.valid && data.validation.errors) {
+      setValidationErrors(data.validation.errors);
+    } else {
+      setValidationErrors(null);
+    }
+  }
+
+  // Initial fetch on mount and when selection changes
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    function trackUserInteraction() {
+      setUserHasInteractedWithForm(true);
+      window.removeEventListener('click', trackUserInteraction);
+      window.removeEventListener('keydown', trackUserInteraction);
+    }
+    fetchBlockData({
+      theAttributes: attributes,
+      theClientId: clientId,
+      theContext: context,
+      isSelected: isSelected
+    });
+    window.addEventListener('click', trackUserInteraction);
+    window.addEventListener('keydown', trackUserInteraction);
+    return () => {
+      window.removeEventListener('click', trackUserInteraction);
+      window.removeEventListener('keydown', trackUserInteraction);
+    };
+  }, []);
+
+  // Update hasAcfError attribute based on validation errors
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    setAttributes(validationErrors ? {
+      hasAcfError: true
+    } : {
+      hasAcfError: false
+    });
+  }, [validationErrors, setAttributes]);
+
+  // Listen for validation error events from other blocks
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    const handleErrorEvent = () => {
+      (0,_utils_post_locking__WEBPACK_IMPORTED_MODULE_8__.lockPostSaving)(clientId);
+      setShowValidationErrors(true);
+    };
+    document.addEventListener('acf/block/has-error', handleErrorEvent);
+    return () => {
+      document.removeEventListener('acf/block/has-error', handleErrorEvent);
+      (0,_utils_post_locking__WEBPACK_IMPORTED_MODULE_8__.unlockPostSaving)(clientId);
+    };
+  }, []);
+
+  // Cleanup: unlock post saving on unmount
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => () => {
+    (0,_utils_post_locking__WEBPACK_IMPORTED_MODULE_8__.unlockPostSaving)(props.clientId);
+  }, []);
+
+  // Handle form data changes with debouncing
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      const parsedData = JSON.parse(theSerializedAcfData);
+      if (!parsedData) {
+        return void fetchBlockData({
+          theAttributes: attributesWithoutError,
+          theClientId: clientId,
+          theContext: context,
+          isSelected: isSelected
+        });
+      }
+      if (theSerializedAcfData === JSON.stringify(attributesWithoutError.data)) {
+        return void fetchBlockData({
+          theAttributes: attributesWithoutError,
+          theClientId: clientId,
+          theContext: context,
+          isSelected: isSelected
+        });
+      }
+
+      // Use original attributes (with hasAcfError) when updating
+      const updatedAttributes = {
+        ...attributes,
+        data: {
+          ...parsedData
+        }
+      };
+      setAttributes(updatedAttributes);
+    }, 200);
+  }, [theSerializedAcfData, attributesWithoutError]);
+
+  // Trigger ACF actions when preview is rendered
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    if (previewRef.current && blockPreviewHtml) {
+      const blockName = attributes.name.replace('acf/', '');
+      const $preview = $(previewRef.current);
+      acf.doAction('render_block_preview', $preview, attributes);
+      acf.doAction(`render_block_preview/type=${blockName}`, $preview, attributes);
+    }
+  }, [blockPreviewHtml]);
+  return /*#__PURE__*/React.createElement(BlockEditInner, _extends({}, props, {
+    validationErrors: validationErrors,
+    showValidationErrors: showValidationErrors,
+    theSerializedAcfData: theSerializedAcfData,
+    setTheSerializedAcfData: setTheSerializedAcfData,
+    acfFormRef: acfFormRef,
+    blockFormHtml: blockFormHtml,
+    blockPreviewHtml: blockPreviewHtml,
+    blockFetcher: fetchBlockData,
+    userHasInteractedWithForm: userHasInteractedWithForm,
+    setUserHasInteractedWithForm: setUserHasInteractedWithForm,
+    previewRef: previewRef,
+    hasFetchedOnce: hasFetchedOnce
+  }));
+};
+
+/**
+ * Inner component that handles rendering and portals
+ * Separated to manage refs and portal targets properly
+ */
+function BlockEditInner(props) {
+  const {
+    blockType,
+    $,
+    isSelected,
+    attributes,
+    context,
+    validationErrors,
+    showValidationErrors,
+    theSerializedAcfData,
+    setTheSerializedAcfData,
+    acfFormRef,
+    blockFormHtml,
+    blockPreviewHtml,
+    blockFetcher,
+    userHasInteractedWithForm,
+    previewRef,
+    hasFetchedOnce
+  } = props;
+  const {
+    clientId
+  } = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockEditContext)();
+  const inspectorControlsRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useRef)();
+  const [isModalOpen, setIsModalOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+  const modalFormContainerRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useRef)();
+  const [currentFormContainer, setCurrentFormContainer] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)();
+
+  // Set current form container when modal opens
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    if (isModalOpen && modalFormContainerRef?.current) {
+      setCurrentFormContainer(modalFormContainerRef.current);
+    }
+  }, [isModalOpen, modalFormContainerRef]);
+
+  // Update form container when inspector panel is available
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    if (isSelected && inspectorControlsRef?.current) {
+      setCurrentFormContainer(inspectorControlsRef.current);
+    } else if (isSelected && !inspectorControlsRef?.current) {
+      // Wait for inspector to be available
+      setTimeout(() => {
+        setCurrentFormContainer(inspectorControlsRef.current);
+      }, 1);
+    } else if (!isSelected) {
+      setCurrentFormContainer(null);
+    }
+  }, [isSelected, inspectorControlsRef, inspectorControlsRef.current]);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    if (isSelected && validationErrors && showValidationErrors && blockType?.hide_fields_in_sidebar) {
+      setIsModalOpen(true);
+    }
+  }, [isSelected, showValidationErrors, validationErrors, blockType]);
+
+  // Build block CSS classes
+  let blockClasses = 'acf-block-component acf-block-body';
+  blockClasses += ' acf-block-preview';
+  if (validationErrors && showValidationErrors) {
+    blockClasses += ' acf-block-has-validation-error';
+  }
+  const blockProps = {
+    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
+      className: blockClasses,
+      ref: previewRef
+    })
+  };
+
+  // Determine portal target
+  let portalTarget = null;
+  if (currentFormContainer) {
+    portalTarget = currentFormContainer;
+  } else if (inspectorControlsRef?.current) {
+    portalTarget = inspectorControlsRef.current;
+  }
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.BlockControls, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToolbarGroup, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToolbarButton, {
+    className: "components-icon-button components-toolbar__control",
+    label: acf.__('Edit Block'),
+    icon: "edit",
+    onClick: () => {
+      setIsModalOpen(true);
+    }
+  }))), /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '16px'
+    }
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    className: "acf-blocks-open-expanded-editor-btn",
+    variant: "secondary",
+    onClick: () => {
+      setIsModalOpen(true);
+    },
+    text: acf.__('Open Expanded Editor'),
+    icon: "edit"
+  })), /*#__PURE__*/React.createElement(InspectorBlockFormContainer, {
+    inspectorBlockFormRef: inspectorControlsRef,
+    setCurrentBlockFormContainer: setCurrentFormContainer
+  })), portalTarget && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createPortal)(/*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_block_form__WEBPACK_IMPORTED_MODULE_5__.BlockForm, {
+    $: $,
+    clientId: clientId,
+    blockFormHtml: blockFormHtml,
+    onMount: () => {
+      if (!hasFetchedOnce) {
+        blockFetcher({
+          theAttributes: attributes,
+          theClientId: clientId,
+          theContext: context,
+          isSelected: isSelected
+        });
+      }
+    },
+    onChange: function ($form) {
+      const serializedData = acf.serialize($form, `acf-block_${clientId}`);
+      if (serializedData) {
+        // Normalize flexible content data for validation
+        const normalizedData = acf.normalizeFlexibleContentData(serializedData);
+        setTheSerializedAcfData(JSON.stringify(normalizedData));
+      }
+    },
+    validationErrors: validationErrors,
+    showValidationErrors: showValidationErrors,
+    acfFormRef: acfFormRef,
+    theSerializedAcfData: theSerializedAcfData,
+    userHasInteractedWithForm: userHasInteractedWithForm,
+    setCurrentBlockFormContainer: setCurrentFormContainer,
+    attributes: attributes,
+    hideFieldsInSidebar: blockType?.hide_fields_in_sidebar && (!currentFormContainer || inspectorControlsRef.current === currentFormContainer)
+  })), currentFormContainer || inspectorControlsRef.current), /*#__PURE__*/React.createElement(React.Fragment, null, isModalOpen && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Modal, {
+    className: "acf-block-form-modal",
+    isFullScreen: true,
+    title: blockType.title,
+    onRequestClose: () => {
+      setCurrentFormContainer(null);
+      setIsModalOpen(false);
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "acf-modal-block-form-container",
+    ref: modalFormContainerRef
+  }))), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_block_preview__WEBPACK_IMPORTED_MODULE_6__.BlockPreview, {
+    blockPreviewHtml: blockPreviewHtml,
+    blockProps: blockProps
+  }, /*#__PURE__*/React.createElement(_error_boundary__WEBPACK_IMPORTED_MODULE_7__.ErrorBoundary, {
+    fallbackRender: ({
+      error
+    }) => /*#__PURE__*/React.createElement(_error_boundary__WEBPACK_IMPORTED_MODULE_7__.BlockPreviewErrorFallback, {
+      blockLabel: blockType?.title || acf.__('ACF Block'),
+      setBlockFormModalOpen: setIsModalOpen,
+      error: error
+    }),
+    onError: (error, errorInfo) => {
+      acf.debug('Block preview error caught:', error, errorInfo);
+    },
+    resetKeys: [blockPreviewHtml],
+    onReset: ({
+      reason,
+      next,
+      prev
+    }) => {
+      acf.debug('Error boundary reset:', reason);
+      if (reason === 'keys') {
+        acf.debug('Preview HTML changed from', prev, 'to', next);
+      }
+    }
+  }, blockPreviewHtml === 'acf-block-preview-no-html' ? /*#__PURE__*/React.createElement(_block_placeholder__WEBPACK_IMPORTED_MODULE_4__.BlockPlaceholder, {
+    setBlockFormModalOpen: setIsModalOpen,
+    blockLabel: blockType.title
+  }) : null, blockPreviewHtml === 'acf-block-preview-loading' && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Placeholder, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null)), blockPreviewHtml !== 'acf-block-preview-loading' && blockPreviewHtml !== 'acf-block-preview-no-html' && blockPreviewHtml && acf.parseJSX(blockPreviewHtml)))));
+}
+
+/***/ }),
+
+/***/ "./assets/src/js/pro/blocks-v3/components/block-form.js":
+/*!**************************************************************!*\
+  !*** ./assets/src/js/pro/blocks-v3/components/block-form.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BlockForm: () => (/* binding */ BlockForm)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_post_locking__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/post-locking */ "./assets/src/js/pro/blocks-v3/utils/post-locking.js");
+/**
+ * BlockForm Component
+ * Renders the ACF fields form inside a block and handles form changes, validation, and remounting
+ */
+
+
+
+
+/**
+ * BlockForm component
+ * Manages ACF field forms within Gutenberg blocks, including validation and change detection
+ *
+ * @param {Object} props - Component props
+ * @param {jQuery} props.$ - jQuery instance
+ * @param {string} props.clientId - Block client ID
+ * @param {string} props.blockFormHtml - HTML markup for the ACF form
+ * @param {Function} props.onMount - Callback when form is mounted
+ * @param {Function} props.onChange - Callback when form data changes
+ * @param {Array} props.validationErrors - Array of validation error objects
+ * @param {boolean} props.showValidationErrors - Whether to display validation errors
+ * @param {React.RefObject} props.acfFormRef - Ref to the form container element
+ * @param {boolean} props.userHasInteractedWithForm - Whether user has interacted with the form
+ * @param {Object} props.attributes - Block attributes
+ * @returns {JSX.Element} - Rendered form component
+ */
+const BlockForm = ({
+  $,
+  clientId,
+  blockFormHtml,
+  onMount,
+  onChange,
+  validationErrors,
+  showValidationErrors,
+  acfFormRef,
+  userHasInteractedWithForm,
+  attributes,
+  hideFieldsInSidebar
+}) => {
+  const [formHtml, setFormHtml] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(blockFormHtml);
+  const [pendingChange, setPendingChange] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const debounceTimer = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  const [userInteracted, setUserInteracted] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [initialValuesCaptured, setInitialValuesCaptured] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+
+  // Call onMount when component first mounts
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    onMount();
+  }, []);
+
+  // Trigger onChange when there's a pending change
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (pendingChange) {
+      // For the first change, capture default values even without interaction
+      if (!initialValuesCaptured || userHasInteractedWithForm || userInteracted) {
+        onChange(pendingChange);
+        setPendingChange(false);
+        if (!initialValuesCaptured) {
+          setInitialValuesCaptured(true);
+        }
+      }
+    }
+  }, [pendingChange, userHasInteractedWithForm, userInteracted, initialValuesCaptured, setPendingChange, onChange]);
+
+  // Update form HTML when blockFormHtml prop changes
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!formHtml && blockFormHtml) {
+      setFormHtml(blockFormHtml);
+    }
+  }, [blockFormHtml]);
+
+  // Handle validation errors
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!acfFormRef?.current) return;
+    const validator = acf.getBlockFormValidator($(acfFormRef.current).find('.acf-block-fields'));
+    validator.clearErrors();
+    validator.set('notice', null);
+    acf.doAction('blocks/validation/pre_apply', validationErrors);
+    if (validationErrors) {
+      if (showValidationErrors) {
+        (0,_utils_post_locking__WEBPACK_IMPORTED_MODULE_1__.lockPostSaving)(clientId);
+        validator.$el.find('.acf-notice').remove();
+        validator.addErrors(validationErrors);
+        validator.showErrors('after');
+      }
+    } else {
+      // Handle successful validation
+      if (validator.$el.find('.acf-notice').length > 0 && showValidationErrors) {
+        validator.$el.find('.acf-notice').remove();
+        validator.addErrors([{
+          message: acf.__('Validation successful')
+        }]);
+        validator.showErrors('after');
+        validator.get('notice').update({
+          type: 'success',
+          text: acf.__('Validation successful'),
+          timeout: 1000
+        });
+        validator.set('notice', null);
+        setTimeout(() => {
+          validator.$el.find('.acf-notice').remove();
+        }, 1001);
+        const noticeDispatch = wp.data.dispatch('core/notices');
+
+        /**
+         * Recursively checks for ACF errors in blocks
+         * @param {Array} blocks - Array of block objects
+         * @returns {Promise<boolean>} - True if error found
+         */
+        function checkForErrors(blocks) {
+          return new Promise(function (resolve) {
+            blocks.forEach(block => {
+              if (block.innerBlocks.length > 0) {
+                checkForErrors(block.innerBlocks).then(hasError => {
+                  if (hasError) return resolve(true);
+                });
+              }
+              if (block.attributes.hasAcfError && block.clientId !== clientId) {
+                return resolve(true);
+              }
+            });
+            return resolve(false);
+          });
+        }
+        checkForErrors(wp.data.select('core/block-editor').getBlocks()).then(hasError => {
+          if (hasError) {
+            noticeDispatch.createErrorNotice(acf.__('An ACF Block on this page requires attention before you can save.'), {
+              id: 'acf-blocks-validation',
+              isDismissible: true
+            });
+          } else {
+            noticeDispatch.removeNotice('acf-blocks-validation');
+          }
+        });
+      }
+      (0,_utils_post_locking__WEBPACK_IMPORTED_MODULE_1__.unlockPostSaving)(clientId);
+    }
+    acf.doAction('blocks/validation/post_apply', validationErrors);
+  }, [validationErrors, clientId, showValidationErrors]);
+
+  // Handle form remounting and change detection
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!acfFormRef?.current || !formHtml) return;
+    acf.debug('Remounting ACF Form');
+    const formElement = acfFormRef.current;
+    const $form = $(formElement);
+    let isActive = true;
+    acf.doAction('remount', $form);
+    if (!initialValuesCaptured) {
+      onChange($form);
+      setInitialValuesCaptured(true);
+    }
+    const handleChange = () => {
+      onChange($form);
+    };
+    const scheduleChange = () => {
+      if (!isActive) return;
+      const inputs = formElement.querySelectorAll('input, textarea');
+      const selects = formElement.querySelectorAll('select');
+      inputs.forEach(input => {
+        input.removeEventListener('input', handleChange);
+        input.addEventListener('input', handleChange);
+      });
+      selects.forEach(select => {
+        select.removeEventListener('change', handleChange);
+        select.addEventListener('change', handleChange);
+      });
+      clearTimeout(debounceTimer.current);
+      debounceTimer.current = setTimeout(() => {
+        if (isActive) {
+          setPendingChange($form);
+        }
+      }, 300);
+    };
+
+    // Observe DOM changes to detect field additions/removals
+    const domObserver = new MutationObserver(scheduleChange);
+
+    // Observe iframe content changes (for WYSIWYG editors)
+    const iframeObserver = new MutationObserver(() => {
+      if (isActive) {
+        setUserInteracted(true);
+        scheduleChange();
+      }
+    });
+    const observerConfig = {
+      attributes: true,
+      childList: true,
+      subtree: true,
+      characterData: true
+    };
+    domObserver.observe(formElement, observerConfig);
+
+    // Watch for changes in iframes (WYSIWYG fields)
+    [...formElement.querySelectorAll('iframe')].forEach(iframe => {
+      if (iframe && iframe.contentDocument) {
+        const iframeBody = iframe.contentDocument.body;
+        if (iframeBody) {
+          iframeObserver.observe(iframeBody, observerConfig);
+        }
+      }
+    });
+
+    // Attach event listeners to form inputs
+    formElement.querySelectorAll('input, textarea').forEach(input => {
+      input.addEventListener('input', handleChange);
+    });
+    formElement.querySelectorAll('select').forEach(select => {
+      select.addEventListener('change', handleChange);
+    });
+
+    // Cleanup function
+    return () => {
+      isActive = false;
+      domObserver.disconnect();
+      iframeObserver.disconnect();
+      clearTimeout(debounceTimer.current);
+      if (formElement) {
+        formElement.querySelectorAll('input, textarea').forEach(input => {
+          input.removeEventListener('input', handleChange);
+        });
+        formElement.querySelectorAll('select').forEach(select => {
+          select.removeEventListener('change', handleChange);
+        });
+      }
+    };
+  }, [acfFormRef, attributes, formHtml]);
+  return /*#__PURE__*/React.createElement("div", {
+    ref: acfFormRef,
+    className: "acf-block-component acf-block-panel",
+    style: {
+      display: hideFieldsInSidebar ? 'none' : null
+    },
+    dangerouslySetInnerHTML: {
+      __html: acf.applyFilters('blocks/form/render', formHtml, true)
+    }
+  });
+};
+
+/***/ }),
+
+/***/ "./assets/src/js/pro/blocks-v3/components/block-placeholder.js":
+/*!*********************************************************************!*\
+  !*** ./assets/src/js/pro/blocks-v3/components/block-placeholder.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BlockPlaceholder: () => (/* binding */ BlockPlaceholder)
+/* harmony export */ });
+/**
+ * BlockPlaceholder Component
+ * Displays a placeholder UI when block has no preview HTML
+ */
+
+const {
+  Placeholder,
+  Button,
+  Icon
+} = wp.components;
+
+/**
+ * SVG icon for the block placeholder
+ * Represents a generic block/form icon
+ */
+const blockIcon = /*#__PURE__*/React.createElement("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  width: "24",
+  height: "24",
+  "aria-hidden": "true",
+  focusable: "false"
+}, /*#__PURE__*/React.createElement("path", {
+  d: "M19 8h-1V6h-5v2h-2V6H6v2H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm.5 10c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-8c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v8z"
+}));
+
+/**
+ * BlockPlaceholder component
+ * Shows when a block has no preview HTML available
+ * Prompts user to open the block form to edit fields
+ *
+ * @param {Object} props - Component props
+ * @param {Function} props.setBlockFormModalOpen - Function to open the block form modal
+ * @param {string} props.blockLabel - The block's title/label
+ * @returns {JSX.Element} - Rendered placeholder
+ */
+const BlockPlaceholder = ({
+  setBlockFormModalOpen,
+  blockLabel,
+  instructions
+}) => {
+  return /*#__PURE__*/React.createElement(Placeholder, {
+    icon: /*#__PURE__*/React.createElement(Icon, {
+      icon: blockIcon
+    }),
+    label: blockLabel,
+    instructions: instructions
+  }, /*#__PURE__*/React.createElement(Button, {
+    variant: "primary",
+    onClick: () => {
+      setBlockFormModalOpen(true);
+    }
+  }, acf.__('Edit Block')));
+};
+
+/***/ }),
+
+/***/ "./assets/src/js/pro/blocks-v3/components/block-preview.js":
+/*!*****************************************************************!*\
+  !*** ./assets/src/js/pro/blocks-v3/components/block-preview.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BlockPreview: () => (/* binding */ BlockPreview)
+/* harmony export */ });
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+/**
+ * BlockPreview Component
+ * Simple wrapper component that renders block preview HTML with block props
+ */
+
+/**
+ * BlockPreview component
+ * Wraps block preview content with the appropriate block props from useBlockProps
+ *
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Child elements to render
+ * @param {string} props.blockPreviewHtml - HTML string of the block preview (used as key)
+ * @param {Object} props.blockProps - Block props from useBlockProps hook
+ * @returns {JSX.Element} - Rendered preview wrapper
+ */
+const BlockPreview = ({
+  children,
+  blockPreviewHtml,
+  blockProps
+}) => /*#__PURE__*/React.createElement("div", _extends({}, blockProps, {
+  key: blockPreviewHtml
+}), children);
+
+/***/ }),
+
+/***/ "./assets/src/js/pro/blocks-v3/components/error-boundary.js":
+/*!******************************************************************!*\
+  !*** ./assets/src/js/pro/blocks-v3/components/error-boundary.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BlockPreviewErrorFallback: () => (/* binding */ BlockPreviewErrorFallback),
+/* harmony export */   ErrorBoundary: () => (/* binding */ ErrorBoundary),
+/* harmony export */   ErrorBoundaryContext: () => (/* binding */ ErrorBoundaryContext)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+
+
+// Create context outside the class
+const ErrorBoundaryContext = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createContext)(null);
+
+// Initial state constant
+const initialState = {
+  didCatch: false,
+  error: null
+};
+
+// Error Boundary Component
+class ErrorBoundary extends _wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Component {
+  constructor(props) {
+    super(props);
+    this.resetErrorBoundary = this.resetErrorBoundary.bind(this);
+    this.state = initialState;
+  }
+  static getDerivedStateFromError(error) {
+    return {
+      didCatch: true,
+      error: error
+    };
+  }
+  resetErrorBoundary() {
+    const {
+      error
+    } = this.state;
+    if (error !== null) {
+      // Collect all arguments passed to reset
+      const args = Array.from(arguments);
+
+      // Call optional onReset callback with context
+      if (this.props.onReset) {
+        this.props.onReset({
+          args: args,
+          reason: 'imperative-api'
+        });
+      }
+      this.setState(initialState);
+    }
+  }
+  componentDidCatch(error, errorInfo) {
+    // Call optional onError callback
+    if (this.props.onError) {
+      this.props.onError(error, errorInfo);
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      didCatch
+    } = this.state;
+    const {
+      resetKeys
+    } = this.props;
+
+    // Auto-reset if resetKeys prop changed
+    if (didCatch && prevState.error !== null && hasResetKeysChanged(prevProps.resetKeys, resetKeys)) {
+      if (this.props.onReset) {
+        this.props.onReset({
+          next: resetKeys,
+          prev: prevProps.resetKeys,
+          reason: 'keys'
+        });
+      }
+      this.setState(initialState);
+    }
+  }
+  render() {
+    const {
+      children,
+      fallbackRender,
+      FallbackComponent,
+      fallback
+    } = this.props;
+    const {
+      didCatch,
+      error
+    } = this.state;
+    let content = children;
+    if (didCatch) {
+      const errorProps = {
+        error: error,
+        resetErrorBoundary: this.resetErrorBoundary
+      };
+      if (typeof fallbackRender === 'function') {
+        content = fallbackRender(errorProps);
+      } else if (FallbackComponent) {
+        content = /*#__PURE__*/React.createElement(FallbackComponent, errorProps);
+      } else if (fallback !== undefined) {
+        content = fallback;
+      } else {
+        throw error;
+      }
+    }
+    return /*#__PURE__*/React.createElement(ErrorBoundaryContext.Provider, {
+      value: {
+        didCatch,
+        error,
+        resetErrorBoundary: this.resetErrorBoundary
+      }
+    }, content);
+  }
+}
+
+// Helper function to check if reset keys changed
+function hasResetKeysChanged(prevKeys = [], nextKeys = []) {
+  return prevKeys.length !== nextKeys.length || prevKeys.some((key, index) => !Object.is(key, nextKeys[index]));
+}
+const BlockPreviewErrorFallback = ({
+  setBlockFormModalOpen,
+  blockLabel,
+  error
+}) => {
+  let errorMessage = null;
+  if (error) {
+    acf.debug('Block preview error:', error);
+    errorMessage = acf.__('Error previewing block v3');
+  }
+  return /*#__PURE__*/React.createElement(Placeholder, {
+    icon: /*#__PURE__*/React.createElement(Icon, {
+      icon: blockIcon
+    }),
+    label: blockLabel,
+    instructions: errorMessage
+  }, /*#__PURE__*/React.createElement(Button, {
+    variant: "primary",
+    onClick: () => {
+      setBlockFormModalOpen(true);
+    }
+  }, acf.__('Edit Block')));
+};
+
+/***/ }),
+
+/***/ "./assets/src/js/pro/blocks-v3/components/jsx-parser.js":
+/*!**************************************************************!*\
+  !*** ./assets/src/js/pro/blocks-v3/components/jsx-parser.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   parseJSX: () => (/* binding */ parseJSX)
+/* harmony export */ });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/**
+ * JSX Parser for ACF Blocks
+ * Converts HTML strings to React/JSX elements for rendering in the block editor
+ */
+
+
+const {
+  createElement,
+  createRef,
+  Component
+} = wp.element;
+const useInnerBlocksProps = wp.blockEditor.__experimentalUseInnerBlocksProps || wp.blockEditor.useInnerBlocksProps;
+
+/**
+ * Gets the JSX-compatible name for an HTML attribute
+ * Maps HTML attribute names to React prop names
+ *
+ * @param {string} attrName - HTML attribute name
+ * @returns {string} - JSX/React prop name
+ */
+function getJSXNameReplacement(attrName) {
+  return acf.isget(acf, 'jsxNameReplacements', attrName) || attrName;
+}
+
+/**
+ * Script component for handling <script> tags in parsed content
+ * Uses jQuery to safely inject and execute script content
+ */
+class ScriptComponent extends Component {
+  render() {
+    return createElement('div', {
+      ref: element => this.el = element
+    });
+  }
+  setHTML(scriptContent) {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(this.el).html(`<script>${scriptContent}</script>`);
+  }
+  componentDidUpdate() {
+    this.setHTML(this.props.children);
+  }
+  componentDidMount() {
+    this.setHTML(this.props.children);
+  }
+}
+
+/**
+ * Gets the component type for a given node name
+ * Handles special cases like InnerBlocks, script tags, and comments
+ *
+ * @param {string} nodeName - Lowercase node name
+ * @returns {string|Function|null} - Component type or null
+ */
+function getComponentType(nodeName) {
+  switch (nodeName) {
+    case 'innerblocks':
+      return 'ACFInnerBlocks';
+    case 'script':
+      return ScriptComponent;
+    case '#comment':
+      return null;
+    default:
+      return getJSXNameReplacement(nodeName);
+  }
+}
+
+/**
+ * ACF InnerBlocks wrapper component
+ * Provides a container for WordPress InnerBlocks with proper props
+ *
+ * @param {Object} props - Component props
+ * @returns {JSX.Element} - Wrapped InnerBlocks component
+ */
+function ACFInnerBlocksComponent(props) {
+  const {
+    className = 'acf-innerblocks-container'
+  } = props;
+  const innerBlocksProps = useInnerBlocksProps({
+    className
+  }, props);
+  return createElement('div', {
+    ...innerBlocksProps,
+    children: innerBlocksProps.children
+  });
+}
+
+/**
+ * Parses and transforms a DOM attribute to React props format
+ * Handles special cases: class -> className, style string -> style object, JSON values, booleans
+ *
+ * @param {Attr} attribute - DOM attribute object with name and value
+ * @returns {Object} - Transformed attribute {name, value}
+ */
+function parseAttribute(attribute) {
+  let attrName = attribute.name;
+  let attrValue = attribute.value;
+
+  // Allow custom filtering via ACF hooks
+  const customParsed = acf.applyFilters('acf_blocks_parse_node_attr', false, attribute);
+  if (customParsed) return customParsed;
+  switch (attrName) {
+    case 'class':
+      // Convert HTML class to React className
+      attrName = 'className';
+      break;
+    case 'style':
+      // Parse inline CSS string to JavaScript style object
+      const styleObject = {};
+      attrValue.split(';').forEach(declaration => {
+        const colonIndex = declaration.indexOf(':');
+        if (colonIndex > 0) {
+          let property = declaration.substr(0, colonIndex).trim();
+          const value = declaration.substr(colonIndex + 1).trim();
+
+          // Convert kebab-case to camelCase (except CSS variables starting with -)
+          if (property.charAt(0) !== '-') {
+            property = acf.strCamelCase(property);
+          }
+          styleObject[property] = value;
+        }
+      });
+      attrValue = styleObject;
+      break;
+    default:
+      // Preserve data- attributes as-is
+      if (attrName.indexOf('data-') === 0) break;
+
+      // Apply JSX name transformations (e.g., onclick -> onClick)
+      attrName = getJSXNameReplacement(attrName);
+
+      // Parse JSON array/object values
+      const firstChar = attrValue.charAt(0);
+      if (firstChar === '[' || firstChar === '{') {
+        attrValue = JSON.parse(attrValue);
+      }
+
+      // Convert string booleans to actual booleans
+      if (attrValue === 'true' || attrValue === 'false') {
+        attrValue = attrValue === 'true';
+      }
+  }
+  return {
+    name: attrName,
+    value: attrValue
+  };
+}
+
+/**
+ * Recursively parses a DOM node and converts it to React/JSX elements
+ *
+ * @param {Node} node - The DOM node to parse
+ * @param {number} depth - Current recursion depth (0-based)
+ * @returns {JSX.Element|null} - React element or null if node should be skipped
+ */
+function parseNodeToJSX(node, depth = 0) {
+  // Determine the component type for this node
+  const componentType = getComponentType(node.nodeName.toLowerCase());
+  if (!componentType) return null;
+  const props = {};
+
+  // Add ref to first-level elements (except ACFInnerBlocks)
+  if (depth === 1 && componentType !== 'ACFInnerBlocks') {
+    props.ref = createRef();
+  }
+
+  // Parse all attributes and add to props
+  acf.arrayArgs(node.attributes).map(parseAttribute).forEach(({
+    name,
+    value
+  }) => {
+    props[name] = value;
+  });
+
+  // Handle special ACFInnerBlocks component
+  if (componentType === 'ACFInnerBlocks') {
+    return createElement(ACFInnerBlocksComponent, {
+      ...props
+    });
+  }
+
+  // Build element array: [type, props, ...children]
+  const elementArray = [componentType, props];
+
+  // Recursively process child nodes
+  acf.arrayArgs(node.childNodes).forEach(childNode => {
+    if (childNode instanceof Text) {
+      const textContent = childNode.textContent;
+      if (textContent) {
+        elementArray.push(textContent);
+      }
+    } else {
+      elementArray.push(parseNodeToJSX(childNode, depth + 1));
+    }
+  });
+
+  // Create and return React element
+  return createElement.apply(this, elementArray);
+}
+
+/**
+ * Main parseJSX function exposed on the acf global object
+ * Converts HTML string to React elements for use in ACF blocks
+ *
+ * @param {string} htmlString - HTML markup to parse
+ * @returns {Array|JSX.Element} - React children from parsed HTML
+ */
+function parseJSX(htmlString) {
+  // Wrap in div to ensure valid HTML structure
+  htmlString = '<div>' + htmlString + '</div>';
+
+  // Handle self-closing InnerBlocks tags (not valid HTML, but used in ACF)
+  htmlString = htmlString.replace(/<InnerBlocks([^>]+)?\/>/, '<InnerBlocks$1></InnerBlocks>');
+
+  // Parse with jQuery, convert to React, and extract children from wrapper div
+  const parsedElement = parseNodeToJSX(jquery__WEBPACK_IMPORTED_MODULE_0___default()(htmlString)[0], 0);
+  return parsedElement.props.children;
+}
+
+// Expose parseJSX function on acf global object for backward compatibility
+acf.parseJSX = parseJSX;
+
+/***/ }),
+
+/***/ "./assets/src/js/pro/blocks-v3/high-order-components/with-align-content.js":
+/*!*********************************************************************************!*\
+  !*** ./assets/src/js/pro/blocks-v3/high-order-components/with-align-content.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   withAlignContent: () => (/* binding */ withAlignContent)
+/* harmony export */ });
+/**
+ * withAlignContent Higher-Order Component
+ * Adds content alignment toolbar controls to ACF blocks
+ * Supports both vertical alignment and matrix alignment (horizontal + vertical)
+ */
+
+const {
+  Fragment,
+  Component
+} = wp.element;
+const {
+  BlockControls,
+  BlockVerticalAlignmentToolbar
+} = wp.blockEditor;
+
+// Matrix alignment control (experimental)
+const BlockAlignmentMatrixControl = wp.blockEditor.__experimentalBlockAlignmentMatrixControl || wp.blockEditor.BlockAlignmentMatrixControl;
+const BlockAlignmentMatrixToolbar = wp.blockEditor.__experimentalBlockAlignmentMatrixToolbar || wp.blockEditor.BlockAlignmentMatrixToolbar;
+
+/**
+ * Normalizes vertical alignment value
+ *
+ * @param {string} alignment - Alignment value
+ * @returns {string} - Normalized alignment (top, center, or bottom)
+ */
+const normalizeVerticalAlignment = alignment => {
+  return ['top', 'center', 'bottom'].includes(alignment) ? alignment : 'top';
+};
+
+/**
+ * Gets the default horizontal alignment based on RTL setting
+ *
+ * @param {string} alignment - Current alignment value
+ * @returns {string} - Normalized alignment value (left, center, or right)
+ */
+const getDefaultHorizontalAlignment = alignment => {
+  const defaultAlign = acf.get('rtl') ? 'right' : 'left';
+  return ['left', 'center', 'right'].includes(alignment) ? alignment : defaultAlign;
+};
+
+/**
+ * Normalizes matrix alignment value (vertical + horizontal)
+ * Format: "top left", "center center", etc.
+ *
+ * @param {string} alignment - Alignment value
+ * @returns {string} - Normalized matrix alignment
+ */
+const normalizeMatrixAlignment = alignment => {
+  if (alignment) {
+    const [vertical, horizontal] = alignment.split(' ');
+    return `${normalizeVerticalAlignment(vertical)} ${getDefaultHorizontalAlignment(horizontal)}`;
+  }
+  return 'center center';
+};
+
+/**
+ * Higher-order component that adds content alignment controls
+ * Supports either vertical-only or matrix (2D) alignment based on block config
+ *
+ * @param {React.Component} BlockComponent - The component to wrap
+ * @param {Object} blockConfig - ACF block configuration
+ * @returns {React.Component} - Enhanced component with content alignment controls
+ */
+const withAlignContent = (BlockComponent, blockConfig) => {
+  let AlignmentControl;
+  let normalizeAlignment;
+
+  // Determine which alignment control to use based on block supports
+  if (blockConfig.supports.align_content === 'matrix' || blockConfig.supports.alignContent === 'matrix') {
+    // Use matrix control (horizontal + vertical)
+    AlignmentControl = BlockAlignmentMatrixControl || BlockAlignmentMatrixToolbar;
+    normalizeAlignment = normalizeMatrixAlignment;
+  } else {
+    // Use vertical-only control
+    AlignmentControl = BlockVerticalAlignmentToolbar;
+    normalizeAlignment = normalizeVerticalAlignment;
+  }
+
+  // If alignment control is not available, return original component
+  if (AlignmentControl === undefined) {
+    return BlockComponent;
+  }
+
+  // Set default alignment on block config
+  blockConfig.alignContent = normalizeAlignment(blockConfig.alignContent);
+  return class extends Component {
+    render() {
+      const {
+        attributes,
+        setAttributes
+      } = this.props;
+      const {
+        alignContent
+      } = attributes;
+      return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(BlockControls, {
+        group: "block"
+      }, /*#__PURE__*/React.createElement(AlignmentControl, {
+        label: acf.__('Change content alignment'),
+        value: normalizeAlignment(alignContent),
+        onChange: function (newAlignment) {
+          setAttributes({
+            alignContent: normalizeAlignment(newAlignment)
+          });
+        }
+      })), /*#__PURE__*/React.createElement(BlockComponent, this.props));
+    }
+  };
+};
+
+/***/ }),
+
+/***/ "./assets/src/js/pro/blocks-v3/high-order-components/with-align-text.js":
+/*!******************************************************************************!*\
+  !*** ./assets/src/js/pro/blocks-v3/high-order-components/with-align-text.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   withAlignText: () => (/* binding */ withAlignText)
+/* harmony export */ });
+/**
+ * withAlignText Higher-Order Component
+ * Adds text alignment toolbar controls to ACF blocks
+ */
+
+const {
+  Fragment,
+  Component
+} = wp.element;
+const {
+  BlockControls,
+  AlignmentToolbar
+} = wp.blockEditor;
+
+/**
+ * Gets the default text alignment based on RTL setting
+ *
+ * @param {string} alignment - Current alignment value
+ * @returns {string} - Normalized alignment value (left, center, or right)
+ */
+const getDefaultAlignment = alignment => {
+  const defaultAlign = acf.get('rtl') ? 'right' : 'left';
+  return ['left', 'center', 'right'].includes(alignment) ? alignment : defaultAlign;
+};
+
+/**
+ * Higher-order component that adds text alignment controls
+ * Wraps a block component and adds AlignmentToolbar to BlockControls
+ *
+ * @param {React.Component} BlockComponent - The component to wrap
+ * @param {Object} blockConfig - ACF block configuration
+ * @returns {React.Component} - Enhanced component with text alignment controls
+ */
+const withAlignText = (BlockComponent, blockConfig) => {
+  const normalizeAlignment = getDefaultAlignment;
+
+  // Set default alignment on block config
+  blockConfig.alignText = normalizeAlignment(blockConfig.alignText);
+  return class extends Component {
+    render() {
+      const {
+        attributes,
+        setAttributes
+      } = this.props;
+      const {
+        alignText
+      } = attributes;
+      return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(BlockControls, {
+        group: "block"
+      }, /*#__PURE__*/React.createElement(AlignmentToolbar, {
+        value: normalizeAlignment(alignText),
+        onChange: function (newAlignment) {
+          setAttributes({
+            alignText: normalizeAlignment(newAlignment)
+          });
+        }
+      })), /*#__PURE__*/React.createElement(BlockComponent, this.props));
+    }
+  };
+};
+
+/***/ }),
+
+/***/ "./assets/src/js/pro/blocks-v3/high-order-components/with-full-height.js":
+/*!*******************************************************************************!*\
+  !*** ./assets/src/js/pro/blocks-v3/high-order-components/with-full-height.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   withFullHeight: () => (/* binding */ withFullHeight)
+/* harmony export */ });
+/**
+ * withFullHeight Higher-Order Component
+ * Adds full height toggle control to ACF blocks
+ */
+
+const {
+  Fragment,
+  Component
+} = wp.element;
+const {
+  BlockControls
+} = wp.blockEditor;
+
+// Full height control (experimental)
+const BlockFullHeightAlignmentControl = wp.blockEditor.__experimentalBlockFullHeightAligmentControl || wp.blockEditor.__experimentalBlockFullHeightAlignmentControl || wp.blockEditor.BlockFullHeightAlignmentControl;
+
+/**
+ * Higher-order component that adds full height toggle controls
+ * Allows blocks to expand to full available height
+ *
+ * @param {React.Component} BlockComponent - The component to wrap
+ * @returns {React.Component} - Enhanced component with full height controls
+ */
+const withFullHeight = BlockComponent => {
+  // If control is not available, return original component
+  if (!BlockFullHeightAlignmentControl) {
+    return BlockComponent;
+  }
+  return class extends Component {
+    render() {
+      const {
+        attributes,
+        setAttributes
+      } = this.props;
+      const {
+        fullHeight
+      } = attributes;
+      return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(BlockControls, {
+        group: "block"
+      }, /*#__PURE__*/React.createElement(BlockFullHeightAlignmentControl, {
+        isActive: fullHeight,
+        onToggle: function (newValue) {
+          setAttributes({
+            fullHeight: newValue
+          });
+        }
+      })), /*#__PURE__*/React.createElement(BlockComponent, this.props));
+    }
+  };
+};
+
+/***/ }),
+
+/***/ "./assets/src/js/pro/blocks-v3/register-block-type-v3.js":
+/*!***************************************************************!*\
+  !*** ./assets/src/js/pro/blocks-v3/register-block-type-v3.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getRegisteredBlock: () => (/* binding */ getRegisteredBlock),
+/* harmony export */   registerACFBlockType: () => (/* binding */ registerACFBlockType)
+/* harmony export */ });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_block_edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/block-edit */ "./assets/src/js/pro/blocks-v3/components/block-edit.js");
+/* harmony import */ var _high_order_components_with_align_text__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./high-order-components/with-align-text */ "./assets/src/js/pro/blocks-v3/high-order-components/with-align-text.js");
+/* harmony import */ var _high_order_components_with_align_content__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./high-order-components/with-align-content */ "./assets/src/js/pro/blocks-v3/high-order-components/with-align-content.js");
+/* harmony import */ var _high_order_components_with_full_height__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./high-order-components/with-full-height */ "./assets/src/js/pro/blocks-v3/high-order-components/with-full-height.js");
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+/**
+ * ACF Block Type Registration - Version 3
+ * Handles registration of ACF blocks (version 3) with WordPress Gutenberg
+ * Includes attribute setup, higher-order component composition, and block filtering
+ */
+
+
+
+
+
+
+const {
+  InnerBlocks
+} = wp.blockEditor;
+const {
+  Component
+} = wp.element;
+const {
+  createHigherOrderComponent
+} = wp.compose;
+
+// Registry to store registered block configurations
+const registeredBlocks = {};
+
+/**
+ * Adds an attribute to the block configuration
+ *
+ * @param {Object} attributes - Existing attributes object
+ * @param {string} attributeName - Name of the attribute to add
+ * @param {string} attributeType - Type of the attribute (string, boolean, etc.)
+ * @returns {Object} - Updated attributes object
+ */
+const addAttribute = (attributes, attributeName, attributeType) => {
+  attributes[attributeName] = {
+    type: attributeType
+  };
+  return attributes;
+};
+
+/**
+ * Checks if block should be registered for current post type
+ *
+ * @param {Object} blockConfig - Block configuration
+ * @returns {boolean} - True if block should be registered
+ */
+function shouldRegisterBlock(blockConfig) {
+  const allowedPostTypes = blockConfig.post_types || [];
+  if (allowedPostTypes.length) {
+    // Always allow in reusable blocks
+    allowedPostTypes.push('wp_block');
+    const currentPostType = acf.get('postType');
+    if (!allowedPostTypes.includes(currentPostType)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
+ * Processes and normalizes block icon
+ *
+ * @param {Object} blockConfig - Block configuration
+ */
+function processBlockIcon(blockConfig) {
+  // Convert SVG string to JSX element
+  if (typeof blockConfig.icon === 'string' && blockConfig.icon.substr(0, 4) === '<svg') {
+    const iconSvg = blockConfig.icon;
+    blockConfig.icon = /*#__PURE__*/React.createElement("div", {
+      dangerouslySetInnerHTML: {
+        __html: iconSvg
+      }
+    });
+  }
+
+  // Remove icon if empty/invalid
+  if (!blockConfig.icon) {
+    delete blockConfig.icon;
+  }
+}
+
+/**
+ * Validates and normalizes block category
+ * Falls back to 'common' if category doesn't exist
+ *
+ * @param {Object} blockConfig - Block configuration
+ */
+function validateBlockCategory(blockConfig) {
+  const categoryExists = wp.blocks.getCategories().filter(({
+    slug
+  }) => slug === blockConfig.category).pop();
+  if (!categoryExists) {
+    blockConfig.category = 'common';
+  }
+}
+
+/**
+ * Sets default values for block configuration
+ *
+ * @param {Object} blockConfig - Block configuration
+ * @returns {Object} - Block configuration with defaults applied
+ */
+function applyBlockDefaults(blockConfig) {
+  return acf.parseArgs(blockConfig, {
+    title: '',
+    name: '',
+    category: '',
+    api_version: 2,
+    acf_block_version: 3,
+    attributes: {},
+    supports: {}
+  });
+}
+
+/**
+ * Cleans up block attributes
+ * Removes empty default values
+ *
+ * @param {Object} blockConfig - Block configuration
+ */
+function cleanBlockAttributes(blockConfig) {
+  for (const attributeName in blockConfig.attributes) {
+    if ('default' in blockConfig.attributes[attributeName] && blockConfig.attributes[attributeName].default.length === 0) {
+      delete blockConfig.attributes[attributeName].default;
+    }
+  }
+}
+
+/**
+ * Configures anchor support if enabled
+ *
+ * @param {Object} blockConfig - Block configuration
+ */
+function configureAnchorSupport(blockConfig) {
+  if (blockConfig.supports && blockConfig.supports.anchor) {
+    blockConfig.attributes.anchor = {
+      type: 'string'
+    };
+  }
+}
+
+/**
+ * Applies higher-order components based on block supports
+ *
+ * @param {React.Component} EditComponent - Base edit component
+ * @param {Object} blockConfig - Block configuration
+ * @returns {React.Component} - Enhanced edit component
+ */
+function applyHigherOrderComponents(EditComponent, blockConfig) {
+  let enhancedComponent = EditComponent;
+
+  // Add text alignment support
+  if (blockConfig.supports.alignText || blockConfig.supports.align_text) {
+    blockConfig.attributes = addAttribute(blockConfig.attributes, 'align_text', 'string');
+    enhancedComponent = (0,_high_order_components_with_align_text__WEBPACK_IMPORTED_MODULE_2__.withAlignText)(enhancedComponent, blockConfig);
+  }
+
+  // Add content alignment support
+  if (blockConfig.supports.alignContent || blockConfig.supports.align_content) {
+    blockConfig.attributes = addAttribute(blockConfig.attributes, 'align_content', 'string');
+    enhancedComponent = (0,_high_order_components_with_align_content__WEBPACK_IMPORTED_MODULE_3__.withAlignContent)(enhancedComponent, blockConfig);
+  }
+
+  // Add full height support
+  if (blockConfig.supports.fullHeight || blockConfig.supports.full_height) {
+    blockConfig.attributes = addAttribute(blockConfig.attributes, 'full_height', 'boolean');
+    enhancedComponent = (0,_high_order_components_with_full_height__WEBPACK_IMPORTED_MODULE_4__.withFullHeight)(enhancedComponent);
+  }
+  return enhancedComponent;
+}
+
+/**
+ * Registers an ACF block type (version 3) with WordPress
+ *
+ * @param {Object} blockConfig - ACF block configuration object
+ * @returns {Object|boolean} - Registered block type or false if not registered
+ */
+function registerACFBlockType(blockConfig) {
+  // Check if block should be registered for current post type
+  if (!shouldRegisterBlock(blockConfig)) {
+    return false;
+  }
+
+  // Process icon
+  processBlockIcon(blockConfig);
+
+  // Validate category
+  validateBlockCategory(blockConfig);
+
+  // Apply default values
+  blockConfig = applyBlockDefaults(blockConfig);
+
+  // Clean up attributes
+  cleanBlockAttributes(blockConfig);
+
+  // Configure anchor support
+  configureAnchorSupport(blockConfig);
+
+  // Start with base BlockEdit component
+  let EditComponent = _components_block_edit__WEBPACK_IMPORTED_MODULE_1__.BlockEdit;
+
+  // Apply higher-order components based on supports
+  EditComponent = applyHigherOrderComponents(EditComponent, blockConfig);
+
+  // Create edit function that passes blockConfig and jQuery
+  blockConfig.edit = function (props) {
+    return /*#__PURE__*/React.createElement(EditComponent, _extends({}, props, {
+      blockType: blockConfig,
+      $: (jquery__WEBPACK_IMPORTED_MODULE_0___default())
+    }));
+  };
+
+  // Create save function (ACF blocks save to post content as HTML comments)
+  blockConfig.save = () => /*#__PURE__*/React.createElement(InnerBlocks.Content, null);
+
+  // Store in registry
+  registeredBlocks[blockConfig.name] = blockConfig;
+
+  // Register with WordPress
+  const registeredBlockType = wp.blocks.registerBlockType(blockConfig.name, blockConfig);
+
+  // Ensure anchor attribute is properly configured
+  if (registeredBlockType && registeredBlockType.attributes && registeredBlockType.attributes.anchor) {
+    registeredBlockType.attributes.anchor = {
+      type: 'string'
+    };
+  }
+  return registeredBlockType;
+}
+
+/**
+ * Retrieves a registered block configuration by name
+ *
+ * @param {string} blockName - Name of the block
+ * @returns {Object|boolean} - Block configuration or false
+ */
+function getRegisteredBlock(blockName) {
+  return registeredBlocks[blockName] || false;
+}
+
+/**
+ * Higher-order component to migrate legacy attribute names to new format
+ * Handles backward compatibility for align_text -> alignText, etc.
+ */
+const withDefaultAttributes = createHigherOrderComponent(BlockListBlock => class extends Component {
+  constructor(props) {
+    super(props);
+    const {
+      name,
+      attributes
+    } = this.props;
+    const blockConfig = getRegisteredBlock(name);
+    if (!blockConfig) return;
+
+    // Remove empty string attributes
+    Object.keys(attributes).forEach(key => {
+      if (attributes[key] === '') {
+        delete attributes[key];
+      }
+    });
+
+    // Map old attribute names to new camelCase names
+    const attributeMap = {
+      full_height: 'fullHeight',
+      align_content: 'alignContent',
+      align_text: 'alignText'
+    };
+    Object.keys(attributeMap).forEach(oldKey => {
+      const newKey = attributeMap[oldKey];
+      if (attributes[oldKey] !== undefined) {
+        // Migrate old key to new key
+        attributes[newKey] = attributes[oldKey];
+      } else if (attributes[newKey] === undefined && blockConfig[oldKey] !== undefined) {
+        // Set default from block config if not present
+        attributes[newKey] = blockConfig[oldKey];
+      }
+
+      // Clean up old attribute names
+      delete blockConfig[oldKey];
+      delete attributes[oldKey];
+    });
+
+    // Apply default values from block config for missing attributes
+    for (let key in blockConfig.attributes) {
+      if (attributes[key] === undefined && blockConfig[key] !== undefined) {
+        attributes[key] = blockConfig[key];
+      }
+    }
+  }
+  render() {
+    return /*#__PURE__*/React.createElement(BlockListBlock, this.props);
+  }
+}, 'withDefaultAttributes');
+
+/**
+ * Initialize ACF blocks on the 'prepare' action
+ * Registers all ACF blocks with version 3 or higher
+ */
+acf.addAction('prepare', function () {
+  // Ensure wp.blockEditor exists (backward compatibility)
+  if (!wp.blockEditor) {
+    wp.blockEditor = wp.editor;
+  }
+  const blockTypes = acf.get('blockTypes');
+  if (blockTypes) {
+    blockTypes.forEach(blockType => {
+      // Only register blocks with version 3 or higher
+      if (parseInt(blockType.acf_block_version) >= 3) {
+        registerACFBlockType(blockType);
+      }
+    });
+  }
+});
+
+/**
+ * Register WordPress filter for attribute migration
+ * Ensures backward compatibility with legacy attribute names
+ */
+wp.hooks.addFilter('editor.BlockListBlock', 'acf/with-default-attributes', withDefaultAttributes);
+
+// Export for testing/external use
+
+
+/***/ }),
+
+/***/ "./assets/src/js/pro/blocks-v3/utils/post-locking.js":
+/*!***********************************************************!*\
+  !*** ./assets/src/js/pro/blocks-v3/utils/post-locking.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   lockPostSaving: () => (/* binding */ lockPostSaving),
+/* harmony export */   lockPostSavingByName: () => (/* binding */ lockPostSavingByName),
+/* harmony export */   sortObjectKeys: () => (/* binding */ sortObjectKeys),
+/* harmony export */   unlockPostSaving: () => (/* binding */ unlockPostSaving),
+/* harmony export */   unlockPostSavingByName: () => (/* binding */ unlockPostSavingByName)
+/* harmony export */ });
+/**
+ * WordPress post locking utilities for ACF blocks
+ * Handles locking/unlocking post saving during block operations
+ */
+
+/**
+ * Locks post saving in the WordPress editor for a specific block
+ * Used when block operations are in progress for a specific block instance
+ *
+ * @param {string} clientId - The block's client ID
+ */
+const lockPostSaving = clientId => {
+  const dispatch = wp.data.dispatch('core/editor');
+  if (dispatch) {
+    dispatch.lockPostSaving('acf/block/' + clientId);
+  }
+};
+
+/**
+ * Unlocks post saving in the WordPress editor for a specific block
+ * Called when block operations are complete for a specific block instance
+ *
+ * @param {string} clientId - The block's client ID
+ */
+const unlockPostSaving = clientId => {
+  const dispatch = wp.data.dispatch('core/editor');
+  if (dispatch) {
+    dispatch.unlockPostSaving('acf/block/' + clientId);
+  }
+};
+
+/**
+ * Locks post saving with a custom lock name
+ * Used for global operations that aren't tied to a specific block
+ *
+ * @param {string} lockName - The name of the lock
+ */
+const lockPostSavingByName = lockName => {
+  const dispatch = wp.data.dispatch('core/editor');
+  if (dispatch) {
+    dispatch.lockPostSaving('acf/block/' + lockName);
+  }
+};
+
+/**
+ * Unlocks post saving with a custom lock name
+ * Used for global operations that aren't tied to a specific block
+ *
+ * @param {string} lockName - The name of the lock
+ */
+const unlockPostSavingByName = lockName => {
+  const dispatch = wp.data.dispatch('core/editor');
+  if (dispatch) {
+    dispatch.unlockPostSaving('acf/block/' + lockName);
+  }
+};
+
+/**
+ * Sorts an object's keys alphabetically and returns a new object
+ * Used for consistent object serialization and comparison
+ * Ensures that objects with same properties in different order produce same hash
+ *
+ * @param {Object} obj - Object to sort
+ * @returns {Object} - New object with sorted keys in alphabetical order
+ */
+const sortObjectKeys = obj => {
+  return Object.keys(obj).sort().reduce((sortedObj, key) => {
+    sortedObj[key] = obj[key];
+    return sortedObj;
+  }, {});
+};
+
+/***/ }),
+
 /***/ "./node_modules/charenc/charenc.js":
 /*!*****************************************!*\
   !*** ./node_modules/charenc/charenc.js ***!
@@ -2495,6 +4519,50 @@ function isSlowBuffer (obj) {
 })();
 
 
+/***/ }),
+
+/***/ "@wordpress/block-editor":
+/*!*************************************!*\
+  !*** external ["wp","blockEditor"] ***!
+  \*************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = window["wp"]["blockEditor"];
+
+/***/ }),
+
+/***/ "@wordpress/components":
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = window["wp"]["components"];
+
+/***/ }),
+
+/***/ "@wordpress/element":
+/*!*********************************!*\
+  !*** external ["wp","element"] ***!
+  \*********************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = window["wp"]["element"];
+
+/***/ }),
+
+/***/ "jquery":
+/*!*************************!*\
+  !*** external "jQuery" ***!
+  \*************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = window["jQuery"];
+
 /***/ })
 
 /******/ 	});
@@ -2577,6 +4645,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _acf_jsx_names_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_acf_jsx_names_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _acf_blocks_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_acf-blocks.js */ "./assets/src/js/pro/_acf-blocks.js");
 /* harmony import */ var _acf_blocks_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_acf_blocks_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _acf_blocks_v3_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_acf-blocks-v3.js */ "./assets/src/js/pro/_acf-blocks-v3.js");
+
 
 
 })();

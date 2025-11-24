@@ -35,7 +35,7 @@
     initialize: function () {
       this.open();
       this.lockFocusToModal(true);
-      this.$el.find('.acf-modal-title').focus();
+      this.$el.find('.acf-modal-title').trigger('focus');
       acf.doAction('show', this.$el);
     },
     tmpl: function () {
@@ -1427,10 +1427,33 @@
       }
     },
     onChangeName: function (e, $el) {
-      const sanitizedName = acf.strSanitize($el.val(), false);
-      $el.val(sanitizedName);
-      this.set('name', sanitizedName);
-      if (sanitizedName.startsWith('field_')) {
+      const id = this.get('id');
+      let forceSanitize = false;
+      // If id is not a number or is zero, force sanitize
+      if (typeof id !== 'number' || id === 0) {
+        forceSanitize = true;
+      }
+
+      // Get the input's value attribute
+      const valueAttr = input.attr('value');
+
+      // If value is a lowercase string, force sanitize
+      if (typeof valueAttr === 'string' && valueAttr === valueAttr.toLowerCase()) {
+        forceSanitize = true;
+      }
+      forceSanitize = acf.applyFilters('convert_field_name_to_lowercase', forceSanitize, this);
+
+      // Sanitize the input value (force if needed)
+      const sanitized = acf.strSanitize($el.val(), forceSanitize);
+
+      // Set the sanitized value back to the input
+      $el.val(sanitized);
+
+      // Update the field's name property
+      this.set('name', sanitized);
+
+      // Warn if the name starts with "field_"
+      if (sanitized.startsWith('field_')) {
         alert(acf.__('The string "field_" may not be used at the start of a field name'));
       }
     },
@@ -1689,7 +1712,7 @@
         if (wp.a11y && wp.a11y.speak && acf.__) {
           wp.a11y.speak(acf.__('Field moved to other group'), 'polite');
         }
-        popup.$('.acf-close-popup').focus();
+        popup.$('.acf-close-popup').trigger('focus');
         field.removeAnimate();
       };
 

@@ -1,26 +1,19 @@
-<footer>
-  
+<footer id="site-footer"> 
   <nav class="footer-navigation" aria-label="Menu footer">
     <?php
-if ( has_nav_menu( 'footer-menu' ) ) :
-    wp_nav_menu( array(
-        'theme_location' => 'footer-menu',
-        'menu_class'     => 'footer-menu-class'  // classe CSS pour personnaliser le menu
-    ) );
-endif;
-?>
-
+    if ( has_nav_menu( 'footer-menu' ) ) :
+        wp_nav_menu( array(
+            'theme_location' => 'footer-menu',
+            'menu_class'     => 'footer-menu-class'
+        ) );
+    endif;
+    ?>
   </nav>
+</footer>
 
-    </footer>
-        <?php get_template_part('templates_part/modal-contact'); ?>
-    <?php wp_footer(); ?>
+<?php get_template_part('templates_part/modal-contact'); ?>
 
-    <!-- ************************************************************* -->
-
-   
-
-<!--  LIGHTBOX GLOBALE -->
+<!-- LIGHTBOX GLOBALE -->
 <div id="lightbox-overlay" class="lightbox hidden">
   <div class="lightbox-header">
     <h3 id="lightbox-title"></h3>
@@ -43,9 +36,6 @@ endif;
   </div>
 </div>
 
-
-    
-    
-    <?php get_footer(); ?>
-  </body>
+<?php wp_footer(); ?>
+</body>
 </html>

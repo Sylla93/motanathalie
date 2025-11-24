@@ -2,6 +2,282 @@
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./assets/src/sass/pro/acf-pro-input.scss ***!
   \*************************************************************************************************************************************************************/
 @charset "UTF-8";
+/*-----------------------------------------------------------------------------
+*
+*	ACF Blocks
+*
+*----------------------------------------------------------------------------*/
+.acf-block-component .components-placeholder {
+  margin: 0;
+}
+
+.block-editor .acf-field.acf-error {
+  background-color: rgba(255, 0, 0, 0.05);
+}
+
+.acf-block-component .acf-block-fields {
+  background: #fff;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.4em;
+  color: #444;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+.acf-block-component .acf-block-fields.acf-empty-block-fields {
+  border: 1px solid #1e1e1e;
+  padding: 12px;
+}
+.components-panel .acf-block-component .acf-block-fields.acf-empty-block-fields {
+  border: none;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+html[dir=rtl] .acf-block-component .acf-block-fields {
+  text-align: right;
+}
+.acf-block-component .acf-block-fields p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.acf-block-body .acf-block-fields:has(> .acf-error-message),
+.acf-block-fields:has(> .acf-error-message) .acf-block-fields:has(> .acf-error-message) {
+  border: none !important;
+}
+.acf-block-body .acf-error-message,
+.acf-block-fields:has(> .acf-error-message) .acf-error-message {
+  margin-top: 0;
+  border: none;
+}
+.acf-block-body .acf-error-message .acf-notice-dismiss,
+.acf-block-fields:has(> .acf-error-message) .acf-error-message .acf-notice-dismiss {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  outline: unset;
+}
+.acf-block-body .acf-error-message .acf-icon.-cancel::before,
+.acf-block-fields:has(> .acf-error-message) .acf-error-message .acf-icon.-cancel::before {
+  margin: 0 !important;
+}
+.acf-block-body.acf-block-has-validation-error,
+.acf-block-fields:has(> .acf-error-message).acf-block-has-validation-error {
+  border: 2px solid #d94f4f;
+}
+.acf-block-body .acf-error .acf-input .acf-notice,
+.acf-block-fields:has(> .acf-error-message) .acf-error .acf-input .acf-notice {
+  background: none !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  padding-left: 0;
+}
+.acf-block-body .acf-error .acf-input .acf-notice p,
+.acf-block-fields:has(> .acf-error-message) .acf-error .acf-input .acf-notice p {
+  margin: 0.5em 0 !important;
+}
+.acf-block-body .acf-error .acf-input .acf-notice::before,
+.acf-block-fields:has(> .acf-error-message) .acf-error .acf-input .acf-notice::before {
+  content: "";
+  position: relative;
+  top: 0;
+  left: 0;
+  font-size: 20px;
+  background-image: url(../../../images/icons/icon-info-red.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 69%;
+  height: 26px !important;
+  width: 26px !important;
+  box-sizing: border-box;
+}
+.acf-block-body .acf-error .acf-label label,
+.acf-block-fields:has(> .acf-error-message) .acf-error .acf-label label {
+  color: #d94f4f;
+}
+.acf-block-body .acf-error .acf-input input,
+.acf-block-fields:has(> .acf-error-message) .acf-error .acf-input input {
+  border-color: #d94f4f;
+}
+.acf-block-body.acf-block-has-validation-error::before,
+.acf-block-fields:has(> .acf-error-message).acf-block-has-validation-error::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -32px;
+  font-size: 20px;
+  background-color: #d94f4f;
+  background-image: url(../../../images/icons/icon-info-white.svg);
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: 52%;
+  background-size: 55%;
+  height: 40px;
+  width: 32px;
+  box-sizing: border-box;
+}
+.acf-block-body .acf-block-validation-error,
+.acf-block-fields:has(> .acf-error-message) .acf-block-validation-error {
+  color: #d94f4f;
+  display: flex;
+  align-items: center;
+}
+.acf-block-body .acf-block-fields,
+.acf-block-fields:has(> .acf-error-message) .acf-block-fields {
+  border: #adb2ad solid 1px;
+}
+.acf-block-body .acf-block-fields .acf-tab-wrap .acf-tab-group,
+.acf-block-fields:has(> .acf-error-message) .acf-block-fields .acf-tab-wrap .acf-tab-group {
+  margin-left: 0;
+  padding: 16px 20px 0;
+}
+.acf-block-body .acf-fields > .acf-field,
+.acf-block-fields:has(> .acf-error-message) .acf-fields > .acf-field {
+  padding: 16px 20px;
+}
+.acf-block-body .acf-fields > .acf-field.acf-accordion,
+.acf-block-fields:has(> .acf-error-message) .acf-fields > .acf-field.acf-accordion {
+  border-color: #adb2ad;
+}
+.acf-block-body .acf-fields > .acf-field.acf-accordion .acf-accordion-title,
+.acf-block-fields:has(> .acf-error-message) .acf-fields > .acf-field.acf-accordion .acf-accordion-title {
+  padding: 16px 20px;
+}
+.acf-block-body .acf-button,
+.acf-block-body .acf-link a.button,
+.acf-block-body .acf-add-checkbox,
+.acf-block-fields:has(> .acf-error-message) .acf-button,
+.acf-block-fields:has(> .acf-error-message) .acf-link a.button,
+.acf-block-fields:has(> .acf-error-message) .acf-add-checkbox {
+  color: #2271b1 !important;
+  border-color: #2271b1 !important;
+  background: #f6f7f7 !important;
+  vertical-align: top;
+}
+.acf-block-body .acf-button.button-primary:hover,
+.acf-block-body .acf-link a.button.button-primary:hover,
+.acf-block-body .acf-add-checkbox.button-primary:hover,
+.acf-block-fields:has(> .acf-error-message) .acf-button.button-primary:hover,
+.acf-block-fields:has(> .acf-error-message) .acf-link a.button.button-primary:hover,
+.acf-block-fields:has(> .acf-error-message) .acf-add-checkbox.button-primary:hover {
+  color: white !important;
+  background: #2271b1 !important;
+}
+.acf-block-body .acf-button:focus,
+.acf-block-body .acf-link a.button:focus,
+.acf-block-body .acf-add-checkbox:focus,
+.acf-block-fields:has(> .acf-error-message) .acf-button:focus,
+.acf-block-fields:has(> .acf-error-message) .acf-link a.button:focus,
+.acf-block-fields:has(> .acf-error-message) .acf-add-checkbox:focus {
+  outline: none !important;
+  background: #f6f7f7 !important;
+}
+.acf-block-body .acf-button:hover,
+.acf-block-body .acf-link a.button:hover,
+.acf-block-body .acf-add-checkbox:hover,
+.acf-block-fields:has(> .acf-error-message) .acf-button:hover,
+.acf-block-fields:has(> .acf-error-message) .acf-link a.button:hover,
+.acf-block-fields:has(> .acf-error-message) .acf-add-checkbox:hover {
+  color: #0a4b78 !important;
+}
+.acf-block-body .acf-block-preview,
+.acf-block-fields:has(> .acf-error-message) .acf-block-preview {
+  min-height: 10px;
+}
+
+.acf-block-panel .acf-block-fields {
+  border-top: #ddd solid 1px;
+  border-bottom: #ddd solid 1px;
+  min-height: 1px;
+}
+.acf-block-panel .acf-block-fields:empty {
+  border-top: none;
+}
+.acf-block-panel .acf-block-fields .acf-tab-wrap {
+  background: transparent;
+}
+
+.components-panel__body .acf-block-panel {
+  margin: 16px -16px -16px;
+}
+
+@media (min-width: 600px) and (min-width: 782px) {
+  .acf-block-form-modal {
+    height: 100% !important;
+    width: 50% !important;
+    border-radius: 0;
+    position: absolute;
+    right: 0;
+  }
+  html[dir=rtl] .acf-block-form-modal {
+    right: auto;
+    left: 0;
+  }
+  html[dir=rtl] .acf-block-form-modal .components-modal__header .components-button {
+    left: 0;
+    right: auto;
+  }
+  @keyframes components-modal__appear-animation {
+    0% {
+      right: -20px;
+      opacity: 0;
+      transform: scale(1);
+    }
+    to {
+      right: 0;
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes components-modal__disappear-animation {
+    0% {
+      right: 0;
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      right: -20px;
+      opacity: 0;
+      transform: scale(1);
+    }
+  }
+  @keyframes components-modal__appear-animation-rtl {
+    0% {
+      left: -20px;
+      opacity: 0;
+      transform: scale(1);
+    }
+    to {
+      left: 0;
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes components-modal__disappear-animation-rtl {
+    0% {
+      left: 0;
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      left: -20px;
+      opacity: 0;
+      transform: scale(1);
+    }
+  }
+  html[dir=rtl] .acf-block-form-modal.components-modal__frame {
+    animation-name: components-modal__appear-animation-rtl !important;
+  }
+  html[dir=rtl] .acf-block-form-modal.is-closing {
+    animation-name: components-modal__disappear-animation-rtl !important;
+  }
+}
+.acf-blocks-open-expanded-editor-btn.has-text.has-icon {
+  width: 100%;
+  justify-content: center;
+}
+
 /*--------------------------------------------------------------------------------------------
 *
 *	Vars
@@ -232,6 +508,8 @@ body.acf-keydown-shift .acf-repeater .acf-row:hover > .acf-row-handle .acf-icon.
 *---------------------------------------------------------------------------------------------*/
 .acf-flexible-content {
   position: relative;
+  container-name: flexible-content;
+  container-type: inline-size;
 }
 
 .acf-flexible-content > .clones {
@@ -365,8 +643,13 @@ html[dir=rtl] .acf-flexible-content .layout .acf-fc-layout-actions-wrap .acf-fc-
   gap: 5px;
 }
 
+.acf-flexible-content .layout .acf-fc-layout-actions-wrap .acf-fc-layout-controls .disabled .acf-icon {
+  background: #ccc !important;
+}
+
 .acf-flexible-content .layout .acf-fc-layout-actions-wrap .acf-fc-layout-controls .acf-icon.-plus-alt,
 .acf-flexible-content .layout .acf-fc-layout-actions-wrap .acf-fc-layout-controls .acf-icon.-duplicate-alt,
+.acf-flexible-content .layout .acf-fc-layout-actions-wrap .acf-fc-layout-controls .acf-icon.-trash-alt,
 .acf-flexible-content .layout .acf-fc-layout-actions-wrap .acf-fc-layout-controls .acf-icon.-more-actions {
   visibility: hidden;
   background: #101828;
@@ -446,8 +729,13 @@ html[dir=rtl] .acf-flexible-content .layout .acf-fc-layout-actions-wrap .acf-fc-
   color: hsla(0, 0%, 100%, 0.5);
 }
 
+.acf-flexible-content .layout.active-layout > .acf-fc-layout-actions-wrap .acf-fc-layout-controls .disabled .acf-icon {
+  background: hsla(0, 0%, 100%, 0.3);
+}
+
 .acf-flexible-content .layout.active-layout > .acf-fc-layout-actions-wrap .acf-fc-layout-controls .-plus-alt,
 .acf-flexible-content .layout.active-layout > .acf-fc-layout-actions-wrap .acf-fc-layout-controls .-duplicate-alt,
+.acf-flexible-content .layout.active-layout > .acf-fc-layout-actions-wrap .acf-fc-layout-controls .-trash-alt,
 .acf-flexible-content .layout.active-layout > .acf-fc-layout-actions-wrap .acf-fc-layout-controls .-more-actions {
   background: #fff;
   visibility: visible;
@@ -485,9 +773,11 @@ html[dir=rtl] .acf-flexible-content .layout .acf-fc-layout-actions-wrap .acf-fc-
 
 .acf-flexible-content .layout:hover .acf-fc-layout-controls .acf-icon.-plus-alt,
 .acf-flexible-content .layout:hover .acf-fc-layout-controls .acf-icon.-duplicate-alt,
+.acf-flexible-content .layout:hover .acf-fc-layout-controls .acf-icon.-trash-alt,
 .acf-flexible-content .layout:hover .acf-fc-layout-controls .acf-icon.-more-actions,
 .acf-flexible-content .layout.-hover .acf-fc-layout-controls .acf-icon.-plus-alt,
 .acf-flexible-content .layout.-hover .acf-fc-layout-controls .acf-icon.-duplicate-alt,
+.acf-flexible-content .layout.-hover .acf-fc-layout-controls .acf-icon.-trash-alt,
 .acf-flexible-content .layout.-hover .acf-fc-layout-controls .acf-icon.-more-actions {
   visibility: visible;
 }
@@ -560,6 +850,25 @@ html[dir=rtl] .acf-flexible-content .layout .acf-fc-layout-actions-wrap .acf-fc-
   align-items: center;
 }
 
+@container flexible-content (max-width: 400px) {
+  .acf-flexible-content > .acf-actions.acf-fc-top-actions {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .acf-flexible-content > .acf-actions.acf-fc-top-actions .acf-separator {
+    display: none;
+  }
+  .acf-flexible-content > .acf-actions.acf-fc-top-actions .acf-btn-clear {
+    flex: 1 1 auto;
+    text-align: center;
+    justify-content: center;
+  }
+  .acf-flexible-content > .acf-actions.acf-fc-top-actions .acf-button {
+    flex: 1 1 100%;
+    justify-content: center;
+    width: 100%;
+  }
+}
 #acf-popup .acf-rename-layout-popup .inner .acf-field:first-child {
   margin-top: 0;
 }
@@ -606,7 +915,7 @@ html[dir=rtl] .acf-flexible-content .layout .acf-fc-layout-actions-wrap .acf-fc-
 }
 
 body:not(.block-editor-page) .acf-flexible-content .acf-fc-top-actions {
-  height: 30px;
+  min-height: 30px;
 }
 
 body:not(.block-editor-page) .acf-flexible-content .acf-fc-top-actions .acf-separator {
@@ -760,26 +1069,12 @@ body:not(.block-editor-page) .acf-flexible-content .layout.active-layout > .acf-
   mask-image: url("../../../images/icons/icon-visible.svg");
 }
 
-.acf-fc-popup.acf-more-layout-actions li a.acf-delete-layout {
-  color: #b71137;
+.acf-fc-popup.acf-more-layout-actions li a.acf-toggle-layout.disabled {
+  pointer-events: none;
 }
 
-.acf-fc-popup.acf-more-layout-actions li a.acf-delete-layout:before {
-  -webkit-mask-image: url("../../../images/icons/icon-trash-alt.svg");
-  mask-image: url("../../../images/icons/icon-trash-alt.svg");
-  background: #b71137;
-}
-
-.acf-fc-popup.acf-more-layout-actions li a.acf-delete-layout:hover {
-  color: rgb(146.4, 13.6, 44);
-}
-
-.acf-fc-popup.acf-more-layout-actions li a.acf-delete-layout:hover:before {
-  background: rgb(146.4, 13.6, 44);
-}
-
-.acf-fc-popup.acf-more-layout-actions li:last-child {
-  border-top: 1px #d0d5dd solid;
+.acf-fc-popup.acf-more-layout-actions li a.acf-toggle-layout.disabled:before {
+  background: #888;
 }
 
 .acf-fc-popup.acf-more-layout-actions.enable-layout .acf-toggle-layout.disable {

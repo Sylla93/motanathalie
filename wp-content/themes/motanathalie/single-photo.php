@@ -22,82 +22,63 @@
           
 
 <!-- =============================== -->
-<!-- 🧩 CHAMPS PERSONNALISÉS + DATE WORDPRESS -->
-<!-- =============================== -->
-<?php if (function_exists('get_field')) : ?> 
-  <!-- Vérifie que le plugin Advanced Custom Fields est bien activé -->
-  
-<!-- =============================== -->
-<!-- 🧩 CHAMPS PERSONNALISÉS + DATE WORDPRESS -->
-<!-- =============================== -->
+<!--  CHAMPS PERSONNALISÉS + DATE WORDPRESS -->
 <div class="photo-acf">
-            <h1 class="photo-title"><?php the_title(); ?></h1>
+  <h1 class="photo-title"><?php the_title(); ?></h1>
+
   <?php
-  //  Champs ACF (si ACF est activé)
+  // ===============================
+  //  Champs personnalisés (ACF)
+  // ===============================
   if (function_exists('get_field')) {
     $reference = get_field('reference'); // Référence personnalisée
     $type      = get_field('type');      // Type personnalisé
   } else {
-    $reference = ''; 
-    $type = '';
+    $reference = '';
+    $type      = '';
   }
 
-  //  Date native WordPress (date de publication du post)
-  $annee = get_the_date('Y'); // Récupère uniquement l'année
+  // ===============================
+  // Année (date WP)
+  // ===============================
+  $annee = get_the_date('Y');
 
-  //  Référence
+  // ===============================
+  //  Affichage des infos
+  // ===============================
   if ($reference) {
-    echo '<p><strong>Référence :</strong> ' . esc_html($reference) . '</p>';
+    echo '<p>Référence : ' . esc_html($reference) . '</p>';
   }
 
-  //  Type
+  // --- Catégories ---
+  $categories = get_the_terms(get_the_ID(), 'categorie');
+  if ($categories && !is_wp_error($categories)) {
+    $categories_list = wp_list_pluck($categories, 'name');
+    echo '<p>Catégories : ' . esc_html(implode(', ', $categories_list)) . '</p>';
+  }
+
+  // --- Formats ---
+  $formats = get_the_terms(get_the_ID(), 'format');
+  if ($formats && !is_wp_error($formats)) {
+    $formats_list = wp_list_pluck($formats, 'name');
+    echo '<p>Formats : ' . esc_html(implode(', ', $formats_list)) . '</p>';
+  }
+
+  // --- Type ---
   if ($type) {
-    echo '<p><strong>Type :</strong> ' . esc_html($type) . '</p>';
+    echo '<p>Type : ' . esc_html($type) . '</p>';
   }
 
-  //  Année de publication (WordPress)
+  // --- Année ---
   if ($annee) {
-    echo '<p><strong>Année :</strong> ' . esc_html($annee) . '</p>';
+    echo '<p>Année : ' . esc_html($annee) . '</p>';
   }
   ?>
+</div>
 
 
 
-<?php endif; ?>
 
-
-<!-- =============================== -->
-<!-- 🏷️ TAXONOMIES : Catégorie & Format -->
-<!-- =============================== -->
-<?php
-// 🔹 Taxonomie : Catégorie
-$categories = get_the_terms(get_the_ID(), 'categorie');
-if ($categories && !is_wp_error($categories)) {
-  echo '<div class="photo-taxonomies">';
-  echo '<h4>Catégories :</h4>';
-  echo '<ul class="categories-list">';
-  foreach ($categories as $cat) {
-    // Affiche le nom de la catégorie sans lien cliquable
-    echo '<li>' . esc_html($cat->name) . '</li>';
-  }
-  echo '</ul></div>';
-}
-
-// 🔹 Taxonomie : Format
-$formats = get_the_terms(get_the_ID(), 'format');
-if ($formats && !is_wp_error($formats)) {
-  echo '<div class="photo-taxonomies">';
-  echo '<h4>Formats :</h4>';
-  echo '<ul class="formats-list">';
-  foreach ($formats as $format) {
-    // Affiche le nom du format sans lien cliquable
-    echo '<li>' . esc_html($format->name) . '</li>';
-  }
-  echo '</ul></div>';
-}
-?>
-
-        </div>
 
         </div>
 
@@ -112,11 +93,55 @@ if ($formats && !is_wp_error($formats)) {
         </div>
       </div>
 
+
+      <!-- ************************************************** -->
+
+      <div class="photo-contact-section">
+  <div class="contenubouton">
+    <p class="contact-text">Cette photo vous intéresse ?</p>
+   <a href="#contact-modal" 
+       class="contact-btn" 
+       data-reference="<?php the_field('reference'); ?>">
+       Contact
+    </a>
+  </div>
+  <div class="photo-contact-right">
+  <?php 
+    $prev_post = get_previous_post();
+    $next_post = get_next_post();
+
+    if ($prev_post || $next_post) :
+  ?>
+    <div class="photo-navigation">
+      <div class="nav-thumbnail">
+        <?php if ($next_post) echo get_the_post_thumbnail($next_post->ID, 'thumbnail'); ?>
+      </div>
+
+      <div class="arrows">
+        <?php if ($prev_post): ?>
+          <a href="<?php echo get_permalink($prev_post->ID); ?>" class="nav-arrow prev">&#8592;</a>
+        <?php endif; ?>
+
+        <?php if ($next_post): ?>
+          <a href="<?php echo get_permalink($next_post->ID); ?>" class="nav-arrow next">&#8594;</a>
+        <?php endif; ?>
+      </div>
+    </div>
+  <?php endif; ?>
+</div>
+
+
+
+
+</div>
+
+
+
       <!-- =================================================== -->
       <!--  Zone "Photos apparentées" (même catégorie/format) -->
       <!-- =================================================== -->
       <section class="related-photos">
-        <h2>Photos apparentées</h2>
+        <h3>VOUS AIMEREZ AUSSI</h3>
         <div class="related-photos-list">
           <?php
           // Récupère les termes liés à la photo actuelle

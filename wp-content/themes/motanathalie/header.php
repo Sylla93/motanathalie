@@ -11,6 +11,15 @@
  <body <?php body_class(); ?>>
    <header class="my-logo">
    <h1><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo('name'); ?></a></h1>
+
+    <!-- BOUTON BURGER -->
+    <div class="burger" id="burger-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+
 <?php
 if ( has_nav_menu( 'header-menu' ) ) :
     wp_nav_menu( array(
@@ -20,4 +29,5 @@ if ( has_nav_menu( 'header-menu' ) ) :
 endif;
 ?>
 
+   
  </header>
