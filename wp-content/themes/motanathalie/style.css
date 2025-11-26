@@ -263,7 +263,6 @@ color: #E00000 !important;
 .choisir {
   display: flex;
   justify-content: center;
-  gap: 2vh;
   margin-top: 10vh;
   margin-bottom: 10vh;
   margin-right: 5vh;
@@ -302,6 +301,7 @@ white-space: nowrap;
   margin: 0;
   padding: 0;
   list-style: none;
+  margin-left: 4vh;
 }
 
 .custom-dropdown.active .options {
@@ -334,68 +334,53 @@ white-space: nowrap;
 
 }
 
-/* .catego {
-  margin-left: 10vh;
+.catego {
+  margin-left: 8vh;
 }
 .forma {
-  margin-left: 14vh;
+  margin-left: 12vh;
 }
 .tri {
-  margin-left: 10vh;
-} */
-
+  margin-left: 9vh;
+}
 
 .custom-dropdown.active .dropdown-arrow {
   transform: rotate(135deg);
   transition: transform 0.2s;
 }
 
-
-
 /* Ajout de l'icône flèche via pseudo-élément */
 .choisir div {
     position: relative;
+    width: 26vh;
+    margin-right: 5vh;
 }
 
 .reception {
   padding-top: 2vh;
 }
 
-
-
-/* La flèche
-.choisir div::after {
-    content: "˅";
-    font-size: 1.2rem;
-    color: black;
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    padding: 1vh;
-    padding-top: 2vh;
-} */
-
-
-
 .trier {
 width: 14vw;
-margin-left: 49vh;
+margin-left: 53vh;
 height: 5vh;
 }
 
 .format {
   width: 20vw;
   height: 5vh;
+  margin-right: 5vh;
 }
 .categorie {
   width: 14vw;
   height: 5vh;
-  margin-left: 1vh;
+  margin-left: 3vh;
 
 } 
-/* ************************ */
+
+.selected-text {
+  margin-left: 1vh;
+}
 
 
 /* *********************** */
@@ -520,11 +505,6 @@ height: 60vh;
 object-fit: cover;
 }
 
-/* .related-photo:nth-child(n+3) {
-  display: none;
-} */
-
-
 
 
 .related-photos {
@@ -648,11 +628,6 @@ object-fit: cover;
   display: none;
 }
 
-
- /* .photo-link {
-  width: 30vh;
-  width: flex;
-} */
 
 /*  LIGHTBOX GLOBALE */
 .lightbox.hidden { display: none; }
@@ -930,7 +905,458 @@ object-fit: cover;
     background: #000;
 }
 
+/* ************************************************** */
 
+/* =========================================================
+                    MODE TABLETTE (768px à 1024px)
+   ========================================================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ---------------- HEADER ---------------- */
+
+
+.my-logo {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    margin: auto;
+}
+
+
+.my-logo h1{
+display: flex;
+align-items: center;
+padding-left: 7%;
+width: 50%;
+font-size: medium;
+white-space: nowrap;
+
+}
+
+.menu-menu-principal-container {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-right: 3%;
+}
+
+#menu-menu-principal {
+    display: flex;
+    align-items: center;
+
+}
+#menu-menu-principal a{
+    margin: 0 30px;
+    color: black;
+    white-space: nowrap;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+        text-decoration: none;
+        text-transform: uppercase;
+}
+
+.my-logo h1 a {
+color: #E00000 !important;
+}
+
+  
+  .wrap {
+    height: auto;
+    /* margin-bottom: 20vh; */
+  }
+
+  /* ---------------- HERO ---------------- */
+  .hero {
+    height: 55vh;
+    margin-bottom: 3vh;
+  }
+
+  .hero-content {
+        font-size: 4vw;
+    -webkit-text-stroke: 2px #fff;
+  }
+
+  /* ---------------- FILTRES ---------------- */
+  .choisir {
+   width: 62vh;
+   display: grid;
+   grid-template-columns: repeat(1, 1fr);
+   justify-items: center;
+    align-items: center;
+    gap: 2vh;
+    margin: auto;
+   margin-bottom: 3vh;
+
+  }
+
+  .choisir div {
+    width: 25vh;
+    margin: auto;
+  }
+
+  .custom-dropdown .selected {
+    width: 22vh;
+    padding: 12px;
+  }
+
+  .custom-dropdown .options {
+    width: 28vh;
+    margin-top: 3vh;
+  }
+ 
+    .catego {
+    margin-left: 9vh;
+}
+.tri {
+    margin-left: 10vh;
+}
+
+/* ******************************** */
+  .gallery-wrapper {
+    display: grid;
+    margin-top: 0vh;
+}
+
+
+
+  /* ************************************************ */
+    .photo-item {
+      width: 30vh;
+      height: 35vh;
+
+    }
+
+    .photo-thumbnail {
+      height: 35vh;
+    }
+
+    /* ************************************** */
+
+   .content-area {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2vh;
+
+  justify-content: center;  /* centre horizontalement la grille dans le container */
+  align-content: start;     /* aligne verticalement au début (ou utiliser center pour centrer) */
+  max-width: 1200px;        /* limite la largeur pour que le centrage soit visible */
+  margin-left: auto;
+  margin-right: auto;       /* centre la zone horizontalement dans la page */
+}
+.gallery-grid img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover; /* pour que les images remplissent bien leur case */
+}
+
+
+
+
+
+  /* ---------------- ARCHIVE ---------------- */
+  .photo-archive {
+        grid-template-columns: repeat(2, 1fr);
+    width: 50%;
+    margin: auto;
+    gap: 3vw;
+  }
+
+  .photo-thumbnail img {
+    height: 45vh;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* ---------------- BOUTON LOAD MORE ---------------- */
+  #load-more {
+    width: 30vh;
+    height: 6vh;
+  }
+
+  /* ---------------- MODAL ---------------- */
+  .modal-content {
+        width: 60vh;
+        padding: 0vh 7vh 10vh 4vh;
+        margin: 8vh;
+        margin-top: 0;
+    }  
+
+  .input-nom,
+  .input-email,
+  .input-photo {
+    width: 45vh;
+  }
+
+    .input-message {
+        width: 45vh;
+        height: 20vh;
+    }
+
+  .btn-envoyer {
+    width: 45vh;
+    height: 5vh;
+    margin-bottom: 5vh;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+    margin-top: -4vh;
+}
+
+  /* ---------------- DETAIL PHOTO ---------------- */
+  .photo-detail {
+    grid-template-columns: 1fr 1fr;
+    gap: 5vh;
+    padding: 5vh 0;
+  }
+
+  .photo-image img {
+    width: 40vh;
+    height: 55vh;
+  }
+
+  .photo-infos {
+    width: 40vh;
+    justify-self: center;
+    text-align: left;
+  }
+
+  .photo-acf h1 {
+    font-size: 3.5vh;
+  }
+
+  .photo-contact-section {
+    grid-template-columns: 1fr 1fr;
+    margin: 8vh auto;
+    width: 80%;
+  }
+
+  .contenubouton {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4vh;
+  }
+
+  .contact-btn {
+    width: 30vh;
+    height: 6vh;
+  }
+
+  /* ---------------- RELATED PHOTOS ---------------- */
+  .related-photos-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 90%;
+    margin: auto;
+    gap: 3vh;
+  }
+
+  .related-photo img {
+    width: 40vh;
+    height: 50vh;
+  }
+
+ /* === Centrage du bouton === */
+.button {
+  display: flex;
+  justify-content: center;
+  margin: 8vh;
+}
+
+#load-more {
+  width: 30vh;
+  height: 6vh;
+  background-color: #d9d9d9;
+  color: #000;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* ********************Detail photo*********************** */
+
+
+    .photo-container {
+    width: 100vw;
+    height: auto;
+    border-bottom: #000 1px solid;
+}
+
+  .photo-detail {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    justify-items: center;
+    margin: auto;
+    align-items: center;
+    border-bottom: #000 1px solid;
+  }
+
+
+  .photo-detail  .photo-infos {
+    order: 2 !important;
+    margin: auto;
+    padding-left: 0;
+    justify-items: center;
+    border-bottom: none;
+  }
+  .photo-detail .photo-image {
+    order: 1 !important;
+    margin: auto;
+    object-fit: cover;
+    width: 45vh;
+
+ 
+  }
+
+  .photo-image img {
+    width: 50vh;
+    height: 76vh;
+    object-fit: cover;
+    margin-left: -3vh;
+}
+
+  .photo-infos .photo-acf {
+    width: 71vh;
+     margin-left: 20vh;
+    border-bottom: none;
+}
+   .photo-acf h1 {
+        font-size: 4vh;
+        width: 20vh;
+        text-transform: uppercase;   
+}
+
+
+  .photo-contact-section {
+         width: 71vh;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        justify-items: center;
+         margin-right: 5vh;
+        margin-left: 0vh;
+        white-space: nowrap;
+  }
+
+    .contenubouton {
+      width: 50vh;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      justify-items: center;
+      align-items: center;
+      margin-left: 0vh;
+      padding-top: 0vh;
+      margin-bottom: 17vh;
+
+    }
+
+    .contact-text {
+      margin: auto;
+      margin-bottom: -3vh;
+      margin-left: 0vh;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    }
+    .photo-contact-right {
+      display: none;
+    }
+    .nav-thumbnail {
+      display: none;
+    }
+    .arrows {
+      display: none;
+    }
+
+    .contact-btn {
+     display: flex;
+    width: 35vh;
+    height: 6vh;
+    margin-left: -15vh;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -11vh;
+
+    }
+
+    
+    .related-photos h3 {
+      margin: auto;
+       margin-top: 0vh;
+       margin-bottom: 4vh;
+      white-space: nowrap;
+    }
+    .related-photos {
+      width: 50vh;
+      margin-top: 5vh;
+      height: auto;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+    } 
+
+  
+
+     .related-photo img {
+      width: 32vh;
+      height: 60vh;
+      margin: auto;
+      margin-left: -2vh;
+    }
+    
+    .related-photos-list {
+      border-bottom: none;
+      margin-left: 5vh;
+      padding-bottom: 8vh;
+
+
+    }
+
+
+/* *********************FOOTER****************** */
+    footer {
+        display: flex;
+        justify-content: center;
+        width: 70vh;
+        height: 43vh;
+        margin: auto;
+        margin-top: 0vh;
+    }
+#menu-menu-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5vh;
+  margin: 4vh;
+  padding-bottom: 4vh; 
+  margin-left: 0vh;
+
+}
+
+#menu-menu-footer li a{
+  color: #000;
+}
+}
+
+
+
+
+
+
+
+/* ****************************************** */
 /*  Mode mobile (écrans de moins de 768px) */
 @media  (min-width: 200px) and (max-width: 768px) {
 
@@ -1029,7 +1455,7 @@ object-fit: cover;
 
   .header-menu-class.active {
     display: flex !important;
-    margin-top: 6vh;
+    margin-top: 8vh;
      width: 60vh;
      height: 87vh;
      margin-right: -4vh;
@@ -1042,12 +1468,21 @@ object-fit: cover;
 
   #menu-menu-principal a {
    color: #FFFFFF;
-   font-size: 2rem;
+   font-size: 1.5rem;
    white-space: nowrap;
     text-decoration: none;
 
   }
 
+  .modal-close {
+    position: absolute;
+    top: 70px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 5vh;
+    cursor: pointer;
+}
   
 
 
@@ -1079,9 +1514,12 @@ object-fit: cover;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2vh;
+        justify-content: center;
+        margin: auto;
+        gap: 4vh;
         margin-bottom: 11vh;
         margin-top: 4vh;
+        margin-left: 8vh;
     }
 
 .custom-dropdown .selected {
@@ -1099,7 +1537,7 @@ object-fit: cover;
   margin-left: 15vh;
 }
 .tri {
-  margin-left: 10vh;
+  margin-left: 12vh;
 }
 
 .custom-dropdown.active .options {
@@ -1119,12 +1557,14 @@ object-fit: cover;
 
 /* Ajout de l'icône flèche via pseudo-élément */
 .choisir div {
+  width: 37vh;
   display: flex;
    justify-content: center;
    align-items: center;
    position: relative;
    margin: auto;
-   margin-left: 4vh;}
+   margin-left: 1vh;
+  }
 
 .reception {
   padding-top: 2vh;
@@ -1159,50 +1599,6 @@ object-fit: cover;
 }
 
 
-
-  .trier, .format, .categorie {
-    width: 100%;
-    height: 45px;
-    margin: 0;
-  }
-
-
-/* Hover = rouge */
-/* --- STYLE DES OPTIONS COMME DANS TON IMAGE --- */
-
-/* Option "Catégories" standard */
-/* -------------------------
-   TA PARTIE "Rouge" gardée
-   ------------------------- */
-
-/* Option "Catégories" standard */
-/* .categorie ul.options li:first-child {
-  background: #ffffff;
-}
-
-/* 1 — Rose très pâle */
-/* .categorie ul.options li[data-value="Reception"] {
-  background: #ffe0e0;
-} */
-
-/* 2 — Rose plus soutenu */
-/* .categorie ul.options li[data-value="Reception"]:nth-child(3) {
-  background: #ff9999;
-} */
-
-/* 3 — Rouge moyen */
-/* .categorie ul.options li[data-value="Reception"]:nth-child(4) {
-  background: #ff5555;
-} */
-
-/* 4 — Rouge vif */
-/* .categorie ul.options li[data-value="Reception"]:nth-child(5) {
-  background: #ff0000;
-  color: white;
-} */ 
-
-
-
   /* ******************************** */
 
   .content-area {
@@ -1229,7 +1625,23 @@ object-fit: cover;
     height: 50vh;
     object-fit: cover;
   }
-
+  /* ******************************** */
+  .photo-thumbnail .icon-top {
+    position: absolute;
+    top: 2vh;
+    right: 3vh;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    color: white;
+    width: 3vw;
+    padding: 6px;
+    font-size: 1.4rem;
+    opacity: 0;
+    transition: opacity 0.3s ease,
+ background 0.3s ease;
+    z-index: 2;
+    cursor: pointer;
+}
   /* ---------------- BOUTON LOAD MORE ---------------- */
   .button {
     text-align: center;
@@ -1248,6 +1660,7 @@ object-fit: cover;
     
   .modal-overlay.active {
     display: flex;
+    margin-top: -5vh;
 }
   
   .modal-content {
@@ -1445,6 +1858,9 @@ height: auto;
   grid-template-columns: repeat(1, 1fr);
 }
 }
+
+
+/* ******************************************** */
 
 
 
