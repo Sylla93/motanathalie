@@ -1,11 +1,11 @@
 <?php
-/* ==========================================================
-   📸 RÉCUPÉRATION DES DONNÉES DE L’IMAGE
-   - ID de l'image
-   - Version medium
-   - Version full (utile si besoin pour lightbox)
-   - Texte alternatif
-   ========================================================== */
+// ********************************************************************************************************
+//                                     RÉCUPÉRATION DES DONNÉES DE L’IMAGE
+//                                    - ID de l'image
+//                                    - Version medium
+//                                    - Version full (utile si besoin pour lightbox)
+//                                    - Texte alternatif
+//    ********************************************************************************************************
 
 $image_id     = get_post_thumbnail_id();                               // ID de l'image mise en avant
 $image_medium = wp_get_attachment_image_src($image_id, 'medium');       // URL + dimensions (format medium)
@@ -17,19 +17,24 @@ $image_alt    = get_post_meta($image_id, '_wp_attachment_image_alt', true); // A
 
   <div class="motanathalie-photo">
 
-    <!-- ==========================================================
-         🔗 LIEN CLIQUABLE vers la page de la photo
-         ========================================================== -->
+    <!-- ***********************************************************************************
+          LIEN CLIQUABLE vers la page de la photo
+        *********************************************************************************** -->
+
+
     <a href="<?php the_permalink(); ?>" class="photo-link">
 
       <?php
-        /* ==========================================================
-           🖼️ AFFICHAGE DE L'IMAGE
-           Utilisation de wp_get_attachment_image() :
-           - Permet une gestion propre du srcset
-           - Génère automatiquement les attributs size
-           - Alt correct : priority = meta alt, fallback = titre
-           ========================================================== */
+
+        // ******************************************************************************
+        //                              AFFICHAGE DE L'IMAGE
+        //                             Utilisation de wp_get_attachment_image() :
+        //                             - Permet une gestion propre du srcset
+        //                             - Génère automatiquement les attributs size
+        //                             - Alt correct : priority = meta alt, fallback = titre
+        //    ******************************************************************************
+
+
         echo wp_get_attachment_image(
           $image_id,
           'medium',
@@ -41,19 +46,21 @@ $image_alt    = get_post_meta($image_id, '_wp_attachment_image_alt', true); // A
         );
       ?>
 
-      <!-- ==========================================================
-           🟣 OVERLAY AU SURVOL
-           S’affiche uniquement au hover.
-           Contient :
-           - une icône œil
-           - le titre de la photo
-           ========================================================== -->
+      <!-- **********************************************************************************
+                                        OVERLAY AU SURVOL
+                                       S’affiche uniquement au hover.
+                                       Contient :
+                                       - une icône œil
+                                       - le titre de la photo
+          ********************************************************************************** -->
+
+
       <div class="photo-hover" aria-hidden="true">
 
         <!-- Icône “œil” -->
         <svg xmlns="http://www.w3.org/2000/svg"
              class="eye-icon"
-             width="38" height="38"
+             width="80" height="80"
              viewBox="0 0 24 24"
              fill="none"
              stroke="white"

@@ -1,9 +1,11 @@
 <?php get_header(); ?>
 
 <?php
-// ==============================================
-// HERO AVEC ACF (si utilisé sur une page statique)
-// ==============================================
+
+// ***************************************************************************************************************
+//                                     HERO AVEC ACF (si utilisé sur une page statique)
+// ***************************************************************************************************************
+
 $hero_image = get_field('hero_background', get_queried_object_id());
 $hero_title = get_field('hero_title', get_queried_object_id());
 
@@ -28,9 +30,11 @@ $hero_url = ($hero_image && isset($hero_image['url']))
 </section>
 
 
-<!-- ==========================================================
-      FILTRES (Catégorie • Format • Trier)
-     ========================================================== -->
+<!-- *************************************************************************************************************
+                                         FILTRES (Catégorie • Format • Trier)
+    ************************************************************************************************************* -->
+
+
 <div class="choisir">
 
   <!--  Filtre : Catégories -->
@@ -50,7 +54,7 @@ $hero_url = ($hero_image && isset($hero_image['url']))
       </ul>
   </div>
 
-  <!-- 🔸 Filtre : Formats -->
+  <!--  Filtre : Formats -->
   <div class="custom-dropdown format" id="format-dropdown">
     <div class="selected">
       <span class="selected-text">Formats</span>
@@ -64,7 +68,7 @@ $hero_url = ($hero_image && isset($hero_image['url']))
     </ul>
   </div>
 
-  <!-- 🔸 Filtre : Tri -->
+  <!--  Filtre : Tri -->
   <div class="custom-dropdown trier" id="trier-dropdown">
     <div class="selected">
       <span class="selected-text">Trier par</span>
@@ -80,9 +84,11 @@ $hero_url = ($hero_image && isset($hero_image['url']))
 
 </div> <!-- /choisir -->
 
-<!-- ==========================================
-     CONTENU PRINCIPAL
-     ========================================== -->
+<!-- *****************************************************************************************************************************
+                                                    CONTENU PRINCIPAL
+    ***************************************************************************************************************************** -->
+
+
 <main class="wrap">
 
     <section class="content-area content-thin">

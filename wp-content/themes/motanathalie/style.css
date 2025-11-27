@@ -93,6 +93,8 @@ color: #E00000 !important;
     display: flex;
     flex-direction: column;
     margin: 5vh;
+        justify-content: center;
+    align-items: center;
 
   }
 
@@ -730,7 +732,7 @@ object-fit: cover;
 }
 
 /* Icône au centre */
-.eye-btn {
+.photo-thumbnail .eye-btn {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -738,12 +740,42 @@ object-fit: cover;
   background: none;
   border: none;
   color: white;
-  font-size: 2rem;
+  font-size: 3rem;
   opacity: 0;
   transition: opacity 0.4s ease, transform 0.4s ease;
   cursor: pointer;
   z-index: 2;
+  width: 80px !important;
+    height: 80px !important;
 }
+
+
+/* Empêche les containers de rétrécir le SVG */
+.eye-btn,
+.eye-btn svg {
+    width: 80px !important;
+    height: 80px !important;
+    min-width: 80px !important;
+    min-height: 80px !important;
+    max-width: 80px !important;
+    max-height: 80px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Neutralise le zoom automatique des parents */
+.gallery-item svg,
+.grid-item svg,
+.photo svg,
+.item svg {
+    transform: none !important;
+    scale: 1 !important;
+}
+
+
+
+
 
 /* Effet d’apparition */
 .photo-thumbnail:hover::after {
@@ -824,8 +856,11 @@ object-fit: cover;
 .photo-thumbnail:hover .icon-top,
 .photo-thumbnail:hover .photo-hover-title {
   opacity: 1;
+  
   /* transform: translateY(0); */
 }
+
+
 
 
 /* ===== Galerie - Titre + Catégorie ===== */
@@ -1014,12 +1049,17 @@ color: #E00000 !important;
     width: 28vh;
     margin-top: 3vh;
   }
- 
+ /* ***************************icones filtres************************ */
     .catego {
-    margin-left: 9vh;
+    margin-left: 7vh;
 }
-.tri {
+
+.forma {
     margin-left: 10vh;
+}
+
+.tri {
+    margin-left: 8vh;
 }
 
 /* ******************************** */
@@ -1531,13 +1571,13 @@ color: #E00000 !important;
 }
 
   .catego {
-  margin-left: 10vh;
+  margin-left: 8vh;
 }
 .forma {
-  margin-left: 15vh;
+  margin-left: 13vh;
 }
 .tri {
-  margin-left: 12vh;
+  margin-left: 10vh;
 }
 
 .custom-dropdown.active .options {

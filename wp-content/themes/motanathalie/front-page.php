@@ -1,8 +1,10 @@
 <?php get_header(); ?>
 
-<!-- ==========================================================
-      SECTION HERO (Image + titre principal)
-     ========================================================== -->
+<!-- ********************************************************************************************************
+                                   SECTION HERO (Image + titre principal)
+    ********************************************************************************************************* -->
+
+
 <section class="hero" style="background-image: url('<?php echo get_template_directory_uri(); ?>/images/hero.jpg');"> 
   <div class="hero-content"> 
     <h1>PHOTOGRAPHE EVENT</h1>
@@ -10,9 +12,9 @@
 </section>
 
 
-<!-- ==========================================================
-      FILTRES (Catégorie • Format • Trier)
-     ========================================================== -->
+<!-- ********************************************************************************************************
+                                FILTRES (Catégorie • Format • Trier)
+    ******************************************************************************************************** -->
 <div class="choisir">
 
   <!--  Filtre : Catégories -->
@@ -32,7 +34,7 @@
       </ul>
   </div>
 
-  <!-- 🔸 Filtre : Formats -->
+  <!--  Filtre : Formats -->
   <div class="custom-dropdown format" id="format-dropdown">
     <div class="selected">
       <span class="selected-text">Formats</span>
@@ -46,7 +48,7 @@
     </ul>
   </div>
 
-  <!-- 🔸 Filtre : Tri -->
+  <!--  Filtre : Tri -->
   <div class="custom-dropdown trier" id="trier-dropdown">
     <div class="selected">
       <span class="selected-text">Trier par</span>
@@ -64,9 +66,10 @@
 
 
 
-<!-- ==========================================================
-     🧱 STRUCTURE PRINCIPALE DE LA PAGE
-     ========================================================== -->
+<!-- ***************************************************************************************************************
+                                            STRUCTURE PRINCIPALE DE LA PAGE
+    *************************************************************************************************************** -->
+
 <main class="wrap">
 
   <!-- Encapsule la zone de contenu -->
@@ -79,9 +82,11 @@
     <?php endif; ?>
 
 
-    <!-- ======================================================
-         🖼️ RÉCUPÉRATION DES 8 PREMIÈRES PHOTOS (CPT "photo")
-         ====================================================== -->
+    <!-- *********************************************************************************************************
+                                  RÉCUPÉRATION DES 8 PREMIÈRES PHOTOS (CPT "photo")
+        ********************************************************************************************************* -->
+
+
     <?php
     $photos = new WP_Query([
       'post_type'      => 'photo',      // Custom Post Type
@@ -98,7 +103,7 @@
         <div id="photo-archive" class="photo-archive">
 
 
-          <!-- 🔁 Boucle sur chaque photo -->
+          <!--  Boucle sur chaque photo -->
           <?php while ($photos->have_posts()) : $photos->the_post(); ?>
 
             <article class="photo-item">
@@ -106,37 +111,39 @@
               <div class="photo-thumbnail">
 
                 <?php
-                /* -------------------------------------------
-                   📁 Récupère la première catégorie associée
-                   ------------------------------------------- */
+
+                  //  *****************************************************************************************
+                  //                       Récupère la première catégorie associée
+                  //  *****************************************************************************************
+
+
                 $categories = get_the_terms(get_the_ID(), 'categorie');
                 $categorie_name = $categories && !is_wp_error($categories)
                                   ? esc_attr($categories[0]->name)
                                   : '';
                 ?>
 
-                <!-- 📸 Image principale -->
+                <!--  Image principale -->
                 <img src="<?php the_post_thumbnail_url('medium'); ?>" 
                      alt="<?php the_title_attribute(); ?>" 
                      data-ref="<?php the_field('reference'); ?>" 
                      data-categorie="<?php echo $categorie_name; ?>">
 
-                <!-- 👁️ Icône clic → page détail -->
-                <a href="<?php the_permalink(); ?>" class="eye-btn">
-                  <svg xmlns="http://www.w3.org/2000/svg"
-                       width="80" height="80"
-                       stroke="white" stroke-width="2">
-                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
-                    <circle cx="12" cy="12" r="3"/>
-                  </svg>
-                </a>
+                <!--  Icône clic → page détail -->
+                 <a href="<?php the_permalink(); ?>
+                       " class="eye-btn" aria-label="Voir les détails de la photo">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </a>
 
                 <!-- ⛶ Icône fullscreen (lightbox) -->
                 <div class="icon-top">
                   <i class="fa-solid fa-expand"></i>
                 </div>
 
-                <!-- 🟣 Informations affichées au survol -->
+                <!--  Informations affichées au survol -->
                 <div class="photo-hover-info">
                   <h3 class="photo-title"><?php the_title(); ?></h3>
 
@@ -156,7 +163,7 @@
 
               </div> <!-- /photo-thumbnail -->
 
-              <!-- 🏷️ Titre sous la miniature -->
+              <!--  Titre sous la miniature -->
               <h2 class="photo-title"><?php the_title(); ?></h2>
 
             </article>
@@ -166,9 +173,11 @@
         </div> <!-- /photo-archive -->
 
 
-        <!-- ======================================================
-             🔘 BOUTON "CHARGER PLUS" (si plusieurs pages)
-             ====================================================== -->
+    <!-- ********************************************************************************************************
+                                      BOUTON "CHARGER PLUS" (si plusieurs pages)
+        ******************************************************************************************************** -->
+
+
         <?php if ($photos->max_num_pages > 1) : ?>
           <div class="button">
             <button id="load-more"

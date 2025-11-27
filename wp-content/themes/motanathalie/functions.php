@@ -1,8 +1,9 @@
 <?php
 
-/* ==========================================================
-   🐞 DEBUG : Liste tous les Custom Post Types chargés
-   ========================================================== */
+//    ******************************************************************************************************************
+//                                         DEBUG : Liste tous les Custom Post Types chargés
+//    ******************************************************************************************************************
+
 add_action('init', function() {
     $post_types = get_post_types([], 'objects');
     foreach ($post_types as $type => $obj) {
@@ -11,9 +12,11 @@ add_action('init', function() {
 });
 
 
-/* ==========================================================
-   📌 Enregistrement des menus (header et footer)
-   ========================================================== */
+// ***********************************************************************************************************
+//                                Enregistrement des menus (header et footer)
+//    ***********************************************************************************************************
+
+
 function register_my_menus() {
     register_nav_menus(array(
         'header-menu' => __('Header Menu'), // Menu principal
@@ -23,9 +26,9 @@ function register_my_menus() {
 add_action('init', 'register_my_menus');
 
 
-/* ==========================================================
-   🖼️ Activation des images mises en avant
-   ========================================================== */
+//    *********************************************************************************************************************
+//                                                  Activation des images mises en avant
+//    *********************************************************************************************************************
 function my_theme_setup() {
     add_theme_support('post-thumbnails');
 }
@@ -35,9 +38,11 @@ add_action('after_setup_theme', 'my_theme_setup');
 add_filter('acf/settings/remove_wp_meta_box', '__return_false', 20);
 
 
-/* ==========================================================
-   📷 Custom Post Type : Galerie
-   ========================================================== */
+// ***********************************************************************************************************************
+//                                                         Custom Post Type : Galerie
+//    ***********************************************************************************************************************
+
+
 function register_cpt_galerie() {
     register_post_type('galerie', [
         'labels' => [
@@ -52,9 +57,11 @@ function register_cpt_galerie() {
 add_action('init', 'register_cpt_galerie');
 
 
-/* ==========================================================
-   📦 Chargement des scripts & styles du thème
-   ========================================================== */
+// *********************************************************************************************************************
+
+//                                                    Chargement des scripts & styles du thème
+
+//    *********************************************************************************************************************
 function motanathalie_enqueue_scripts() {
 
     // jQuery natif de WordPress
@@ -104,9 +111,11 @@ function motanathalie_enqueue_scripts() {
 add_action('wp_enqueue_scripts', 'motanathalie_enqueue_scripts');
 
 
-/* ==========================================================
-   🔄 AJAX : Filtrage / Chargement des photos
-   ========================================================== */
+// ***********************************************************************************************************************
+//                                               AJAX : Filtrage / Chargement des photos
+//    ***********************************************************************************************************************
+
+
 add_action('wp_ajax_filter_photos', 'filter_photos');       // Si utilisateur connecté
 add_action('wp_ajax_nopriv_filter_photos', 'filter_photos'); // Si utilisateur non connecté
 
@@ -164,14 +173,15 @@ function filter_photos() {
                          alt="<?php the_title_attribute(); ?>"
                          data-ref="<?php the_field('reference'); ?>"
                          data-categorie="<?php echo $categorie_name; ?>">
-
-                    <!-- Bouton oeil -->
-                    <a href="<?php the_permalink(); ?>" class="eye-btn" aria-label="Voir les détails de la photo">
+                       <a href="<?php the_permalink(); ?>
+                       " class="eye-btn" aria-label="Voir les détails de la photo">
                         <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
                             <circle cx="12" cy="12" r="3"/>
                         </svg>
                     </a>
+                    <!-- Bouton oeil -->
+                    
 
                     <!-- Icône fullscreen -->
                     <div class="icon-top">
@@ -211,9 +221,11 @@ function filter_photos() {
 }
 
 
-/* ==========================================================
-   🔧 REST API + Cache (permet React / Gutenberg / JS)
-   ========================================================== */
+// *******************************************************************************************************************
+//                                      REST API + Cache (permet React  / JS)
+//    *******************************************************************************************************************
+
+
 add_action('init', function() {
     global $wp_taxonomies;
 
