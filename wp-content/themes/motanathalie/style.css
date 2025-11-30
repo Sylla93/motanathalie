@@ -100,6 +100,26 @@ color: #E00000 !important;
 
  
 /* **********************MODAL**************************** */
+.modal-header-graphic {
+    margin-top: 4vh;
+    width: 90vh;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+        margin-left: -27vh;
+
+}
+
+.modal-header-svg {
+    width: 160vh;      /* tu ajustes comme tu veux */
+    max-width: 180vh;
+    height: auto;
+    display: block;
+    margin-right: 18vh;
+    margin: 2vh;
+    /* margin-bottom: 2vh; */
+
+}
 
 .modal-overlay {
   position: fixed;
@@ -112,6 +132,7 @@ color: #E00000 !important;
   align-items: center;
   justify-content: center;
   z-index: 9999;
+
 }
 
 .modal-overlay.active {
@@ -124,9 +145,10 @@ color: #E00000 !important;
   padding: 2rem;
   padding-left: 14vh;
   border-radius: 12px;
-  max-width: 500px;
+  max-width: 410px;
   width: 90%;
   position: relative;
+  overflow: hidden;
 }
 
 .modal-close {
@@ -139,29 +161,43 @@ color: #E00000 !important;
   cursor: pointer;
 }
 
+label {
+   margin-left: -2vh;
+}
 
 .input-nom {
+  text-align: center;
   height: 4vh;
   border-radius: 1vh;
  border: 1px solid #B8BBC2;
+ width: 38vh;
+ margin-left: -2vh;
+
 }
 
 .input-email {
   height: 4vh;
   border-radius: 1vh;
    border: 1px solid #B8BBC2;
+    width: 38vh;
+    margin-left: -2vh;
+
 }
 .input-photo {
   height: 4vh;
   border-radius: 1vh;
    border: 1px solid #B8BBC2;
+    width: 38vh;
+    margin-left: -2vh;
+
 }
 
 .input-message {
   height: 30vh;
    border: 1px solid #B8BBC2;
     border-radius: 1vh;
-    width: 44vh;
+ width: 38vh;
+ margin-left: -2vh;
 }
 
 .btn-envoyer {
@@ -169,8 +205,9 @@ color: #E00000 !important;
   background-color: #D8D8D8;
   border-radius: 0vh;
   cursor: pointer;
-      width: 45vh;
+ width: 38vh;
       border: none;
+      margin-left: -2vh;
 
   
 }
@@ -281,7 +318,20 @@ color: #E00000 !important;
   font-family: inherit;
 }
 
+/* .custom-dropdown .selected {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+} */
+
+
+
 .custom-dropdown .selected {
+   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: #FFFFFF;
   color: #000;
   padding: 10px;
@@ -323,28 +373,27 @@ white-space: nowrap;
 }
 
 
+
+
+
 .dropdown-arrow {
+
   display: inline-block;
   width: 8px;
   height: 8px;
+   position: absolute;
+  right: 12px;
+  top: 50%;
   border-left: 2px solid #000;
   border-bottom: 2px solid #000;
-  transform: rotate(-45deg);
-  margin-left: 6px;
+  transform: translateY(-50%) rotate(-45deg);
+  margin: 0 !important; /* pour annuler tes anciennes marges */  margin-left: 6px;
   margin-bottom: 2px;
     margin-left: 10vh;
 
 }
 
-.catego {
-  margin-left: 8vh;
-}
-.forma {
-  margin-left: 12vh;
-}
-.tri {
-  margin-left: 9vh;
-}
+
 
 .custom-dropdown.active .dropdown-arrow {
   transform: rotate(135deg);
@@ -363,7 +412,7 @@ white-space: nowrap;
 }
 
 .trier {
-width: 14vw;
+width: 18vw;
 margin-left: 53vh;
 height: 5vh;
 }
@@ -477,10 +526,129 @@ position: relative;
 
 /* *******************photo apparentée***************** */
 
-.related-photos {
+/* ----------------------------------------------------- */
+/*        BLOC PHOTO APPARENTÉE AVEC HOVER               */
+/* ----------------------------------------------------- */
+
+/* Le conteneur de chaque photo */
+.related-photo-hover {
+    position: relative;        /* nécessaire pour le hover */
+    overflow: hidden;          /* évite que le hover dépasse */
+    display: inline-block;
+}
+
+/* L’image */
+.related-photo-hover img {
+    display: block;
+    width: 82vh;
+    height: 80vh;
+    object-fit: cover;
+}
+
+/* Icône œil */
+.related-photo-hover .eye-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: none;
+    border: none;
+    color: white !important;
+    font-size: 3rem;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    cursor: pointer;
+    z-index: 5;
+    width: 80px !important;
+    height: 80px !important;
+}
+
+
+
+.related-photo-hover:hover .eye-btn {
+    opacity: 1;
+}
+
+/* Icône fullscreen */
+.related-photo-hover .icon-top {
+    position: absolute;
+        text-align: center;
+    top: 2vh;
+    right: 3vh;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    color: white;
+    width: 3vw;
+    padding: 6px;
+    font-size: 1.4rem;
+    opacity: 0;
+    transition: opacity 0.3s 
+ease, background 0.3s ease;
+    z-index: 5;
+    cursor: pointer;
+}
+
+
+
+.related-photo-hover:hover .icon-top {
+    opacity: 1;
+}
+
+/* HOVER — le panneau noir */
+.related-photo-hover .photo-hover-info {
+  height: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.3s ease;
+
+    z-index: 2;              /* au-dessus de l’image mais sous les icônes */
+}
+
+/* Affichage du hover */
+.related-photo-hover:hover .photo-hover-info {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Le titre en dehors doit rester caché */
+.related-photo-hover .photo-hover-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin: 0;
+    display: inline-block;
+    padding: 6px 14px;
+    margin-right: 45vh;
+    margin-bottom: 3vh;
+    margin-top: 72vh;
+
+    text-transform: uppercase;
+}
+
+
+
+ .related-photos {
   display: flex;
   flex-direction: column;
+  align-items: center;
+   position: relative;
+    overflow: hidden;
+  }
+
+ /* .related-photo:hover .photo-hover-info {
+    opacity: 1;
+    transform: translateY(0);
 }
+
+
+
 .related-photos h3 {
   display: flex;
   justify-content: start;
@@ -489,7 +657,6 @@ position: relative;
   font-weight: 400;
   font-style: light;
   margin-bottom: 6vh;
-  /* flex-direction: column; */
 
 }
 .related-photos-list {
@@ -517,23 +684,22 @@ object-fit: cover;
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-}
-
+} */
+/* 
 .related-photo img {
   width: 82vh;
     height: 80vh;
-  /* border-radius: 6px; */
-  /* transition: transform 0.3s ease; */
-}
+
+} */
 
 
 
 
 /* ********************************* */
-.related-photo h3 {
+/* .related-photo h3 {
   display: none;
 }
-
+ */
 
 /* Image miniature centrée */
 .nav-thumbnail {
@@ -897,7 +1063,7 @@ object-fit: cover;
   padding: 4px 10px;
   /* border-radius: 4px; */
   margin-left: 37vh;
- margin-bottom: 1vh;
+ margin-bottom: 4vh;
 
 }
 
@@ -1697,6 +1863,27 @@ color: #E00000 !important;
 
 
   /* ****************MODAL***************** */
+
+  .modal-header-graphic {
+    margin-top: 4vh;
+    width: 90vh;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+        margin-left: -23vh;
+
+}
+
+.modal-header-svg {
+    width: 90vh;      /* tu ajustes comme tu veux */
+    max-width: 100vh;
+    height: auto;
+    display: block;
+    margin-right: 18vh;
+    margin: 2vh;
+    /* margin-bottom: 2vh; */
+
+}
     
   .modal-overlay.active {
     display: flex;
@@ -1706,6 +1893,10 @@ color: #E00000 !important;
   .modal-content {
       margin: auto;
     padding-left: 6vh;
+    margin-top: -3vh;
+    margin-bottom: -15vh;
+     height: 111vh;
+
     }
 
 
@@ -1727,6 +1918,7 @@ color: #E00000 !important;
     .btn-envoyer {
       width: 45vh;
       height: 9vh;
+      margin-bottom: 5vh;
     }
   /* ********************Detail photo*********************** */
 

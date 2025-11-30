@@ -3,8 +3,8 @@ Contributors: emrevona
 Donate link: https://profiles.wordpress.org/emrevona/
 Tags: cache, Optimize, performance, PageSpeed, core web vitals
 Requires at least: 5.3
-Tested up to: 6.8
-Stable tag: 1.4.2
+Tested up to: 6.9
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,9 @@ Chinese Simplified (China), Chinese Traditional (Taiwan), Czech, Dutch (Belgium)
 18. Database Cleanup
 
 == Changelog ==
+
+= 1.4.3 =
+* Tested and confirmed full compatibility with WordPress 6.9 to ensure smooth and reliable plugin performance
 
 = 1.4.2 =
 * <strong>[Improvement]</strong> Updated the function modifying for url() paths in CSS

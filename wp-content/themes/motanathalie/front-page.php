@@ -17,50 +17,74 @@
     ******************************************************************************************************** -->
 <div class="choisir">
 
-  <!--  Filtre : Catégories -->
-  <div class="custom-dropdown categorie" id="categorie-dropdown">
-      <div class="selected">
-        <span class="selected-text">Catégories</span>
-        <span class="dropdown-arrow catego"></span>
-      </div>
 
-      <!-- Options de catégories (taxonomie personnalisée) -->
-      <ul class="options">
+<div class="custom-dropdown categorie" id="categorie-dropdown">
+    <div class="selected">
+      <span class="selected-text">Catégories</span>
+      <span class="dropdown-arrow catego"></span>
+    </div>
+
+    <ul class="options">
         <li data-value="">Catégories</li>
-        <li data-value="Reception">Réception</li>
-        <li data-value="Concert">Concert</li>
-        <li data-value="Mariage">Mariage</li>
-        <li data-value="Television">Télévision</li>
-      </ul>
-  </div>
+
+        <?php  
+        $terms = get_terms([
+            'taxonomy' => 'categorie',
+            'hide_empty' => false
+        ]);
+
+        foreach ($terms as $term) {
+            echo '<li data-value="' . esc_attr($term->slug) . '">' . esc_html($term->name) . '</li>';
+        }
+        ?>
+    </ul>
+</div>
+
+
+
 
   <!--  Filtre : Formats -->
-  <div class="custom-dropdown format" id="format-dropdown">
+
+<div class="custom-dropdown format" id="format-dropdown">
     <div class="selected">
       <span class="selected-text">Formats</span>
       <span class="dropdown-arrow forma"></span>
     </div>
 
     <ul class="options">
-      <li data-value="">Formats</li>
-      <li data-value="paysage">Paysage</li>
-      <li data-value="portrait">Portrait</li>
+        <li data-value="">Formats</li>
+
+        <?php  
+        $formats = get_terms([
+            'taxonomy' => 'format',
+            'hide_empty' => false
+        ]);
+
+        foreach ($formats as $format) {
+            echo '<li data-value="' . esc_attr($format->slug) . '">' . esc_html($format->name) . '</li>';
+        }
+        ?>
     </ul>
-  </div>
+</div>
+
+
+
 
   <!--  Filtre : Tri -->
-  <div class="custom-dropdown trier" id="trier-dropdown">
+ <div class="custom-dropdown trier" id="trier-dropdown">
     <div class="selected">
       <span class="selected-text">Trier par</span>
       <span class="dropdown-arrow tri"></span>
     </div>
 
     <ul class="options">
-      <li data-value="recent">Trier par</li>
-      <li data-value="Argentique">Argentique</li>
-      <li data-value="Numérique">Numérique</li>
+        <li data-value="">Trier par</li>
+        <li data-value="desc">Plus récentes</li>
+        <li data-value="asc">Plus anciennes</li>
     </ul>
-  </div>
+</div>
+
+
 
 </div> <!-- /choisir -->
 
