@@ -642,6 +642,8 @@ ease, background 0.3s ease;
     overflow: hidden;
   }
 
+ 
+ 
  /* .related-photo:hover .photo-hover-info {
     opacity: 1;
     transform: translateY(0);
@@ -990,7 +992,7 @@ object-fit: cover;
 }
 
 /*  Titre sur l’image */
-.photo-hover-title {
+.photo-thumbnail.photo-hover-title {
   position: absolute;
   width: 45vh;
   bottom: 2vh;
@@ -1004,7 +1006,7 @@ object-fit: cover;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.photo-hover-title h3 {
+.photo-thumbnail.photo-hover-title h3 {
   font-size: 1rem;
   font-weight: 500;
   color: #FFFFFF;
@@ -1043,27 +1045,50 @@ object-fit: cover;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.photo-hover-info h3 {
+ .photo-thumbnail .photo-hover-info h3 {
+  width: 17vh;
   font-size: 1rem;
   font-weight: 600;
   color: #FFFFFF;
   margin: 0;
   display: inline-block;
   padding: 6px 14px;
-   margin-right: 45vh;
+   margin-right: 55vh;
    margin-bottom: 3vh;
+   margin-left: 5vh;
+  text-transform: uppercase;
+}
+ .photo-hover-info h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin: 0;
+  display: inline-block;
+  padding: 6px 14px;
+   margin-right: 60vh;
+   margin-bottom: 3vh;
+   margin-left: -15vh;
   text-transform: uppercase;
 }
 
-.photo-hover-info .photo-cat {
+.related-photos-list .photo-hover-info .photo-cat {
   font-size: 1rem;
   margin-top: 4px;
-  color:  #FFFFFF;
+  color:  #FFFFFF !important;
   display: inline-block;
   padding: 4px 10px;
-  /* border-radius: 4px; */
-  margin-left: 37vh;
+  margin-left: 45vh;
  margin-bottom: 4vh;
+
+}
+.photo-thumbnail .photo-hover-info .photo-cat {
+  font-size: 1rem;
+  margin-top: 4px;
+  color:  #FFFFFF !important;
+  display: inline-block;
+  padding: 4px 10px;
+  margin-left: 30vh;
+ margin-bottom: 2vh;
 
 }
 
@@ -2028,6 +2053,8 @@ color: #E00000 !important;
        margin-top: 0vh;
        margin-bottom: 4vh;
       white-space: nowrap;
+       margin-right: 41vh;
+
     }
     .related-photos {
       width: 50vh;
